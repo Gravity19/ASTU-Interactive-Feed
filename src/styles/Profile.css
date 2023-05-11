@@ -231,9 +231,9 @@
 
 .account-card .card-banner-tag{
     width: 100%;
-    font-size: 16px;
-    font-weight: bold;
-    color: #404040;
+    font-size: 17px;
+    font-weight: bolder;
+    color: #494949;
     background-color: #ffd01a;
     border: none;
     padding: 1rem;
@@ -247,8 +247,7 @@
 .account-card .card-banner-text{
     text-align: justify;
     font-size: 16px;
-    color: #404040;
-    /* padding: 0px 32px; */
+    color: #494949;
 }
 
 
