@@ -1,0 +1,450 @@
+
+/* Home Section */
+.user-home{
+    position: absolute;
+    /* background-color: #f0f0f0; */
+    background: linear-gradient(to right, #0b486b, #f56217);
+    height: 100vh ;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.profile-section{
+    position: relative;
+    /* background-color: #dadada; */
+}
+
+
+
+
+
+
+
+
+
+
+/* Chat Area */
+
+
+
+.chat-box {
+    padding:0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    /* height: 600px; */
+    width: 82%;
+    position: relative;
+    justify-self: center;
+    align-self: center;
+    left: 30px;
+}
+
+
+
+  /* === CONVERSATIONS === */
+
+  .discussions {
+    width: 35%;
+    height: 690px;
+    box-sizing: border-box;
+    box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+    overflow: hidden;
+    background-color: #7789b6;
+    display: inline-block;
+  }
+
+  .discussions .scroll-discussions{
+    position: relative;
+    height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  .discussions .discussion {
+    width: 100%;
+    height: 90px;
+    background-color: #FAFAFA;
+    border-bottom: solid 1px #E0E0E0;
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .discussions .discussion:hover {
+    background-color: #ffffff;
+    
+  }
+  
+  .discussions .search {
+    width: 100%;
+    height: 90px;
+    background-color: #939393;
+    border-bottom: solid 1px #E0E0E0;
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color: #E0E0E0;
+    /* background-color: rgb(175, 175, 175); */
+
+  }
+  
+  .discussions .search .searchbar {
+    height: 40px;
+    background-color: #FFF;
+    width: 70%;
+    padding: 0 20px;
+    border-radius: 50px;
+    border: 1px solid #EEEEEE;
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .discussions .search .searchbar input {
+    margin-left: 15px;
+    height:38px;
+    width:100%;
+    border:none;
+    font-family: 'Montserrat', sans-serif;;
+  }
+  
+  .discussions .search .searchbar *::-webkit-input-placeholder {
+      color: #E0E0E0;
+  }
+  .discussions .search .searchbar input *:-moz-placeholder {
+      color: #E0E0E0;
+  }
+  .discussions .search .searchbar input *::-moz-placeholder {
+      color: #E0E0E0;
+  }
+  .discussions .search .searchbar input *:-ms-input-placeholder {
+      color: #E0E0E0;
+  }
+  
+  .discussions .message-active {
+    width: 98.5%;
+    /* width: 100%; */
+    height: 90px;
+    background-color: #FFF;
+    border-bottom: solid 1px #E0E0E0;
+  }
+  
+  .discussions .discussion .photo {
+      margin-left:20px;
+      display: block;
+      width: 45px;
+      height: 45px;
+      background: #E6E7ED;
+      -moz-border-radius: 50px;
+      -webkit-border-radius: 50px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+  }
+  
+  .discussion .online {
+    position: relative;
+    top: 30px;
+    left: 35px;
+    width: 13px;
+    height: 13px;
+    background-color: #8BC34A;
+    border-radius: 13px;
+    border: 3px solid #FAFAFA;
+  }
+  
+  .desc-contact {
+    height: 43px;
+    width:50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .discussions .discussion .name {
+    margin: 0 0 0 20px;
+    font-family:'Montserrat', sans-serif;
+    font-size: 11pt;
+    color:#515151;
+    text-align: left;
+  }
+  
+  .discussions .discussion .message {
+    margin: 6px 0 0 20px;
+    font-family:'Montserrat', sans-serif;
+    font-size: 9pt;
+    color:#515151;
+    text-align: left;
+  }
+  
+  .timer {
+    margin-left: 15%;
+    font-family:'Open Sans', sans-serif;
+    font-size: 11px;
+    padding: 3px 8px;
+    color: #BBB;
+    background-color: #FFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 15px;
+  }
+  
+
+
+
+  /* CHAT PART */
+
+
+  .chat {
+    width: 65%;
+    /* height: 65%; */
+    /* height: 95vh; */
+    border: 2px #8095a5 solid;
+  }
+  
+  .header-chat {
+    background-color: #8095a5;
+    height: 87px;
+    box-shadow: 0px 3px 2px rgba(0,0,0,0.100);
+    display:flex;
+    align-items: center;
+  }
+  
+  .chat .header-chat .icon {
+    margin-left: 30px;
+    color:#515151;
+    font-size: 14pt;
+  }
+  
+  .chat .header-chat .name {
+    margin: 0 0 0 20px;
+    text-transform: uppercase;
+    font-family:'Montserrat', sans-serif;
+    font-size: 13pt;
+    font-weight: 700;
+    color:#ffffff;
+  }
+  
+  .chat .header-chat .right {
+    position: absolute;
+    right: 40px;
+  }
+  
+  .chat .messages-chat {
+    padding: 25px 35px;
+    background-color: white;
+    height: 540px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat .message-container{           /* Message Container Left */
+    /* margin-bottom: 5px; */
+    float: left;
+  }
+
+  .message-container-right{           /* Message Container Right */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .chat .messages-chat .message {
+    display:flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .chat .messages-chat .message .photo {
+      display: block;
+      min-width: 40px;
+      height: 40px;
+      background: #E6E7ED;
+      /* -moz-border-radius: 50px; */
+      -webkit-border-radius: 50px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+  }
+  
+  .chat .messages-chat .text {
+    margin: 0 15px;
+    background-color: #f6f6f6;
+    padding: 15px;
+    padding-top: 7px;
+    border-radius: 12px;
+    text-align: left;
+    max-width: 500px;
+  }
+
+  .chat .messages-chat .name-text{
+    font-family:'Montserrat', sans-serif;
+    font-size: 10pt;
+    font-weight: 700;
+    /* padding-bottom: 5px; */
+    color:#78a3b0;
+    /* text-align: left; */
+    margin-bottom: 4px;
+  }
+
+  .chat .messages-chat .focus-text{
+    font-family:'Montserrat', sans-serif;
+    font-size: 11pt;
+    color:#202020;
+  }
+
+
+
+  
+  .chat .text-only {
+    margin-left: 45px;
+  }
+  
+  .chat .time {
+    font-size: 10px;
+    color:lightgrey;
+    margin-bottom:15px;
+    margin-left: 65px;
+    float: left;
+    
+    /* position: relative;
+    left:-35%; */
+  }
+  
+  .chat .response-time {
+    font-size: 10px;
+    color:lightgrey;
+    margin-bottom:20px;
+    position: relative;
+    left: -30px;
+    /* margin-right: 40px !important; */
+  }
+
+  
+  .chat .response {
+    float: right;
+    margin-right: 0px !important;
+    margin-left:auto; /* flexbox alignment rule */
+  }
+  
+  .chat .response .text {
+    background-color: #e3effd !important;
+  }
+  
+  .chat .footer-chat {
+    width: 100%;
+    height: 60px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    bottom: 0;
+    background-color: rgb(222, 227, 233);
+  }
+  
+  .chat .footer-chat .icon {
+    margin-left: 30px;
+    color:#C0C0C0;
+    font-size: 14pt;
+  }
+
+
+  
+  .chat .footer-chat .name {
+    margin: 0 0 0 20px;
+    text-transform: uppercase;
+    font-family:'Montserrat', sans-serif;
+    font-size: 13pt;
+    color:#515151;
+  }
+  
+  .chat .footer-chat .right {
+    position: absolute;
+    right: 40px;
+  }
+  
+  .write-message {
+    border:none !important;
+    width:70%;
+    height: 40px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+  
+  .footer-chat *::-webkit-input-placeholder {
+    color: #C0C0C0;
+    font-size: 13pt;
+  }
+
+
+  .chat .footer-chat .send_button {
+    color:#fff;
+    height:38px;
+    /* background-color: #7ab5d4; */
+    /* padding: 5px 7px; */
+    /* border-radius: 50px; */
+    /* float: right; */
+    /* font-size: 14pt; */
+  }
+  .chat .footer-chat .send_button img {
+    height: 35px;
+    width: 35px;
+  }
+
+
+  
+  .clickable {
+    cursor: pointer;
+  }
+
+
+
+/* Responsive */
+
+@media only screen and (max-width: 1000px) {
+  .discussions{
+    display: none;
+  }
+  
+  .chat {
+    width: 100%;
+    /* border-right: 2px #e6e6e6 solid; */
+  }
+  .chat .messages-chat {
+    height: 74.9vh;
+    padding: 20px 20px;
+  }
+
+  .chat .messages-chat .text {
+    margin: 0 10px;
+  }
+
+  .chat .footer-chat {
+    height: 56px;
+    }
+
+  .write-message {
+    width:65%;
+    height: 35px;
+    /* margin-left: 20px; */
+    border-radius: 0px;
+  }
+
+
+}
+
+@media only screen and (max-width: 720px) {
+  .chat .messages-chat {
+    padding: 20px 15px;
+  }
+
+}

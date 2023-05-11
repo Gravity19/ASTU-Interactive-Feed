@@ -1,0 +1,37 @@
+
+:root {
+	--mainColor: #eae5e4;
+	--mainColorLight: #5767aa;
+	--secondaryColor: #db2b39;
+    --fieldColor:rgb(233, 233, 233);
+}
+
+
+.Dashboard{
+    background-color: rgb(255, 255, 255);
+    padding: 50px;
+    height: 100vh;
+    display: flex;
+}
+
+.field-one{
+    height: 97%;
+    width: 55%;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--fieldColor);
+    position: relative;
+    top: 20px;
+    left: 50px;
+    overflow: auto;
+}
+
+.field-two{
+    height: 97%;
+    width: 40%;
+    border-radius: 15px;
+    background-color: var(--fieldColor);
+    position: relative;
+    top: 20px;
+    left: 85px;
+}
