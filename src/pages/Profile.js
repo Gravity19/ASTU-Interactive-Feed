@@ -4,7 +4,7 @@ import "../styles/Profile.css";
 import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
 
-import account_bgr from "../assets/stue.jpg";    ////account card bgr
+import account_bgr from "../assets/stue.jpg";    //account card bgr
 
 
 function Profile() {

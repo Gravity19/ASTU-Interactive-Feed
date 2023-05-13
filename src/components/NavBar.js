@@ -81,7 +81,7 @@ function NavBar() {
 
 								<ul>
 									<li>										
-										<Link to="/#">
+										<Link to="/profile">
 											<div className='dropdown-icons'><FaUser/></div>
 											<p>Profile</p>
 											<div className='arrow-right'><MdArrowForwardIos/></div>
@@ -89,7 +89,7 @@ function NavBar() {
 									</li>
 
 									<li>									
-										<Link to="/#">
+										<Link to="/dashboard">
 											<div className='dropdown-icons'><MdDashboardCustomize/></div>
 											<p>Dashboard</p>
 											<div className='arrow-right'><MdArrowForwardIos/></div>

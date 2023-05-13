@@ -14,17 +14,295 @@
     display: flex;
 }
 
+
+
+/* === NAV SIDE === */
+
+
+.Dashboard .create-btn{
+    padding: 10px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 7px 9px -4px rgba(0,0,0,0.27);
+    position: absolute;
+    top: 25px;
+    right: 150px;
+    color: #707070;
+    cursor: pointer;
+}
+
+.Dashboard .create-btn:active{
+    /* background-color: #e1e0e0; */
+    box-shadow: 0px 0.3rem 0.5rem rgba(0,0,0,0.5);
+}
+
+.Dashboard .create-btn .icon{
+    height: 20px;
+    width: 20px;
+}
+
+.Dashboard .create-btn p{
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(71, 71, 71);
+}
+
+
+
+
+
+
+
+/* =========== Modal ========== */
+
+.create-modal{
+    position: fixed;
+    /* height: 600px; */
+    width: 700px;
+    padding: 25px 30px;
+    border-radius: 25px;
+    border: none;
+    background-color: #d6d6d6;
+    box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+
+
+/* Modal-Form */
+
+
+.create-modal .publish-form{
+    padding: 20px 0px;
+    width: 100%;
+}
+
+
+.publish-form .publish-box{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.publish-form label{
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 3px;
+    color: rgb(71, 71, 71);
+    margin-bottom: 7px;
+}
+
+.publish-form input{
+    min-height: 40px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    border: 1px solid #99a7bb;
+    border-radius: 7px;
+    padding: 0 15px;
+}
+
+.publish-form input:focus{
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    border: 2px solid #7abaff;
+}
+
+
+.publish-form textarea{
+    max-height:100px;
+    max-width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    border: 2px solid #99a7bb;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+
+.publish-form select{
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    height: 35px;
+    padding:0px 8px;
+    border: 2px solid #0b81b4;
+    border-radius: 6px;
+    color: #2b9ecf;
+    font-weight: bold;
+}
+
+
+.publish-form textarea:focus , select:focus{
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    border: 2px solid #7abaff;
+}
+
+
+.publish-form select option{
+    padding: 5px 10px;
+    outline: none;
+    font-size: 1rem;
+    color: #0b81b4;
+}
+
+
+/* Modal - Radio */
+
+.publish-form .publish-radio{
+    display: flex;
+    align-items: center;
+    gap: 90px;
+    padding-left: 2px;
+}
+
+.publish-form  .publish-to{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.publish-form .audience{
+    position: relative;
+    height: 50px;
+    width: 50px;
+    margin-right: 15px;
+}
+
+
+.audience input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    z-index: 1;
+    
+    opacity: 0;
+}
+
+
+.publish-form .Radio-tile{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #078fc9;
+    border-radius: 5px;
+    color: #078fc9;
+    padding: 5px;
+
+    text-align: center;
+    font-size: 10px;
+    font-weight: bolder;
+    font-family: 'Montserrat', sans-serif;
+    transition: 0.37s ease;
+}
+
+.publish-to input:checked ~ .Radio-tile{
+    background-color: #079ad9;
+    border: 2px solid #079ad9;
+    color: white;
+    transform: scale(1.1, 1.1);
+    z-index: 1;
+}
+
+
+.audience .icon{
+    height: 20px;
+    width: 20px;
+    margin-bottom: 3px;
+}
+
+
+
+
+
+/* Modal-Buttons */
+
+.create-modal .bottom-btn{
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.create-modal .publish{
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:5px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 7px 9px -4px rgba(0,0,0,0.27);
+    cursor: pointer;
+    background-color: #007bff;
+    color: rgb(255, 254, 254);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.create-modal .publish:active{
+    background-color: #248eff;
+    box-shadow: 0px 7px 9px -4px rgba(0, 0, 0, 0.47);
+}
+
+.create-modal .close-modal{
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 7px 9px -4px rgba(0,0,0,0.27);
+    cursor: pointer;
+    color: rgb(71, 71, 71);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.create-modal .close-modal:active{
+    background-color: #ffffff;
+    box-shadow: 0px 7px 9px -4px rgba(0, 0, 0, 0.47);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======= FIELD ONE ======= */
+
+
 .field-one{
-    height: 97%;
+    height: 95%;
     width: 55%;
     padding: 10px;
     border-radius: 15px;
     background-color: var(--fieldColor);
     position: relative;
-    top: 20px;
+    top: 50px;
     left: 50px;
     overflow: auto;
 }
+
+
+
+
+
+
+/* ======= FIELD TWO ======= */
+
 
 .field-two{
     height: 97%;
@@ -32,6 +310,6 @@
     border-radius: 15px;
     background-color: var(--fieldColor);
     position: relative;
-    top: 20px;
+    top: 50px;
     left: 85px;
 }
