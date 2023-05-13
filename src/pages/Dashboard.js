@@ -11,7 +11,7 @@ import PostItem from "../helpers/PostItem";
 import { BsFillBookmarkPlusFill, BsFillPeopleFill } from "react-icons/bs";       //plus icon
 import { FaWalking, FaSchool } from "react-icons/fa";                  //Book icon
 
-import { RiAddCircleFill } from "react-icons/ri";                  //plus icon
+import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //plus icon
 
 
 function Dashboard() {
@@ -23,7 +23,6 @@ function Dashboard() {
 
     // Radio Button Functionality
 
-
     const [answer, setAnswer] = useState('');
 
     const handlePostChange = (e) => {
@@ -31,6 +30,13 @@ function Dashboard() {
         setAnswer(selectedAnswer);
     };
 
+    // Upload Image Preview
+
+    const [file, setFile] = useState();
+
+    function getFile(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
 
     return (
         <div>
@@ -66,8 +72,21 @@ function Dashboard() {
                                 <textarea className="input" placeholder="Enter Description" required></textarea>
                             </div>
 
+                        {/* -- Upload Button -- */}
+                            <div className="publish-box">
+                                <input type="file" id="image" accept='image/*' onChange={getFile} />
+                                <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
+                                {/* <img src={file} alt="No Photo Uploaded" className='image'/> */}
 
-                        {/* Radio Button*/}
+                                {file ? (
+                                    <img src={file} alt="Uploaded Photo" className="image" />
+                                ) : (
+                                    <img src="" alt="No Photo Uploaded" style={{ display: "none" }} />
+                                )}
+                            </div>
+
+
+                        {/* -- Radio Button -- */}
 
                             <div className='publish-radio'>
                                 <div className="publish-to">
@@ -99,7 +118,7 @@ function Dashboard() {
 
 
                             {answer === 'school' && (
-                                <select id="depId" name="depId"   required>
+                                <select id="depId" name="depId" required>
                                     <option hidden>School</option>
                                     <option>SOEEC</option>
                                     <option>SOASE</option>
@@ -118,6 +137,8 @@ function Dashboard() {
                             )}
 
                             </div>
+
+                    {/* -- Radio-Button Ends -- */}
 
                         </form>
 
