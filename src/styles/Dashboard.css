@@ -131,16 +131,17 @@
     color: #707070;
     height: 35px;
     padding:0px 8px;
-    border: 2px solid #0b81b4;
+    border: 2px solid #FF2849;
     border-radius: 6px;
-    color: #2b9ecf;
+    color: #FF2849;
     font-weight: bold;
+    box-shadow: 2px 3px 9px 1px rgba(104,54,54,0.63);
 }
 
 
 .publish-form textarea:focus , select:focus{
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    border: 2px solid #7abaff;
+    border: 2px solid #FF2849;
 }
 
 
@@ -148,8 +149,52 @@
     padding: 5px 10px;
     outline: none;
     font-size: 1rem;
-    color: #0b81b4;
+    font-weight: 500;
+    color: #cc2740;
 }
+
+
+/* Modal - Image */
+
+.publish-box [type="file"]{
+    /* opacity: 0; */
+    cursor: pointer;
+    width: 160px;
+    border-radius: 20px;
+}
+
+.publish-box .upload{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid #FF2849;
+    background-color: #FF2849;
+    border-radius: 20px;
+    color: #ffffff;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.publish-box .image .icon{
+    height: 20px;
+    width: 20px;
+    position: relative;
+    /* top: 2px; */
+}
+
+
+.publish-box .image{
+    position: absolute;
+    left: 250px;
+    bottom: 170px;
+    height: 60px;
+    width: 60px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 9px 1px rgba(104,54,54,0.63);
+}
+
 
 
 /* Modal - Radio */
@@ -190,13 +235,14 @@
     position: absolute;
     height: 100%;
     width: 100%;
+    /* box-shadow: 1px 2px 7px 1px rgba(108, 108, 108, 0.63); */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px solid #078fc9;
+    border: 2px solid #FF2849;
     border-radius: 5px;
-    color: #078fc9;
+    color: #FF2849;
     padding: 5px;
 
     text-align: center;
@@ -207,8 +253,8 @@
 }
 
 .publish-to input:checked ~ .Radio-tile{
-    background-color: #079ad9;
-    border: 2px solid #079ad9;
+    background-color: #FF2849;
+    border: 2px solid #FF2849;
     color: white;
     transform: scale(1.1, 1.1);
     z-index: 1;
