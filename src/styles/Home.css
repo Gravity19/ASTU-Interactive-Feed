@@ -463,8 +463,6 @@
 
 .discussions-board{
     width: 25%;
-    /* box-sizing: border-box; */
-    /* border: 2px solid rgb(225, 225, 225); */
     border-radius: 25px;
     font-family: 'DM Sans', sans-serif;
     position: absolute;
@@ -474,6 +472,7 @@
     right: 50px;
     top: 960px;
     background-color: transparent;
+    box-shadow: -7px 7px 14px -3px rgba(0,0,0,0.44);
 }
 
 

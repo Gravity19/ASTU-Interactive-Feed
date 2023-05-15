@@ -56,7 +56,7 @@ function NavBar() {
 				</div>
 
 			{/* Right-Side */}
-				{authState ? (
+				{!authState ? (
 					<>
 						<a href="/Register" className='loj'>Register</a>
 						<a href="/login" className='log'>Login</a>

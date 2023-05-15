@@ -225,16 +225,19 @@
 }
 
 
-.sidebar li.profile .name,
-.sidebar li.profile .job{
-    font-size: 15px;
-    font-weight: 400;
+.sidebar li.profile .name {
+    font-size: 14px;
+    font-weight: bold;
     color: #fff;
     white-space: nowrap;
     text-align: left;
 }
 .sidebar li.profile .job{
-    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+    white-space: nowrap;
+    text-align: left;
+    font-size: 10px;
 }
 
 .sidebar .profile .log_out{
