@@ -1,13 +1,10 @@
 import React from 'react';
-import {useNavigate, Link} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 import "../styles/NavBar.css";
 import { useState, useEffect } from "react";
 
-
 import { FaUser } from "react-icons/fa";
-// import { CgProfile } from "react-icons/cg";
-// import { TbLogout, TbLayoutDashboard } from "react-icons/tb";
 import { BsFillChatRightTextFill } from "react-icons/bs";
 import { MdArrowForwardIos, MdDashboardCustomize } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
@@ -21,7 +18,6 @@ function NavBar() {
 	// Session Management
 	const [authState, setAuthState]=useState(false);
 	const [open, setOpen]=useState(false);
-	const navigate = useNavigate();             // define navigation
 	
 
 	useEffect(() => {
@@ -31,14 +27,12 @@ function NavBar() {
 	}, []);
 
 
-
 	// Logout function
 
 	const logout = () => {
 		localStorage.removeItem("accessToken");
 		setAuthState(false);
 		window.location.reload();
-		// navigate('/login');
 	};
 
 
