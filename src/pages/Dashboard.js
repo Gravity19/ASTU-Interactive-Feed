@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from "axios";
 
 import "../styles/Dashboard.css";
@@ -11,10 +11,11 @@ import HeadIcon from '../components/HeadIcon';      //HeadIcon
 import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
 
-import { BsFillBookmarkPlusFill, BsFillPeopleFill } from "react-icons/bs";       //plus icon
-import { FaWalking, FaSchool } from "react-icons/fa";                  //Book icon
 
-import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //plus icon
+import { MdEmail, MdAddLocationAlt, MdCall } from "react-icons/md";       //plus icon
+import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-icons/bs";       //plus icon
+import { FaWalking, FaSchool } from "react-icons/fa";                  //Book icon
+import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //plus icon 
 import logo from "../assets/logo1.png";
 
 
@@ -204,6 +205,24 @@ function Dashboard() {
 
                 
                 <div className='field-one'>
+
+                    <div className='profile'>
+                        <img src="https://images.unsplash.com/photo-1545703549-7bdb1d01b734?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="account-bgr" className="bgr"/>
+
+                        <div className="detail">
+                            <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="user-img" className="user-img"/>
+
+                            <div className='left'>
+                                <div className="big">Yabets Urgo</div>
+                                <div className="small">Computer Science</div>
+                                <div className="small"><RiAddCircleFill/> ASTU, Adama</div>
+                            </div>
+
+                            <Link to="/profile" className='edit-btn'>Edit Profile</Link>
+                            
+                        </div>
+
+                    </div>
                     <div className='posts'>
 
                         {/* POST Custom */}
@@ -231,7 +250,17 @@ function Dashboard() {
 
                     </div>
                 </div>
-                {/* <div className='field-two'></div> */}
+                <div className='field-two'>
+
+                    <div className='about'>
+                        <p>About</p>
+                        <div className='entry'><MdEmail className='icon'/>YabetsUrgo@gmail.com</div>
+                        <div className='entry'><BsPersonFill className='icon'/>Teacher</div>
+                        <div className='entry'><MdCall className='icon'/>+251-953-6459-08</div>
+                        <div className='entry'><MdAddLocationAlt className='icon'/>Ethiopia, Addis Abeba</div>
+                    </div>
+
+                </div>
 
 
                 

@@ -9,11 +9,12 @@
 
 
 .Dashboard{
-    /* background-color: rgb(255, 255, 255); */
     background-color: #f5f5f5;
-    padding: 50px;
-    height: 100vh;
+    padding: 0px 50px;
+    padding-top: 90px;
+    padding-left: 70px;
     display: flex;
+    /* gap: 50px; */
 }
 
 
@@ -354,28 +355,88 @@
 
 
 .field-one{
-    height: 100%;
-    /* width: 55%; */
-    padding: 20px 10px;
-    padding-left: 20px;
+    width: 60%;
     position: relative;
-    top: 20px;
-    left: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    border: 1px solid #ddd;
-    border-radius: 29px;
-    background: #f5f5f5;
-    box-shadow:  13px 13px 26px #c9c9c9, -13px -13px 26px #ffffff;
+    gap: 50px;
+    /* border: 1px solid #ddd; */
 }
 
 
+/* field One - profile */
+
+.field-one .profile{
+    position: relative;
+    width: 600px;
+    border-radius: 10px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.field-one .profile .bgr{
+    height: 120px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.field-one .profile .detail{
+    padding: 25px;
+    padding-top: 70px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.field-one .detail .user-img{
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    height: 7rem;
+    width: 7rem;
+    border-radius: 50%;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+    object-fit: cover;
+    box-sizing: border-box;
+}
+
+.field-one .detail .left{
+    text-align: left;
+    font-size: 15px;
+    font-weight: 400;
+    color: #7d7d7d;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field-one .detail .left .big{
+    font-size: 16px;
+    font-weight: bold;
+    color: #2f2f2f;
+    margin-bottom: 3px;
+}
+
+
+
+
+.field-one .detail .edit-btn{
+    text-decoration: none;
+    padding: 10px 18px;
+	background-color: #f86115;
+    color: rgb(255, 255, 255);
+	border-radius: 5px;
+	font-weight: 600;
+}
+
+
+
+
+/* field One - Posts */
+
 .field-one .posts{
-    height: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    position: relative;
 }
 
 
@@ -385,11 +446,53 @@
 
 
 .field-two{
-    height: 97%;
-    width: 40%;
-    border-radius: 15px;
-    background-color: var(--fieldColor);
+    width: 35%;
     position: relative;
-    top: 50px;
-    left: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    /* border: 1px solid #ddd; */
 }
+
+
+.field-two .about{
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    top: 40px;
+    width: 100%;
+    padding: 30px 25px;
+    border-radius: 10px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.field-two p{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #5a5a5a;
+}
+
+.field-two .entry{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    display: flex;
+    gap:15px;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+}
+
+.entry .icon{
+    height: 32px;
+    width: 32px;
+    padding: 7px;
+    border-radius: 50%;
+    background-color: rgb(255, 236, 221);
+    color: #e46a05;
+}
+
