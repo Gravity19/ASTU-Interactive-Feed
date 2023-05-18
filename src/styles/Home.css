@@ -240,26 +240,31 @@
     padding: 0px 10px;
 }
 
+
 /* Card Footer */
 
 .card__footer {
     display: flex;
-    padding: 15px;
-    margin-top: auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    padding-right: 25px;
     background-color: #e1e1e1;
-    /* box-shadow: 0px -4px 5px rgba(0, 0, 0, 0.28); */
 }
 
 .card__footer .supplies {
     display: flex;
-    gap: .5rem;
+    align-items: center;
+}
+
+.card__footer .location{
+    display: flex;
     align-items: center;
 }
 
 .card__footer .date_icon {
     height: 37px;
     width: 37px;
-
 }
 
 .card__footer .date_info {
@@ -275,107 +280,94 @@
 
 .card__footer .map_icon {
     height: 45px;
-    position: relative;
-    left: 60%;
-}
-
-.card__footer .Map_info {
-    position: relative;
-    left: 55%;
+    width: 45px;
 }
 
 
 
 
-.like_button {                                          /* like Button */
+/* Like - Button */
+
+.like-heart{
     display: flex;
-    justify-content: center;
     align-items: center;
-    justify-self: right;
-    padding: 20px 25px 20px 22px;
-    box-shadow: rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-    background-color: #e8e8e8;
-    border-color: #ffe2e2;
-    border-style: solid;
-    border-width: 9px;
-    border-radius: 35px;
-    font-size: 25px;
-    font-weight: 900;
-    color: rgb(134, 124, 124);
-    font-family: monospace;
-    transition: transform 400ms cubic-bezier(.68,-0.55,.27,2.5), 
-    border-color 400ms ease-in-out,
-    background-color 400ms ease-in-out;
-    word-spacing: -2px;
-    height: 80%;
-    
+    justify-content: center;
+    gap: 7px;
 }
 
-@keyframes movingBorders {
+.like-container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+.like-heart p{
+    font-size: 15px;
+    font-weight: 800;
+    color: #818181;
+    position: relative;
+    top: 2px;
+}
+
+.like-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+
+.like-container .svg {
+    position: relative;
+    top: 5px;
+    height: 27px;
+    width: 27px;
+    transition: all 0.3s;
+    fill: #666;
+    animation: dislike_effect 400ms ease;
+}
+
+.like-container .svg:hover {
+    transform: scale(1.1);
+}
+
+.like-container input:checked ~ .svg {
+    fill: #E3474F;
+    animation: like_effect 400ms ease;
+}
+
+
+@keyframes like_effect {
     0% {
-        border-color: #fce4e4;
+        transform: scale(0);
     }
 
     50% {
-        border-color: #ffd8d8;
+        transform: scale(1.2);
     }
 
-    90% {
-        border-color: #fce4e4;
+    100% {
+        transform: scale(1);
     }
 }
 
-.like_button:hover {
-    background-color: #eee;
-    transform: scale(105%);
-    animation: movingBorders 3s infinite;
-}
-
-.like_button svg {
-    margin-right: 11px;
-    fill: rgb(255, 110, 110);
-    transition: opacity 100ms ease-in-out;
-}
-
-.filled_like {
-    position: absolute;
-    opacity: 0;
-    /* top: 20px; */
-    left: 22px;
-}
-
-@keyframes beatingHeart {
+@keyframes dislike_effect {
     0% {
-        transform: scale(1);
+        transform: scale(0);
     }
 
-    15% {
-        transform: scale(1.15);
+    50% {
+        transform: scale(1.2);
     }
 
-    30% {
-        transform: scale(1);
-    }
-
-    45% {
-        transform: scale(1.15);
-    }
-
-    60% {
+    100% {
         transform: scale(1);
     }
 }
 
-.like_button:hover .empty_like{
-    opacity: 0;
-}
 
-.like_button:hover .filled_like {
-    opacity: 1;
-    animation: beatingHeart 1.2s infinite;
-}
-
-                                                    /* like Button Ends */
 
 
 
@@ -383,6 +375,7 @@
 
 
 /* Utinsil + More Button + Text*/
+
 
 .home-write{         /* Text*/
     position: absolute;
@@ -463,8 +456,6 @@
 
 .discussions-board{
     width: 25%;
-    /* box-sizing: border-box; */
-    /* border: 2px solid rgb(225, 225, 225); */
     border-radius: 25px;
     font-family: 'DM Sans', sans-serif;
     position: absolute;
@@ -474,6 +465,7 @@
     right: 50px;
     top: 960px;
     background-color: transparent;
+    box-shadow: -7px 7px 14px -3px rgba(0,0,0,0.44);
 }
 
 

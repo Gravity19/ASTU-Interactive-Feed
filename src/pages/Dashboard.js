@@ -1,5 +1,8 @@
 import React from 'react';
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import axios from "axios";
+
 import "../styles/Dashboard.css";
 import Modal from 'react-modal';    // import modal
 
@@ -12,6 +15,7 @@ import { BsFillBookmarkPlusFill, BsFillPeopleFill } from "react-icons/bs";      
 import { FaWalking, FaSchool } from "react-icons/fa";                  //Book icon
 
 import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //plus icon
+import logo from "../assets/logo1.png";
 
 
 function Dashboard() {
@@ -19,6 +23,56 @@ function Dashboard() {
     // Modal Functionality
 
     const [Visible, setVisible] = useState(false);
+
+
+    // Create Post
+
+
+    const [formData, setFormData] = useState({
+        content: "",
+        staffId: "",
+        categoryId: "",
+        // rsvp: "",
+    });
+    
+    const handlePost = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3000/api/staff/post", formData);
+            console.log(response.data);     // handle response data here
+            
+        }    
+        catch (error) {
+          console.log(error.response.data); // handle error here
+        }
+
+        setVisible(false);
+    };
+    
+
+    // -------
+
+    const handleInputChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+
+    };
+
+
+
+    // Upload Image Preview
+
+    const [file, setFile] = useState();
+
+    function getFile(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
+
+    const twoFunctions = (e) => {                       // Merging Two Functions together
+        getFile(e);
+        handleInputChange(e);
+    }
+
 
 
     // Radio Button Functionality
@@ -30,13 +84,13 @@ function Dashboard() {
         setAnswer(selectedAnswer);
     };
 
-    // Upload Image Preview
 
-    const [file, setFile] = useState();
-
-    function getFile(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
+    const DosFunctions = (e) => { 
+        handleInputChange(e);
+        handlePostChange(e);
+        
     }
+
 
     return (
         <div>
@@ -53,35 +107,32 @@ function Dashboard() {
                 {/* Modal Body */}
 
                     <Modal isOpen={Visible} className='create-modal' style={{overlay: {
-                        background: 'none',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',}}}>
-                            
 
-                        <p>Modal Body</p>
 
-                        <form className='publish-form'>
+                        <img src={logo} alt='Astu-logo' className='logo'/>
+
+                        <form className='publish-form' onSubmit={handlePost}>
                             <div className="publish-box">
-                                <label htmlFor="title">Title</label>
-                                <input type="text" name="title" id="title" placeholder="Place Your title here" required />
+                                <label htmlFor="staffId">Title</label>
+                                <input type='text' name="staffId" placeholder="Place Your title here" onChange={handleInputChange} />
                             </div>
 
                             <div className="publish-box">
-                                <label htmlFor="body">Description</label>
-                                <textarea className="input" placeholder="Enter Description" required></textarea>
+                                <label htmlFor="content">Description</label>
+                                <textarea className="input"  name="content" placeholder="Enter Description" onChange={handleInputChange} required></textarea>
                             </div>
 
                         {/* -- Upload Button -- */}
+
                             <div className="publish-box">
                                 <input type="file" id="image" accept='image/*' onChange={getFile} />
                                 <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
-                                {/* <img src={file} alt="No Photo Uploaded" className='image'/> */}
 
-                                {file ? (
-                                    <img src={file} alt="Uploaded Photo" className="image" />
-                                ) : (
-                                    <img src="" alt="No Photo Uploaded" style={{ display: "none" }} />
+                                {file && (
+                                    <img src={file} alt="Uploaded-Photo" className="image" />
                                 )}
                             </div>
 
@@ -91,7 +142,7 @@ function Dashboard() {
                             <div className='publish-radio'>
                                 <div className="publish-to">
                                     <div className="audience">
-                                        <input className='input' type="radio" id="all" name="audience" value="all" checked={answer === 'all'}  onChange={handlePostChange}/>
+                                        <input className='input' type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={DosFunctions} />
                                         <div className='Radio-tile'>
                                             <BsFillPeopleFill className='icon'/>
                                             <span>ALL</span>
@@ -99,7 +150,7 @@ function Dashboard() {
                                     </div>  
                                     
                                     <div className="audience">
-                                        <input className='input' type="radio" id="school" name="audience" value="school" checked={answer === 'school'} onChange={handlePostChange}/>                                    
+                                        <input className='input' type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={DosFunctions}/>                                    
                                         <div className='Radio-tile'>
                                             <FaSchool className='icon'/>
                                             <span>SCL</span>
@@ -107,7 +158,7 @@ function Dashboard() {
                                     </div>
 
                                     <div className="audience">
-                                        <input type="radio" id="department" name="audience" value="department" checked={answer === 'department'} onChange={handlePostChange}/>
+                                        <input className='input' type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={DosFunctions}/>
                                         <div className='Radio-tile'>
                                             <FaWalking className='icon'/>
                                             <span>DEPT</span>
@@ -140,12 +191,12 @@ function Dashboard() {
 
                     {/* -- Radio-Button Ends -- */}
 
-                        </form>
+                            <div className='bottom-btn'>
+                                <button className='publish'>Publish<BsFillBookmarkPlusFill/></button>
+                                <button className='close-modal' onClick={()=>setVisible(false)}> Cancel</button>
+                            </div>
 
-                        <div className='bottom-btn'>
-                            <button className='publish'>Publish<BsFillBookmarkPlusFill/></button>
-                            <button className='close-modal' onClick={()=>setVisible(false)}> Cancel</button>
-                        </div>
+                        </form>
 
                     </Modal>
 
@@ -153,7 +204,7 @@ function Dashboard() {
 
                 
                 <div className='field-one'>
-                    <div className='post'>
+                    <div className='posts'>
 
                         {/* POST Custom */}
 
@@ -180,7 +231,7 @@ function Dashboard() {
 
                     </div>
                 </div>
-                <div className='field-two'></div>
+                {/* <div className='field-two'></div> */}
 
 
                 

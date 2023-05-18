@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {useNavigate, Link} from 'react-router-dom';
 
-// import { FaArrowDown, FaPaperPlane, FaAngleDoubleRight } from "react-icons/fa";
 import "../styles/SideBar.css";
 
 import menu_icon from "../assets/icons/bx-menu.png";       //menu icon

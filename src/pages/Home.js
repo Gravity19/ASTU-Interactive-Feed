@@ -20,6 +20,7 @@ function Home() {
 
 
     // Session Management
+
 	const [authState, setAuthState]=useState(false);
 	
 	useEffect(() => {
@@ -29,6 +30,8 @@ function Home() {
 	}, []);
 
 
+
+    // View Post API
 
     const [posts, setPosts] = useState([]);
 
@@ -54,7 +57,11 @@ function Home() {
                         <h4 className='m-desc'>ASTU interactive Feed lets members publish directly to students and other audience, without getting into any hassle.</h4>
                     </div>
                     <button className='more-button-one'>Start Reading</button>
+
+                {!authState && (
                     <button className='more-button-two'>Register</button>
+                )}
+                    
                 </div>
                 
                 <img src={utensil} alt='utensil' className='utensil'/>
@@ -115,6 +122,7 @@ function Home() {
 
                                 user_name={item.staffName}
                                 loc={item.eventLocation}
+                                desc={item.content}
                             />
                         )
                     )}
@@ -126,7 +134,7 @@ function Home() {
 
             {!authState ? (
                 <>
-                    <div  className='discussions-board'> Noting to see</div> 
+                    <div  className='discussions-board'> Noting to see</div>
                     
                 </>
             ):(

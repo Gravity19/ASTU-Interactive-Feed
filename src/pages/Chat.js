@@ -1,11 +1,48 @@
 import React from 'react';
-import "../styles/Chat.css";
-import SideBar from '../components/SideBar';      //SideBar
+import { useState, useEffect } from 'react';        //Api Fetching
+import axios from "axios";
 
+import "../styles/Chat.css";
+
+import SideBar from '../components/SideBar';      //SideBar
 import send_icon from "../assets/icons2/bx-send.png";       //send icon
+import { IoSend } from "react-icons/io5";  
 
 
 function Chat() {
+
+
+    // View Chat API
+
+    const [chats, setChats] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/student/getchat')
+        .then(res => {setChats(res.data)})
+        .catch(err => console.log(err));
+    }, []);
+
+
+    // View Chat API
+
+    const [message, setMessage] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/student/getconv?chatId=1')
+        .then(res => {setMessage(res.data)})
+        .catch(err => console.log(err));
+    }, []);
+
+
+
+
+    // Active Click Chat
+
+    const [activeChat, setActiveChat] = useState(null);
+
+    const handleChatClick = (chat) => {
+        setActiveChat(chat);
+    }
 
     return (
         <div className="user-home">
@@ -20,7 +57,7 @@ function Chat() {
 
 
 
-            {/* New Chat Section */}
+            {/* Discussion Section */}
 
             <div class="chat-box">
                 <div class="row">
@@ -32,124 +69,146 @@ function Chat() {
                                 <input type="text" placeholder="Search..."></input>
                             </div>
                         </div>
+            
+            {/* Discussion Scrollable-Box */}
 
-                {/* Discussion-Box */}
+                        <div className='scroll-discussions'>
 
-                        <div className='scroll-discussions'>         {/* Scrollable-Box */}
+        {/* Discussion-Box from Database */}
+                            
+                    {chats.map((chat, index) => (
+                        <div key={index}>
 
-                        <div class="discussion message-active">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}>
-                                <div class="online"></div>
+                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`} onClick={() => handleChatClick(chat.chatId)}>
+                            
+                                <div className="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}></div>
+                                <div className="desc-contact">
+                                    <p className="name">{chat.topic}</p>
+                                    <p className="message">Let's meet for a coffee CSS word-wrap property is used to break the long words.</p>
+                                </div>
+                                <div className="timer">{chat.chatId}</div>
                             </div>
-                            <div class="desc-contact">
-                                <p class="name">Campus Group</p>
-                                <p class="message">Let's meet for a coffee CSS word-wrap property is used to break the long words.</p>
-                            </div>
-                            <div class="timer">12 sec</div>
+
                         </div>
+                    ))}
 
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://i.pinimg.com/originals/a9/26/52/a926525d966c9479c18d3b4f8e64b434.jpg)'}}>
-                                <div class="online"></div>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">School Board Meeting</p>
-                                <p class="message">The students council needs a change</p>
-                            </div>
-                            <div class="timer">3 min</div>
-                        </div>
 
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80)'}}>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">Web Design Group</p>
-                                <p class="message">I've sent you the annual report</p>
-                            </div>
-                            <div class="timer">42 min</div>
-                        </div>
+        {/* Discussion-Box from Database -END */}
 
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://card.thomasdaubenton.com/img/photo.jpg)'}}>
-                                <div class="online"></div>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">Debate Club</p>
-                                <p class="message">We should shuffle the topics next</p>
-                            </div>
-                            <div class="timer">2 hour</div>
-                        </div>
 
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}>
+                            <div className={`discussion ${activeChat === 11 ? 'message-active' : ''}`} onClick={() => handleChatClick(11)}>
+                            
+                                <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}>
+                                    <div class="online"></div>
+                                </div>
+                                <div class="desc-contact">
+                                    <p class="name">Campus Group</p>
+                                    <p class="message">Let's meet for a coffee CSS word-wrap property is used to break the long words.</p>
+                                </div>
+                                <div class="timer">12 sec</div>
                             </div>
-                            <div class="desc-contact">
-                                <p class="name">5th Year NLP Class</p>
-                                <p class="message">The question on table 5,8 is not clear</p>
-                            </div>
-                            <div class="timer">1 day</div>
-                        </div>
 
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1541747157478-3222166cf342?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80)'}}>
+                            <div className={`discussion ${activeChat === 12 ? 'message-active' : ''}`} onClick={() => handleChatClick(12)}>
+                                <div class="photo" style={{backgroundImage: 'url(https://i.pinimg.com/originals/a9/26/52/a926525d966c9479c18d3b4f8e64b434.jpg)'}}>
+                                    <div class="online"></div>
+                                </div>
+                                <div class="desc-contact">
+                                    <p class="name">School Board Meeting</p>
+                                    <p class="message">The students council needs a change</p>
+                                </div>
+                                <div class="timer">3 min</div>
                             </div>
-                            <div class="desc-contact">
-                                <p class="name">Graduation Talk</p>
-                                <p class="message">when was it, Ahahah 😂</p>
-                            </div>
-                            <div class="timer">2 days</div>
-                        </div>
-
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1435348773030-a1d74f568bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80)'}}>
-                                <div class="online"></div>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">5th Year - Section 5</p>
-                                <p class="message">You can't see me</p>
-                            </div>
-                            <div class="timer">3 days</div>
-                        </div>
-
-                {/* Extra Discussions - for scroll test */}
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1541747157478-3222166cf342?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80)'}}>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">ASTU Football</p>
-                                <p class="message">You shouldn't hold the line</p>
-                            </div>
-                            <div class="timer">4 days</div>
-                        </div>
-
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1541747157478-3222166cf342?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80)'}}>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">Physics</p>
-                                <p class="message">The text on the course</p>
-                            </div>
-                            <div class="timer">5 days</div>
-                        </div>
-
-                        <div class="discussion">
-                            <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1435348773030-a1d74f568bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80)'}}>
-                                <div class="online"></div>
-                            </div>
-                            <div class="desc-contact">
-                                <p class="name">Women's Club</p>
-                                <p class="message">next to the library,</p>
-                            </div>
-                            <div class="timer">1 week</div>
-                        </div>
-
 
                         </div>
                         
                     </section>
 
+
+
+
+        {/* CHAT-Box Database */}
+
+        
+                {activeChat === 1 && (
+                <>
+                    <section class="chat">
+                        <div class="header-chat">
+                            <p class="name">Campus Group</p>
+                        </div>
+
+                        
+                        <div class="messages-chat"> 
+                    {message.map((messages, i) => (
+                    <div key={i}>
+
+                            <div class="message-container">
+                                <div class="message">
+                                    <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}></div>
+                                    <div class="text">
+                                        <div className='name-text'>{messages.from}</div>
+                                        <div className='focus-text'>{messages.message}</div>
+                                    </div>
+                                </div>
+                                <p class="time"> 15h09</p>
+                            </div>
+                    </div>
+                    ))}
+                            
+                        </div>
+
+
+                        <div class="footer-chat">
+                            <input type="text" class="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><img src={send_icon} alt='icon' /></button>
+                        </div>
+
+                    </section>
+                </>
+                )}
+
+
+        {/* CHAT-Box Database END */}
+
+
+
+
+
+
+
+
+
         {/* CHAT-Box */}
 
+        {activeChat === null && (
+            <>
+                    <section class="chat">
+                        <div class="header-chat">
+                            <i class="icon fa fa-user-o" aria-hidden="true"></i>
+                            <p class="name"> </p>
+                            <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="messages-null"> 
+                            <p class="null"> Select a chat to start messaging ... </p>
+                        </div>
+
+                        <div class="footer-chat">
+                            <input type="text" class="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><img src={send_icon} alt='icon' /></button>
+                        </div>
+
+                    </section>
+                            
+                            
+            </>
+            )}
+
+        
+
+        {/* CHAT-Box */}
+
+            {activeChat === 11 && (
+            <>
                     <section class="chat">
                         <div class="header-chat">
                             <i class="icon fa fa-user-o" aria-hidden="true"></i>
@@ -157,7 +216,7 @@ function Chat() {
                             <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
                         </div>
 
-                        <div class="messages-chat">         {/* Scrollable Chat-Box */}
+                        <div class="messages-chat"> 
 
                             <div class="message-container">
                                 <div class="message">
@@ -173,19 +232,7 @@ function Chat() {
                                 </div>
                                 <p class="time"> 14h58</p>
                             </div>
-                            
-
-                            {/* <div class="message text-only">
-                                <p class="text"> What are you doing tonight ? Want to go take a drink ?</p>
-                            </div>
-                            <p class="time"> 14h58</p> */}
-                            
-                            <div class="message text-only">
-                                <div class="response">
-                                <p class="text"> Hey Megan ! It's been a while 😃</p>
-                                </div>
-                            </div>
-
+                        
                             <div class="message-container-right">
                                 <div class="message text-only">
                                     <div class="response">
@@ -194,27 +241,34 @@ function Chat() {
                                 </div>
                                 <div class="response-time"> 15h04</div>
                             </div>
-                            
-                            <div class="message-container">
-                                <div class="message">
-                                    <div class="photo" style={{backgroundImage: 'url(https://card.thomasdaubenton.com/img/photo.jpg)'}}>
-                                        <div class="online"></div>
-                                    </div>
-                                    <div class="text">
-                                        <div className='name-text'>Abraham Abebe</div>
-                                        <div className='focus-text'>
-                                            We need to look at the table to understand
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="time"> 15h09</p>
-                            </div>
+
+                        </div>
+
+                        <div class="footer-chat">
+                            <input type="text" className="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><IoSend className="icon"/></button>
+                        </div>
+
+                    </section>
                             
                             
+            </>
+            )}
 
-                        {/* Extra Chat for The Scroll Test */}
+        
+        {/* CHAT 2 */}
 
+            {activeChat === 12 && (
+                <>
 
+                    <section class="chat">
+                        <div class="header-chat">
+                            <i class="icon fa fa-user-o" aria-hidden="true"></i>
+                            <p class="name">School Board Meeting</p>
+                            <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="messages-chat"> 
                             <div class="message-container">
                                 <div class="message">
                                     <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}>
@@ -230,34 +284,18 @@ function Chat() {
                                 </div>
                                 <p class="time"> 15h09</p>
                             </div>
-
-                            
-                            <div class="message-container">
-                                <div class="message">
-                                    <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1541747157478-3222166cf342?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80)'}}>
-                                        <div class="online"></div>
-                                    </div>
-                                    <div class="text">
-                                        <div className='name-text'>Yabets Urgo</div>
-                                        <div className='focus-text'>
-                                            Not only will you learn subjects but you will also learn new skills, including social skills.
-                                            The skills and knowledge that you learn at school will help you now and in later life as you start work.
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="time"> 15h09</p>
-                            </div>
-
                             
                         </div>
 
                         <div class="footer-chat">
-                            {/* <i class="icon fa fa-smile-o clickable" style={{fontSize: '25pt'}} aria-hidden="true"></i> */}
-                            <input type="text" class="write-message" placeholder="Type your message here"></input>
-                            {/* <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"></i> */}
-                            <button className='send_button'><img src={send_icon} alt='icon' /></button>
+                            <input type="text" className="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><IoSend className="icon"/></button>
                         </div>
+
                     </section>
+
+            </>
+            )}
 
                 </div>
             </div>
