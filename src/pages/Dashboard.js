@@ -17,6 +17,7 @@ import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-ic
 import { FaWalking, FaSchool } from "react-icons/fa";                  //Book icon
 import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //plus icon 
 import logo from "../assets/logo1.png";
+import teacher_badge from "../assets/badges/Teacher_badge.png";      //Teacher Badge
 
 
 function Dashboard() {
@@ -90,6 +91,14 @@ function Dashboard() {
         handleInputChange(e);
         handlePostChange(e);
         
+    }
+
+    // Handle Active Tab
+
+    const [activeTab, setActiveTab] = useState(null);
+
+    const handleClick = (tab) => {
+        setActiveTab(tab);
     }
 
 
@@ -214,8 +223,9 @@ function Dashboard() {
 
                             <div className='left'>
                                 <div className="big">Yabets Urgo</div>
+                                <img src={teacher_badge} alt="role" className="role"/>
                                 <div className="small">Computer Science</div>
-                                <div className="small"><RiAddCircleFill/> ASTU, Adama</div>
+                                <div className="small"><RiAddCircleFill className='icon' /> ASTU, Adama</div>
                             </div>
 
                             <Link to="/profile" className='edit-btn'>Edit Profile</Link>
@@ -223,30 +233,78 @@ function Dashboard() {
                         </div>
 
                     </div>
+
+
                     <div className='posts'>
+                        <div className='post-nav'>
+                            <button className={`button ${activeTab === null ? 'active' : ''}`} onClick={() => handleClick(null)}>Feed</button>
+                            <button className={`button ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleClick(1)}>Personalized</button>
+                            <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(3)}>School</button>
+                        </div>
 
-                        {/* POST Custom */}
+                    {activeTab === null && (
+                    <>
+                        <div className='post-list'>
 
-                        {PostList.map((Item, keys) => {
-                            return (
-                                <PostItem
-                                    key={keys}
-                                    
-                                    user_name={Item.user_name}
-                                    user_image={Item.user_image}
-                                    user_badge={Item.user_badge}
-                                    card_image={Item.card_image}
-                                    tag= {Item.tag}
-                                    title= {Item.title}
-                                    desc= {Item.desc}
-                                    time={Item.time}
-                                    date={Item.date}
-                                    loc={Item.loc}
-                                />
-                            );
-                        })}
+                            {/* POST Custom */}
 
-                        <PostItem/>
+                            {PostList.map((Item, keys) => {
+                                return (
+                                    <PostItem
+                                        key={keys}
+                                        
+                                        user_name={Item.user_name}
+                                        user_image={Item.user_image}
+                                        user_badge={Item.user_badge}
+                                        card_image={Item.card_image}
+                                        tag= {Item.tag}
+                                        title= {Item.title}
+                                        desc= {Item.desc}
+                                        time={Item.time}
+                                        date={Item.date}
+                                        loc={Item.loc}
+                                    />
+                                );
+                            })}
+
+                            <PostItem/>
+
+                        </div>
+                    </>
+                    )}
+
+                    
+                    {activeTab === 1 && (
+                    <>
+                        <div className='post-list'>
+
+                            {/* POST Custom */}
+
+                            {PostList.map((Item, keys) => {
+                                return (
+                                    <PostItem
+                                        key={keys}
+                                        
+                                        user_name={Item.user_name}
+                                        user_image={Item.user_image}
+                                        user_badge={Item.user_badge}
+                                        card_image={Item.card_image}
+                                        tag= {Item.tag}
+                                        title= {Item.title}
+                                        desc= {Item.desc}
+                                        time={Item.time}
+                                        date={Item.date}
+                                        loc={Item.loc}
+                                    />
+                                );
+                            })}
+
+                            <PostItem/>
+
+                        </div>
+                    </>
+                    )}
+
 
                     </div>
                 </div>
