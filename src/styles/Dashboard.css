@@ -369,21 +369,22 @@
 
 .field-one .profile{
     position: relative;
-    width: 600px;
+    width: 650px;
     border-radius: 10px;
     background-color: white;
     overflow: hidden;
+    box-shadow: 0px 0.5rem 1.2rem rgba(0,0,0,0.3);
 }
 
 .field-one .profile .bgr{
-    height: 120px;
+    height: 110px;
     width: 100%;
     object-fit: cover;
 }
 
 .field-one .profile .detail{
     padding: 25px;
-    padding-top: 70px;
+    padding-top: 50px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -391,7 +392,7 @@
 
 .field-one .detail .user-img{
     position: absolute;
-    top: 60px;
+    top: 30px;
     left: 30px;
     height: 7rem;
     width: 7rem;
@@ -411,13 +412,28 @@
     gap: 7px;
 }
 
-.field-one .detail .left .big{
+.field-one .left .big{
     font-size: 16px;
     font-weight: bold;
     color: #2f2f2f;
     margin-bottom: 3px;
 }
 
+.field-one .left .role{
+    height: 35px;
+    width: 85px;
+}
+
+.field-one .left .small{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.field-one .detail .left .icon{
+    height: 20px;
+    width: 20px;
+}
 
 
 
@@ -427,7 +443,7 @@
 	background-color: #f86115;
     color: rgb(255, 255, 255);
 	border-radius: 5px;
-	font-weight: 600;
+	font-weight: 500;
 }
 
 
@@ -437,9 +453,51 @@
 
 .field-one .posts{
     position: relative;
+    /* width: 600px;                      edit this @1000px to % or min-width to size the post as u go */
+    /* min-width: 500px; */
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* box-shadow: 0px 0.1rem 0.4rem rgba(0,0,0,0.1); */
+}
+
+.field-one .posts .post-nav{
+    border-radius: 15px 15px 0px 0px;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.field-one .post-nav .button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    /* outline: none; */
+    color: #858585;
+    background-color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #d8d5d5;
+}
+
+.field-one .post-nav .active {
+    background-color: #fbfbfb;
+    border: 1px solid #f9f9f9;
+    border-bottom: 2px solid #f06018;
 }
 
 
+
+.field-one .posts .post-list{
+    padding: 25px;
+    /* background-color: #6ab1fd; */
+}
 
 
 /* ======= FIELD TWO ======= */
@@ -452,6 +510,7 @@
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    
     /* border: 1px solid #ddd; */
 }
 
@@ -461,25 +520,25 @@
     display: flex;
     flex-direction: column;
     align-items:flex-start;
+    gap: 25px;
     top: 40px;
     width: 100%;
     padding: 30px 25px;
     border-radius: 10px;
     background-color: white;
     overflow: hidden;
+    box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.2);
 }
 
 .field-two p{
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 15px;
     color: #5a5a5a;
 }
 
 .field-two .entry{
     font-size: 15px;
     font-weight: 600;
-    margin-bottom: 25px;
     display: flex;
     gap:15px;
     justify-content: center;
