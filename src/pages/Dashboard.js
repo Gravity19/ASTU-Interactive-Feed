@@ -12,10 +12,10 @@ import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
 
 
-import { MdEmail, MdAddLocationAlt, MdCall } from "react-icons/md";       //plus icon
-import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-icons/bs";       //plus icon
-import { FaWalking, FaSchool } from "react-icons/fa";                  //Book icon
-import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //plus icon 
+import { MdEmail, MdAddLocationAlt, MdCall } from "react-icons/md";
+import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-icons/bs";
+import { FaWalking, FaSchool } from "react-icons/fa";                  //walking + School icon
+import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //upload + Add icon 
 import logo from "../assets/logo1.png";
 import teacher_badge from "../assets/badges/Teacher_badge.png";      //Teacher Badge
 
@@ -142,7 +142,7 @@ function Dashboard() {
                                 <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
 
                                 {file && (
-                                    <img src={file} alt="Uploaded-Photo" className="image" />
+                                    <img src={file} alt="Uploaded" className="image" />
                                 )}
                             </div>
 

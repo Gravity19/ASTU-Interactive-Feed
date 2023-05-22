@@ -35,13 +35,15 @@ function Chat() {
 
 
 
-
     // Active Click Chat
 
     const [activeChat, setActiveChat] = useState(null);
+    const [activeChatID, setActiveChatID] = useState(null);
 
     const handleChatClick = (chat) => {
         setActiveChat(chat);
+
+        // setActiveChatID(chat.chatId);  or put onClick={()=> setActiveChatID(chat.chatId)} on there (that makes it 2 onClicks)
     }
 
     return (
@@ -79,7 +81,7 @@ function Chat() {
                     {chats.map((chat, index) => (
                         <div key={index}>
 
-                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`} onClick={() => handleChatClick(chat.chatId)}>
+                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`} onClick={()=>{handleChatClick(chat.chatId); setActiveChatID(chat.chatId);}}>
                             
                                 <div className="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}></div>
                                 <div className="desc-contact">
@@ -96,7 +98,7 @@ function Chat() {
         {/* Discussion-Box from Database -END */}
 
 
-                            <div className={`discussion ${activeChat === 11 ? 'message-active' : ''}`} onClick={() => handleChatClick(11)}>
+                            <div className={`discussion ${activeChat === 5 ? 'message-active' : ''}`} onClick={() => handleChatClick(5)}>
                             
                                 <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}>
                                     <div class="online"></div>
@@ -129,17 +131,17 @@ function Chat() {
         {/* CHAT-Box Database */}
 
         
-                {activeChat === 1 && (
+                {activeChat === activeChatID ? (
                 <>
                     <section class="chat">
                         <div class="header-chat">
-                            <p class="name">Campus Group</p>
+                            <p class="name">{activeChatID}</p>
                         </div>
 
                         
                         <div class="messages-chat"> 
-                    {message.map((messages, i) => (
-                    <div key={i}>
+                        {message.map((messages, i) => (
+                        <div key={i}>
 
                             <div class="message-container">
                                 <div class="message">
@@ -151,15 +153,37 @@ function Chat() {
                                 </div>
                                 <p class="time"> 15h09</p>
                             </div>
-                    </div>
-                    ))}
+                        </div>
+                        ))}
                             
                         </div>
 
 
                         <div class="footer-chat">
-                            <input type="text" class="write-message" placeholder="Type your message here"></input>
-                            <button className='send_button'><img src={send_icon} alt='icon' /></button>
+                            <input type="text" className="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><IoSend className="icon"/></button>
+                        </div>
+
+                    </section>
+                </>
+
+                ) : (
+
+                <>
+                    <section class="chat">
+                        <div class="header-chat">
+                            <i class="icon fa fa-user-o" aria-hidden="true"></i>
+                            <p class="name"> </p>
+                            <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="messages-null"> 
+                            <p class="null"> Select a chat to start messaging ... </p>
+                        </div>
+
+                        <div class="footer-chat">
+                            <input type="text" className="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><IoSend className="icon"/></button>
                         </div>
 
                     </section>
@@ -179,7 +203,7 @@ function Chat() {
 
         {/* CHAT-Box */}
 
-        {activeChat === null && (
+        {/* {activeChat === null && (
             <>
                     <section class="chat">
                         <div class="header-chat">
@@ -193,21 +217,21 @@ function Chat() {
                         </div>
 
                         <div class="footer-chat">
-                            <input type="text" class="write-message" placeholder="Type your message here"></input>
-                            <button className='send_button'><img src={send_icon} alt='icon' /></button>
+                            <input type="text" className="write-message" placeholder="Type your message here"></input>
+                            <button className='send_button'><IoSend className="icon"/></button>
                         </div>
 
                     </section>
                             
                             
             </>
-            )}
+            )} */}
 
         
 
         {/* CHAT-Box */}
 
-            {activeChat === 11 && (
+            {activeChat === 5 && (
             <>
                     <section class="chat">
                         <div class="header-chat">

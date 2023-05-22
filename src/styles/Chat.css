@@ -75,6 +75,7 @@
     align-items: center;
     cursor: pointer;
   }
+  
   .discussions .discussion:hover {
     background-color: #ffffff;
     
@@ -291,6 +292,9 @@
   
   .chat .messages-chat .message .photo {
       display: block;
+      align-self: start;
+      position: relative;
+      top: 8px;
       min-width: 40px;
       height: 40px;
       background: #E6E7ED;
