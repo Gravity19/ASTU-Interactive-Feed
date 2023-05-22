@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link} from 'react-router-dom';
+import {useState, useEffect, useRef} from 'react';
 
 import "../styles/NavBar.css";
-import { useState, useEffect } from "react";
 
 import { FaUser } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
@@ -17,8 +17,6 @@ function NavBar() {
 
 	// Session Management
 	const [authState, setAuthState]=useState(false);
-	const [open, setOpen]=useState(false);
-	
 
 	useEffect(() => {
 		if(localStorage.getItem('accessToken')){
@@ -35,7 +33,25 @@ function NavBar() {
 		window.location.reload();
 	};
 
+    //Pop-Up Functionality
+    const [open, setOpen]=useState(false);
 
+	const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        };
+    
+        document.addEventListener('mousedown', handleOutsideClick);
+    
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+    
 
     return (
         <div className='nav-bar'>
@@ -66,7 +82,7 @@ function NavBar() {
 						{/* DropDown */}
 
 						{open && (
-							<div className="dropdown">
+							<div className="dropdown" useRef={dropdownRef}>
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import "../styles/NavBar.css";
 import "../styles/HeadIcon.css";
-import { useState } from "react";
+import {useState, useEffect, useRef} from 'react';
 
 
 import { FaUser } from "react-icons/fa";
@@ -17,7 +17,27 @@ import profile_img from "../assets/img_avatar.png";
 function HeadIcon() {
 
     const [authState, setAuthState]=useState(false);
+
+	// Pop-Up Functionality
+
     const [open, setOpen]=useState(false);
+
+	const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        };
+    
+        document.addEventListener('mousedown', handleOutsideClick);
+    
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+    
 
     // Logout function
 
@@ -34,7 +54,7 @@ function HeadIcon() {
 
                         {open && (
 
-                        <div className="dropdown">
+                        <div className="dropdown" ref={dropdownRef}>
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
