@@ -114,7 +114,7 @@
     margin-bottom: 7px;
 }
 
-.publish-form input{
+.publish-form .inputs{
     min-height: 40px;
     width: 100%;
     outline: none;
@@ -140,7 +140,7 @@
     margin-bottom: 10px;
 }
 
-.publish-form textarea:focus , input:focus{
+.publish-form textarea:focus , .inputs:focus{
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     border: 2px solid #7abaff;
 }
@@ -181,7 +181,7 @@
 .publish-box .image{
     position: absolute;
     left: 290px;
-    bottom: 166px;
+    bottom: 200px;
     height: 80px;
     width: 80px;
     border-radius: 10px;
@@ -212,7 +212,7 @@
 }
 
 
-.audience input{
+.audience .inputs{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -245,7 +245,7 @@
     transition: 0.37s ease;
 }
 
-.publish-to input:checked ~ .Radio-tile{
+.publish-to .inputs:checked ~ .Radio-tile{
     background-color: #252525;
     border: 2px solid #252525;
     color: white;
@@ -273,8 +273,6 @@
     background-color: #f5f5f5;
     border-radius: 6px;
     color: #306aa9;
-    /* font-weight: bold; */
-    /* box-shadow: 2px 3px 9px 1px rgba(104,54,54,0.63); */
 }
 
 
@@ -293,6 +291,70 @@
 }
 
 
+
+
+/* Modal-Switch */
+
+.switch-box{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    /* width: auto; */
+}
+
+.publish-form .switch {
+    position: relative;
+    height: 1.5rem;
+    width: 3rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 9999px;
+    background-color: rgba(100, 116, 139, 0.377);
+    transition: all .3s ease;
+}
+
+.publish-form .switch:checked {
+    background-color: rgba(236, 72, 153, 1);
+}
+
+.publish-form .switch::before {
+    position: absolute;
+    content: "";
+    left: calc(1.5rem - 1.6rem);
+    top: calc(1.5rem - 1.6rem);
+    display: block;
+    height: 1.6rem;
+    width: 1.6rem;
+    cursor: pointer;
+    border: 1px solid rgba(100, 116, 139, 0.527);
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(100, 116, 139, 0.327);
+    transition: all .3s ease;
+}
+
+.publish-form .switch:hover::before {
+    box-shadow: 0 0 0px 8px rgba(0, 0, 0, .15)
+}
+
+.publish-form .switch:checked:hover::before {
+    box-shadow: 0 0 0px 8px rgba(236, 72, 153, .15)
+}
+
+.publish-form .switch:checked:before {
+    transform: translateX(100%);
+    border-color: rgba(236, 72, 153, 1);
+}
+
+.publish-form .switch-box span{
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(71, 71, 71);
+    padding-left: 5px;
+}
 
 
 /* Modal-Buttons */

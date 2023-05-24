@@ -88,7 +88,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                     <form className='publish-form'>
                                         <div className="publish-box">
                                             <label htmlFor="staffId">Title</label>
-                                            <input type='text' name="staffId" placeholder="Place Your title here"/>
+                                            <input className="inputs" type='text' name="staffId" placeholder="Place Your title here"/>
                                         </div>
 
                                         <div className="publish-box">
@@ -99,7 +99,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                     {/* -- Upload Button -- */}
 
                                         <div className="publish-box">
-                                            <input type="file" id="image" accept='image/*' onChange={getFile} />
+                                            <input  className="inputs" type="file" id="image" accept='image/*' onChange={getFile} />
                                             <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
 
                                             {file && (
@@ -113,7 +113,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                         <div className='publish-radio'>
                                             <div className="publish-to">
                                                 <div className="audience">
-                                                    <input className='input' type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={handlePostChange} />
+                                                    <input className="inputs" type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={handlePostChange} />
                                                     <div className='Radio-tile'>
                                                         <BsFillPeopleFill className='icon'/>
                                                         <span>ALL</span>
@@ -121,7 +121,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                                 </div>  
                                                 
                                                 <div className="audience">
-                                                    <input className='input' type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={handlePostChange}/>                                    
+                                                    <input className="inputs" type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={handlePostChange}/>                                    
                                                     <div className='Radio-tile'>
                                                         <FaSchool className='icon'/>
                                                         <span>SCL</span>
@@ -129,7 +129,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                                 </div>
 
                                                 <div className="audience">
-                                                    <input className='input' type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={handlePostChange}/>
+                                                    <input className="inputs" type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={handlePostChange}/>
                                                     <div className='Radio-tile'>
                                                         <FaWalking className='icon'/>
                                                         <span>DEPT</span>
