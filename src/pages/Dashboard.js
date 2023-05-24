@@ -70,10 +70,10 @@ function Dashboard() {
     }
 
 
-    const twoFunctions = (e) => {                       // Merging Two Functions together
-        getFile(e);
-        handleInputChange(e);
-    }
+    // const twoFunctions = (e) => {
+    //     getFile(e);
+    //     handleInputChange(e);
+    // }
 
 
 
@@ -127,18 +127,18 @@ function Dashboard() {
                         <form className='publish-form' onSubmit={handlePost}>
                             <div className="publish-box">
                                 <label htmlFor="staffId">Title</label>
-                                <input type='text' name="staffId" placeholder="Place Your title here" onChange={handleInputChange} />
+                                <input className="inputs" type='text' name="staffId" placeholder="Place Your title here" onChange={handleInputChange} />
                             </div>
 
                             <div className="publish-box">
                                 <label htmlFor="content">Description</label>
-                                <textarea className="input"  name="content" placeholder="Enter Description" onChange={handleInputChange} required></textarea>
+                                <textarea name="content" placeholder="Enter Description" onChange={handleInputChange} required></textarea>
                             </div>
 
                         {/* -- Upload Button -- */}
 
                             <div className="publish-box">
-                                <input type="file" id="image" accept='image/*' onChange={getFile} />
+                                <input className="inputs" type="file" id="image" accept='image/*' onChange={getFile} />
                                 <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
 
                                 {file && (
@@ -152,7 +152,7 @@ function Dashboard() {
                             <div className='publish-radio'>
                                 <div className="publish-to">
                                     <div className="audience">
-                                        <input className='input' type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={DosFunctions} />
+                                        <input className='inputs' type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={DosFunctions} />
                                         <div className='Radio-tile'>
                                             <BsFillPeopleFill className='icon'/>
                                             <span>ALL</span>
@@ -160,7 +160,7 @@ function Dashboard() {
                                     </div>  
                                     
                                     <div className="audience">
-                                        <input className='input' type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={DosFunctions}/>                                    
+                                        <input className='inputs' type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={DosFunctions}/>                                    
                                         <div className='Radio-tile'>
                                             <FaSchool className='icon'/>
                                             <span>SCL</span>
@@ -168,7 +168,7 @@ function Dashboard() {
                                     </div>
 
                                     <div className="audience">
-                                        <input className='input' type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={DosFunctions}/>
+                                        <input className='inputs' type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={DosFunctions}/>
                                         <div className='Radio-tile'>
                                             <FaWalking className='icon'/>
                                             <span>DEPT</span>
@@ -198,6 +198,15 @@ function Dashboard() {
                             )}
 
                             </div>
+
+
+                        {/* -- Switch RSVP -- */}
+
+                            <div className='switch-box'>
+                                <span>RSVP</span>
+                                <input className="switch" type="checkbox"/>
+                            </div>
+
 
                     {/* -- Radio-Button Ends -- */}
 
