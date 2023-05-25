@@ -1,13 +1,29 @@
 import React from 'react';
 import "../styles/Profile.css";
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
 
-import account_bgr from "../assets/stue.jpg";    //account card bgr
-
 
 function Profile() {
+
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+                setName(res.data.user.fullname);
+            }
+            else{
+                setName(res.data.message);
+            } 
+        })
+    }, []);
+
+
     return (
         <div className='account-setting'>
             <SideBar />
@@ -103,7 +119,7 @@ function Profile() {
                     <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="account-user-img" className="account-user-img"/>
 
                     <div className="card-banner-space"></div>
-                    <div className="card-banner-big">Yabets Urgo</div>
+                    <div className="card-banner-big">Yabets Urgo {name}</div>
                     <div className="card-banner-small">Computer Science</div>
                     <div className="card-banner-tag">Student</div>
                     <div className="card-banner-text">Morgan has collected 

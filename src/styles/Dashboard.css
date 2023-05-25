@@ -617,3 +617,52 @@
     color: #e46a05;
 }
 
+
+
+
+
+
+
+
+
+/* ==== RESPONSIVE ==== */
+
+@media only screen and (max-width: 1200px) {
+    .Dashboard{
+        padding-right: 0px;
+        padding-top: 90px;
+        padding-left: 100px;
+    }
+
+
+}
+
+
+
+@media only screen and (max-width: 1000px) {
+    .field-one{
+        width: 100%;
+    }
+
+    .field-one .profile{
+        width: 90%;
+    }
+
+
+    .field-two{
+        display: none;
+    }
+
+
+}
+
+@media only screen and (max-width: 780px) {
+
+    .Dashboard{
+        padding: 0;
+        padding-top: 90px;
+    }
+
+
+
+}
