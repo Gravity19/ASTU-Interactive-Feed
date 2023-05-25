@@ -4,12 +4,27 @@ import axios from "axios";
 
 import "../styles/Chat.css";
 
-import SideBar from '../components/SideBar';      //SideBar
-import send_icon from "../assets/icons2/bx-send.png";       //send icon
-import { IoSend } from "react-icons/io5";  
+import SideBar from '../components/SideBar';      //SideBar   
+import { IoSend } from "react-icons/io5";  //send icon
+import { RxChevronLeft } from "react-icons/rx"
 
 
 function Chat() {
+
+    // conversation to Chat change 
+
+    const [zIndex1, setZIndex1] = useState(1);
+    const [zIndex2, setZIndex2] = useState(0);
+
+    const handleClickDiv1 = () => {
+        setZIndex2(2);
+        setZIndex1(1);
+    };
+
+    const handleClickDiv2 = () => {
+        setZIndex1(2);
+        setZIndex2(1);
+    };
 
 
     // View Chat API
@@ -23,7 +38,7 @@ function Chat() {
     }, []);
 
 
-    // View Chat API
+    // View Convo API
 
     const [message, setMessage] = useState([]);
 
@@ -42,8 +57,8 @@ function Chat() {
 
     const handleChatClick = (chat) => {
         setActiveChat(chat);
-
-        // setActiveChatID(chat.chatId);  or put onClick={()=> setActiveChatID(chat.chatId)} on there (that makes it 2 onClicks)
+        // setConversation(false);
+        handleClickDiv1();
     }
 
     return (
@@ -52,36 +67,27 @@ function Chat() {
             <SideBar />
 
 
-        {/* Home Section */}
-            <div class="profile-section">
-                <div class="text"></div>
-            </div>
-
-
-
             {/* Discussion Section */}
 
             <div class="chat-box">
                 <div class="row">
 
-                    <section class="discussions">
+                    <section class="discussions" style={{ zIndex: zIndex1 }}>
                         <div class="search">
                             <div class="searchbar">
                                 {/* <i class="fa fa-search" aria-hidden="true"></i> */}
                                 <input type="text" placeholder="Search..."></input>
                             </div>
                         </div>
-            
-            {/* Discussion Scrollable-Box */}
 
                         <div className='scroll-discussions'>
 
-        {/* Discussion-Box from Database */}
+                        {/* Discussion-Box from Database */}
                             
-                    {chats.map((chat, index) => (
+                        {chats.map((chat, index) => (
                         <div key={index}>
 
-                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`} onClick={()=>{handleChatClick(chat.chatId); setActiveChatID(chat.chatId);}}>
+                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`} onClick={()=>{handleChatClick(chat.chatId); setActiveChatID(chat.chatId); }}>
                             
                                 <div className="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}></div>
                                 <div className="desc-contact">
@@ -92,11 +98,9 @@ function Chat() {
                             </div>
 
                         </div>
-                    ))}
+                        ))}
 
-
-        {/* Discussion-Box from Database -END */}
-
+                        {/* Discussion-Box from Database -END */}
 
                             <div className={`discussion ${activeChat === 5 ? 'message-active' : ''}`} onClick={() => handleChatClick(5)}>
                             
@@ -110,31 +114,20 @@ function Chat() {
                                 <div class="timer">12 sec</div>
                             </div>
 
-                            <div className={`discussion ${activeChat === 12 ? 'message-active' : ''}`} onClick={() => handleChatClick(12)}>
-                                <div class="photo" style={{backgroundImage: 'url(https://i.pinimg.com/originals/a9/26/52/a926525d966c9479c18d3b4f8e64b434.jpg)'}}>
-                                    <div class="online"></div>
-                                </div>
-                                <div class="desc-contact">
-                                    <p class="name">School Board Meeting</p>
-                                    <p class="message">The students council needs a change</p>
-                                </div>
-                                <div class="timer">3 min</div>
-                            </div>
-
                         </div>
                         
                     </section>
 
 
 
+            {/* CHAT-Box Database */}
 
-        {/* CHAT-Box Database */}
 
-        
                 {activeChat === activeChatID ? (
                 <>
-                    <section class="chat">
+                    <section class="chat" style={{ zIndex: zIndex2 }}>
                         <div class="header-chat">
+                            <RxChevronLeft className='icon'  onClick={handleClickDiv2}/>
                             <p class="name">{activeChatID}</p>
                         </div>
 
@@ -191,45 +184,12 @@ function Chat() {
                 )}
 
 
-        {/* CHAT-Box Database END */}
 
 
 
 
 
-
-
-
-
-        {/* CHAT-Box */}
-
-        {/* {activeChat === null && (
-            <>
-                    <section class="chat">
-                        <div class="header-chat">
-                            <i class="icon fa fa-user-o" aria-hidden="true"></i>
-                            <p class="name"> </p>
-                            <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
-                        </div>
-
-                        <div class="messages-null"> 
-                            <p class="null"> Select a chat to start messaging ... </p>
-                        </div>
-
-                        <div class="footer-chat">
-                            <input type="text" className="write-message" placeholder="Type your message here"></input>
-                            <button className='send_button'><IoSend className="icon"/></button>
-                        </div>
-
-                    </section>
-                            
-                            
-            </>
-            )} */}
-
-        
-
-        {/* CHAT-Box */}
+            {/* ===== custom chat === */}
 
             {activeChat === 5 && (
             <>
@@ -249,8 +209,8 @@ function Chat() {
                                     </div>
                                     <div class="text">
                                         <div className='name-text'>Beth Ruth</div>
-                                        <div className='focus-text'>
-                                            Hi, how are you ?
+                                        <div className='focus-text'>ADD is the term commonly used to describe symptoms of inattention,distractibility.
+                                            ADHD is the term used to describe  . 9 pm at the bar if possible 😳
                                         </div>
                                     </div>
                                 </div>
@@ -279,47 +239,6 @@ function Chat() {
             </>
             )}
 
-        
-        {/* CHAT 2 */}
-
-            {activeChat === 12 && (
-                <>
-
-                    <section class="chat">
-                        <div class="header-chat">
-                            <i class="icon fa fa-user-o" aria-hidden="true"></i>
-                            <p class="name">School Board Meeting</p>
-                            <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
-                        </div>
-
-                        <div class="messages-chat"> 
-                            <div class="message-container">
-                                <div class="message">
-                                    <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}>
-                                        <div class="online"></div>
-                                    </div>
-                                    <div class="text">
-                                        <div className='name-text'>Dagi Tamene</div>
-                                        <div className='focus-text'>
-                                            ADD is the term commonly used to describe symptoms of inattention,distractibility.
-                                            ADHD is the term used to describe  . 9 pm at the bar if possible 😳
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="time"> 15h09</p>
-                            </div>
-                            
-                        </div>
-
-                        <div class="footer-chat">
-                            <input type="text" className="write-message" placeholder="Type your message here"></input>
-                            <button className='send_button'><IoSend className="icon"/></button>
-                        </div>
-
-                    </section>
-
-            </>
-            )}
 
                 </div>
             </div>
