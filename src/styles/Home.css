@@ -143,17 +143,17 @@
 
 .card {
     width: 600px;
-    overflow: hidden;
     border-radius: 1em;
     background: #ECE9E6;
     background: linear-gradient(to right, #FFFFFF, #ECE9E6);
     margin-bottom: 50px;
     box-shadow: 7px 7px 8px -5px rgba(0,0,0,0.60);
-    border: 1px solid rgb(129, 124, 124);
+    box-shadow: 7px 7px 8px -5px rgba(0,0,0,0.60);
 }
 
 
 /* Card Header */
+
 
 .card__header .user_info {
     position: relative;
@@ -162,6 +162,8 @@
     display: flex;
     align-items: center;
     gap: .9rem;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
 }
 
 .card__header .user_image {
@@ -244,6 +246,7 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    position: relative;
 }
 
 
@@ -266,18 +269,101 @@
 }
 
 .card__body .title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
     text-transform: capitalize;
+    color: #414141;
 }
 
 .card__body .desc{
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     color: #616161;
     align-self: flex-start;
     text-align: justify;
     padding: 0px 10px;
 }
+
+.card__body .summary-btn{
+    position: relative;
+    padding: 7px 7px;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+	border-radius: 5px;
+	font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    opacity: 0.7;
+}
+
+.card__body .summary-btn:active{
+    opacity: 0.8;
+}
+
+.card__body .summary{
+    position: absolute;
+    right: -320px;
+    bottom: 20px ;
+    max-width: 300px;
+    padding: 0px;
+    color: #4a4a4a;
+    background-color: #ffffff;
+    border-radius: .5rem;
+    box-shadow: 0px 13px 18px -6px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 15px 20px -5px rgba(0, 0, 0, 0.5);
+    transition: all .3s;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    font-size: 13px;
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.card__body .summary:hover{
+    transform: scale(1.03);
+    box-shadow: 0px 15px 20px -5px rgba(0, 0, 0, 0.55);
+}
+
+.card__body .summary .upper{
+    padding: 15px;
+    padding-bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card__body .summary .upper span{
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: rgb(255 117 117);
+}
+
+.card__body .summary .icon{
+    height: 24px;
+    width: 24px;
+    color:  rgb(80, 80, 80);
+}
+
+.card__body .summary p{
+    text-align: justify;
+    padding: 14px;
+    padding-bottom: 0px;
+    color: rgb(81, 81, 81);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.card__body .summary svg{
+    opacity: 0.8;
+}
+
 
 
 /* Card Footer */
@@ -289,6 +375,8 @@
     padding: 15px 20px;
     padding-right: 25px;
     background-color: #e1e1e1;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
 }
 
 .card__footer .supplies {
@@ -1004,6 +1092,16 @@
     .card {
         left: 20%;
     }
+
+    .card__body .summary{
+        position: absolute;
+        left: 20px;
+        bottom: 20px ;
+        width: 250px;
+    }
+
+
+
     .utensil{               /* Utinsil */
         height: 450px;
         position: absolute;

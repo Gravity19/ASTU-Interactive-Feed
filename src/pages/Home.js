@@ -104,6 +104,7 @@ function Home() {
                                 tag= {Item.tag}
                                 title= {Item.title}
                                 desc= {Item.desc}
+                                sum= {Item.summary}
                                 time={Item.time}
                                 date={Item.date}
                                 loc={Item.loc}
