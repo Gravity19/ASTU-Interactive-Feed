@@ -2,22 +2,24 @@ import React from "react";
 import {useState, useEffect, useRef} from 'react';
 import Modal from 'react-modal';
 
-import date_icon from "../assets/date_icon.png";            //Date Icon
-import map_icon from "../assets/map_icon.png";    //map_icon
-import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsFillHeartFill } from "react-icons/bs";
-import { IoOptionsOutline } from "react-icons/io5";                  //Option icon
-import { RiUploadCloud2Fill } from "react-icons/ri";                  //upload + Add icon
-import { FaWalking, FaSchool } from "react-icons/fa";                  //walking + School icon
+import date_icon from "../assets/date_icon.png";
+import map_icon from "../assets/map_icon.png";
+import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsFillHeartFill, BsRobot } from "react-icons/bs";
+import { IoOptionsOutline } from "react-icons/io5";
+import { RiUploadCloud2Fill } from "react-icons/ri";
+import { FaWalking, FaSchool } from "react-icons/fa";
+
 import logo from "../assets/logo1.png";
 
 
-function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, time, date, loc}) {
+function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc}) {
 
 
     const [Popup, setPopup] = useState(false);      //modal Functionality
 
     //Update Pop-Up Functionality
-    const [open, setOpen]=useState(false);
+    const [open, setOpen]=useState(false);          //Update Functionality
+    const [summary, setSummary]=useState(false);          //Summary Functionality
 
     const dropdownRef = useRef(null);
 
@@ -25,6 +27,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         const handleOutsideClick = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setOpen(false);
+                setSummary(false);
             }
         };
     
@@ -183,6 +186,19 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             <span className="tag tag-red">{tag}</span>
                             <h4 className='title'>{title}</h4>
                             <p className='desc'>{desc}</p>
+
+                            <button className="summary-btn" onClick={()=> setSummary(!open)}>
+                                <p>Summarize</p>
+                            </button>
+
+                            {summary && (
+                            <div className="summary" ref={dropdownRef}>
+                                <div className="upper"><span>Summary</span><BsRobot className="icon"/></div>
+                                <p>{sum}</p>
+                                <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><defs><linearGradient id="gradient" x1="12%" y1="83%" x2="88%" y2="17%"><stop offset="5%" stop-color="#cb2d3e"></stop><stop offset="95%" stop-color="#f78da7"></stop></linearGradient></defs><path d="M 0,400 C 0,400 0,133 0,133 C 144.10714285714283,151.96428571428572 288.21428571428567,170.92857142857142 406,174 C 523.7857142857143,177.07142857142858 615.2500000000001,164.25 734,148 C 852.7499999999999,131.75 998.7857142857142,112.07142857142857 1121,109 C 1243.2142857142858,105.92857142857143 1341.607142857143,119.46428571428572 1440,133 C 1440,133 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="url(#gradient)" fill-opacity="0.53" class="transition-all duration-300 ease-in-out delay-150 path-0"></path><defs><linearGradient id="gradient" x1="12%" y1="83%" x2="88%" y2="17%"><stop offset="5%" stop-color="#cb2d3e"></stop><stop offset="95%" stop-color="#f78da7"></stop></linearGradient></defs><path d="M 0,400 C 0,400 0,266 0,266 C 134.42857142857144,249.64285714285714 268.8571428571429,233.28571428571428 396,223 C 523.1428571428571,212.71428571428572 643.0000000000001,208.49999999999997 765,224 C 886.9999999999999,239.50000000000003 1011.1428571428571,274.7142857142857 1124,285 C 1236.857142857143,295.2857142857143 1338.4285714285716,280.6428571428571 1440,266 C 1440,266 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="url(#gradient)" fill-opacity="1" class="transition-all duration-300 ease-in-out delay-150 path-1"></path></svg>
+                            </div>
+                            )}
+                            
                         </div>
 
                         <div className="card__footer">
