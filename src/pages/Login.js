@@ -3,10 +3,9 @@ import {useNavigate, Link} from 'react-router-dom';
 import "../styles/login.css";
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
 import login_graphics from "../assets/login-graphic.png";
-// import svgback from "../assets/shape/svg-back5.png";
 
 import axios from "axios";
-import Modal from 'react-modal';    // import modal
+import Modal from 'react-modal';
 import { AuthContext } from '../helpers/AuthContext';
 
 function Login() {
@@ -123,28 +122,17 @@ function Login() {
             </div>
 
 
-        {/* MODAL ERROR POP UP */}
+            {/* MODAL ERROR POP UP */}
 
-                <Modal className ="modal-pop" isOpen={!!error} onRequestClose={closeModal} contentLabel="Error message" ariaHideApp={false} style={{
-                    overlay: {
-                    position: 'fixed',
-                    height: 200,
-                    width: 450,
-                    top:'50%',
-                    left: 0,
-                    right: 0,
-                    margin:'0 auto',
-                    border: '1px solid #ccc',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    justifySelf: 'center',
-                }
-                }}>
-                    <p>{error}</p>
-                    <button onClick={closeModal}>Close</button>
-                </Modal>
+            <Modal className ="modal-pop" isOpen={!!error} onRequestClose={closeModal} contentLabel="Error message" ariaHideApp={false} style={{overlay: {
+                backgroundColor: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',}}}>
+
+                <p>{error}</p>
+                <button onClick={closeModal}>Close</button>
+            </Modal>
 
         </div>
     );
