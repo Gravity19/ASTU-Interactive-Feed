@@ -248,7 +248,7 @@ function Dashboard() {
                         <div className='post-nav'>
                             <button className={`button ${activeTab === null ? 'active' : ''}`} onClick={() => handleClick(null)}>Feed</button>
                             <button className={`button ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleClick(1)}>Personalized</button>
-                            <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(3)}>School</button>
+                            <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(3)}>My Posts</button>
                         </div>
 
                     {activeTab === null && (

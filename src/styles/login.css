@@ -50,7 +50,7 @@
 	line-height: 1.75rem;
 	font-weight: 700;
 	text-align: left;
-	color: #000;
+	color: #2d2d2d;
 	margin-bottom: 10px;
 }
 
@@ -172,6 +172,17 @@
 
 
 /* MODAL Pop-Up*/
+
+.modal-pop{
+	height: 200px;
+	width: 450px;
+	border: 1px solid #ccc;
+	background-color: white;
+	display: flex;
+	align-items: 'center';
+	justify-content: center;
+}
+
 
 .modal-pop p{
 	position: relative;

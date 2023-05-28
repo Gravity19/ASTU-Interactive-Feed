@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
+
+
 import "../styles/Home.css";
 import Footer from '../components/Footer';      //Footer
 import NavBar from '../components/NavBar';      //NavBar
@@ -42,13 +45,48 @@ function Home() {
         .catch(err => console.log(err));
     }, []);
 
-    console.log(posts);
+
+    // Pagination 
+
+    const [pageNumber, setPageNumber] = useState(0);
+
+    const postsPerPage = 4;
+    const pagesVisited = pageNumber * postsPerPage;
+
+    const displayPosts = PostList
+        .slice(pagesVisited, pagesVisited + postsPerPage)
+        .map((Item, keys) => {
+            return (
+                <PostItem
+                    key={keys}
+                    
+                    user_name={Item.user_name}
+                    user_image={Item.user_image}
+                    user_badge={Item.user_badge}
+                    card_image={Item.card_image}
+                    tag= {Item.tag}
+                    title= {Item.title}
+                    desc= {Item.desc}
+                    sum= {Item.summary}
+                    time={Item.time}
+                    date={Item.date}
+                    loc={Item.loc}
+                />
+            );
+        });
+
+    const pageCount = Math.ceil(PostList.length / postsPerPage);
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected);
+    };
 
 
     return (
         <div className='hmain'>
             <NavBar />
-    {/* Header Section */}
+
+            {/* Header Section */}
             <div className='homey'>
 
                 <div className='home-write'>
@@ -67,7 +105,7 @@ function Home() {
                 <img src={utensil} alt='utensil' className='utensil'/>
 
 
-        {/* Search Section */}
+                {/* Search Section */}
                 <div className='input-box'>
                     <img src={barc} alt='barc' className='bicon'/>
                     
@@ -79,7 +117,7 @@ function Home() {
             </div>
 
 
-        {/* Middle Header Place */}
+            {/* Middle Header Place */}
 
             <div className='mid-head'>
                 <h3 className='mid-title'><img src={trend_icon} alt='latest' className='trend-icon'/>Latest posts</h3>
@@ -92,7 +130,7 @@ function Home() {
 
                     {/* POST Custom */}
             
-                    {PostList.map((Item, keys) => {
+                    {/* {PostList.map((Item, keys) => {
                         return (
                             <PostItem
                                 key={keys}
@@ -113,6 +151,22 @@ function Home() {
                     })}
 
                     <PostItem/>
+
+                    */}
+
+                    {displayPosts}
+
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        containerClassName={"paginationBttns"}
+                        previousLinkClassName={"previousBttn"}
+                        nextLinkClassName={"nextBttn"}
+                        disabledClassName={"paginationDisabled"}
+                        activeClassName={"paginationActive"}
+                    />
 
 
                     {/* POST APi /EXPERIMENTAL */}

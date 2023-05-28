@@ -1,15 +1,26 @@
 import React from "react";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import "../styles/Register.css";
-// import svgback from "../assets/shape/svg-back4.png";
 
 import axios from "axios";
 import { useState, useEffect } from 'react';
 
+import login_graphics from "../assets/login-graphic.png";
+import astu_logo from "../assets/badges/AstuFeed_badge.png";
 
 function Register() {
 
-// GET DEPARTMENT
+
+    // Radio Button functionality
+
+    const [selectedOption, setSelectedOption] = useState('student');
+
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+    };
+
+
+    // Get Department
 
     const [depts, setDepts] = useState([]);
 
@@ -24,7 +35,7 @@ function Register() {
 
 
 
-// POST Registration
+    // POST Registration
 
     const navigate = useNavigate();             // define navigation
 
@@ -59,28 +70,51 @@ function Register() {
     };
 
 
+
     return (
         <div className="reg-main">
-            {/* <img src={svgback} className='svg-back' alt="svg-back"/> */}
-            <div className='svg-back'></div>
+
+            <Link to="/" >
+                <img src={astu_logo} className='astu-logo' alt="astu-logo"/>
+            </Link>
+
+            <div className='register-graphics-overlay'>
+                <img src={login_graphics} className='register-graphics' alt="login-graphics"/>
+                <div className='register-graphics-word'>
+                    <p className='register-graphics-title'>Create. Communicate. Learn</p>
+                    <p className='register-graphics-text'>Welcome to Astu Interactive Feed</p>
+                </div>
+            </div>
 
             <div className="reg-container">
-                <div className="reg-title">Registration Form</div>
+
+                <div class="radio-reg">
+                    <label class="radio">
+                        <input type="radio" name="radio" value="student" checked={selectedOption === 'student'} onChange={handleOptionChange}/>
+                        <span>Student</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio" value="staff" checked={selectedOption === 'staff'} onChange={handleOptionChange}/>
+                        <span>Staff</span>
+                    </label>
+                </div>
+                
+            {selectedOption === 'student' && (
+            <>
+                <div className="reg-title">Registration<p>student</p></div>
 
                 <form onSubmit={handleSubmit} className="reg-form">
-                    <div className="reg-input-box">
-                        <label htmlFor="fullname">Full Name</label>
-                        <input type="text" name="fullname" id="fullname" placeholder="Enter full name" onChange={handleInputChange} required />
-                    </div>
 
-                    {/* <div className="reg-input-box">
-                        <label htmlFor="studentId">Student ID</label>
-                        <input type="text" name="studentId" id="studentId" placeholder="UGR/xxx-xx/11" maxLength={13} onChange={handleInputChange} required />
-                    </div> */}
+                    <div className="x-y-combo">
+                        <div className="x-y-box">
+                            <label htmlFor="fullname">Full Name</label>
+                            <input type="text" name="fullname" id="fullname" placeholder="Enter full name" onChange={handleInputChange} required />
+                        </div>
 
-                    <div className="reg-input-box">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleInputChange} required />
+                        <div className="x-y-box">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleInputChange} required />
+                        </div>
                     </div>
 
 
@@ -91,22 +125,17 @@ function Register() {
                         </div>
 
                         <div className="x-y-box">
-                            <label htmlFor="picture">picture</label>
+                            <label htmlFor="picture">Picture</label>
                             <input type="text" name="picture" id="picture" placeholder="Enter picture" onChange={handleInputChange} required />
                         </div>
                     </div>
 
 
                     <div className="reg-input-box">
-                        <label htmlFor="year">year</label>
+                        <label htmlFor="year">Year</label>
                         <input type="text" name="year" id="year" placeholder="Enter year" onChange={handleInputChange} required />
                     </div>
 {/*
-                    <div className="reg-input-box">
-                        <label htmlFor="depId">dep Id</label>
-                        <input type="text" name="depId" id="depId" placeholder="Enter depId" onChange={handleInputChange} required />
-                    </div>
-
 
                     <div className="column">
                         <div className="reg-input-box">
@@ -151,10 +180,80 @@ function Register() {
                         </div>
                     </div>
 
-
-                    <button className="reg-button">Submit</button>
+                    <div className="reg-footer">
+                        <button className="reg-button">Register</button>
+                        <p>Already have an account? <a href="/login">Login</a></p>
+                    </div>
                     
                 </form>
+            </>
+            )}
+
+            {selectedOption === 'staff' && (
+            <>
+                <div className="reg-title">Registration<p>staff</p></div>
+
+                <form onSubmit={handleSubmit} className="reg-form">
+
+                    <div className="x-y-combo">
+                        <div className="x-y-box">
+                            <label htmlFor="fullname">Full Name</label>
+                            <input type="text" name="fullname" id="fullname" placeholder="Enter full name" onChange={handleInputChange} required />
+                        </div>
+
+                        <div className="x-y-box">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleInputChange} required />
+                        </div>
+                    </div>
+
+                    <div className="x-y-combo">
+                        <div className="x-y-box">
+                            <label htmlFor="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleInputChange} required />
+                        </div>
+
+                        <div className="x-y-box">
+                            <label htmlFor="picture">Picture</label>
+                            <input type="text" name="picture" id="picture" placeholder="Enter picture" onChange={handleInputChange} required />
+                        </div>
+                    </div>
+
+                    <div className="reg-input-box">
+                        <label htmlFor="year">Year</label>
+                        <input type="text" name="year" id="year" placeholder="Enter year" onChange={handleInputChange} required />
+                    </div>
+
+                    <div className="reg-input-box address">
+                        <div className="column">
+                            <div className="select-box">
+                                <select id="depId" name="depId" onChange={handleInputChange} required>
+                                    <option hidden>Department</option>
+                                    {depts.map((Depart, i) => (
+                                        <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                        )
+                                    )}
+                                </select>
+                            </div>
+
+                             {/* <input type="text" placeholder="Enter your city" required />  */}
+                        </div>
+                    </div>
+
+                    <div className="reg-footer">
+                        <button className="reg-button">Register</button>
+                        <p>Already have an account? <a href="/login">Login</a></p>
+                    </div>
+                    
+                </form>
+            </>
+            )}
+
+
+            </div>
+
+            <div className='closing-tag'>
+                Copyright Ⓒ 2023 AstuFeed by ASTU Design inc. All rights reserved
             </div>
         </div>
 

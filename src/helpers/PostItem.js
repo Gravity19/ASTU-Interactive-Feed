@@ -10,6 +10,9 @@ import { RiUploadCloud2Fill } from "react-icons/ri";
 import { FaWalking, FaSchool } from "react-icons/fa";
 
 import logo from "../assets/logo1.png";
+import B507 from "../assets/loc/b507.png";
+import B508 from "../assets/loc/b508.png";
+import B509 from "../assets/loc/b509.png";
 
 
 function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc}) {
@@ -19,6 +22,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
     //Update Pop-Up Functionality
     const [open, setOpen]=useState(false);          //Update Functionality
+    const [locate, setLocate]=useState(false);          //Map Functionality
     const [summary, setSummary]=useState(false);          //Summary Functionality
 
     const dropdownRef = useRef(null);
@@ -28,6 +32,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setOpen(false);
                 setSummary(false);
+                setLocate(false);
             }
         };
     
@@ -57,6 +62,19 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         setAnswer(selectedAnswer);
     };
 
+    // mapping location to image
+
+    
+    const getImageByLoc = (loc) => {
+        switch (loc) {
+            case 'B507': return B507;
+            case 'B508': return B508;
+            case 'B509': return B509;
+            default: return null;
+        }
+    };
+
+    const imageSrc = getImageByLoc(loc)
 
     return (
         <div className="card">
@@ -209,13 +227,22 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                     <small>{time}</small>
                                 </div>
                             </div>
-
-                            <div className="location">
-                                <img src={map_icon} alt="map_icon" className="map_icon"/>
-                                <div className="Map_info">
-                                    <h5>{loc}</h5>
+                            
+                            <div className="mid">
+                                <div className="location" onClick={()=> setLocate(!locate)}>
+                                    <img src={map_icon} alt="map_icon" className="map_icon"/>
+                                    <div className="Map_info">
+                                        <h5>{loc}</h5>
+                                    </div>
                                 </div>
-                            </div> 
+
+                                {locate && (
+                                <div className="location-img" ref={dropdownRef}>
+                                    <img src={imageSrc} alt="loc_image"/>
+                                </div>
+                                )}
+                            </div>
+                            
                             
                             <div className="like-heart">
                                 <label class="like-container">
