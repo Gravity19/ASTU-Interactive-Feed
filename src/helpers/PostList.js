@@ -23,7 +23,7 @@ export const PostList = [
         summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus.  Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit",
         time: "7:35 PM",
         date: "Today",
-        loc: "B507",
+        loc: "B-507",
     },
 
     {
@@ -37,7 +37,7 @@ export const PostList = [
         summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus.",
         time: "7:35 PM",
         date: "Yesterday",
-        loc: "B508",
+        loc: "B-508",
     },
 
     {
@@ -51,7 +51,7 @@ export const PostList = [
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
         date: "Thursday",
-        loc: "B509",
+        loc: "B-509",
     },
 
     {

@@ -1,7 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import axios from "axios";
 
 import "../styles/Dashboard.css";
 import Modal from 'react-modal';    // import modal
@@ -10,6 +9,7 @@ import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
 import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
+import ip from '../helpers/Config.js';
 
 
 import { MdEmail, MdAddLocationAlt, MdCall } from "react-icons/md";
@@ -40,9 +40,8 @@ function Dashboard() {
     const handlePost = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/staff/post", formData);
+            const response = await ip.post("/api/staff/post", formData);
             console.log(response.data);     // handle response data here
-            
         }    
         catch (error) {
           console.log(error.response.data); // handle error here

@@ -58,18 +58,19 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
     const [answer, setAnswer] = useState('');
 
     const handlePostChange = (e) => {
-        const selectedAnswer = e.target.value;              // Make the value of the button the Selected Answer 
+        const selectedAnswer = e.target.value;
         setAnswer(selectedAnswer);
     };
 
-    // mapping location to image
 
+    // mapping location to image
     
     const getImageByLoc = (loc) => {
         switch (loc) {
-            case 'B507': return B507;
-            case 'B508': return B508;
-            case 'B509': return B509;
+            case 'B-507': return B507;
+            case 'B-508': return B508;
+            case 'B-509': return B509;
+            case 'Space': return B507;
             default: return null;
         }
     };
@@ -231,9 +232,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             <div className="mid">
                                 <div className="location" onClick={()=> setLocate(!locate)}>
                                     <img src={map_icon} alt="map_icon" className="map_icon"/>
-                                    <div className="Map_info">
-                                        <h5>{loc}</h5>
-                                    </div>
+                                    <h5>{loc}</h5>
                                 </div>
 
                                 {locate && (

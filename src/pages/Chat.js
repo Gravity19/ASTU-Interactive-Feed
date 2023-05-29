@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';        //Api Fetching
-import axios from "axios";
 
 import "../styles/Chat.css";
+import ip from '../helpers/Config.js';
 
 import SideBar from '../components/SideBar';      //SideBar   
 import { IoSend } from "react-icons/io5";  //send icon
@@ -32,21 +32,28 @@ function Chat() {
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/student/getchat')
+        ip.get('/api/student/getchat')
         .then(res => {setChats(res.data)})
         .catch(err => console.log(err));
     }, []);
 
 
+
     // View Convo API
 
     const [message, setMessage] = useState([]);
+    const [chatId, setChatId] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/student/getconv?chatId=1')
-        .then(res => {setMessage(res.data)})
+        ip.get(`/api/student/getconv?chatId=${chatId}`)
+        .then(res => {setMessage(res.data);})
         .catch(err => console.log(err));
-    }, []);
+    }, [chatId]);
+
+    
+    const handleChatBtn = (newChatId) => {      // Function to handle changing chatId when a new chat button is clicked
+        setChatId(newChatId);
+    };
 
 
 
@@ -87,7 +94,14 @@ function Chat() {
                         {chats.map((chat, index) => (
                         <div key={index}>
 
-                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`} onClick={()=>{handleChatClick(chat.chatId); setActiveChatID(chat.chatId); }}>
+                            <div className={`discussion ${activeChat === chat.chatId ? 'message-active' : ''}`}
+                                    onClick={(event) => {
+                                        handleChatClick(chat.chatId);
+                                        setActiveChatID(chat.chatId);
+                                        handleChatBtn(chat.chatId);
+                                        event.stopPropagation(); // To prevent event bubbling
+                                    }}
+                                    >
                             
                                 <div className="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)'}}></div>
                                 <div className="desc-contact">
