@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+.account-setting{
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+
+
+.account-setup {
+    position: absolute;
+    left: 150px;
+    max-width: 750px;
+    height: 750px;
+    width: 100%;
+    padding: 50px;
+    text-align: left;
+    border: 1px solid #0da1bc;
+
+    border-radius: 29px;
+    background: #0a6596;
+    box-shadow: 11px 18px 30px -10px rgba(0,0,0,0.79);
+}
+
+.account-setup .title {
+    position: relative;
+    font-size: 1.5rem;
+    color: #c76a06;
+    font-weight: 500;
+}
+
+
+.account-setup .account-update {
+    margin-top: 30px;
+}
+
+
+
+/* Reg Input Box */
+
+.account-update .account-div {
+    width: 100%;
+    margin-top: 20px;
+}
+.account-div label {
+    color: #ffffff;
+}
+.account-update .account-div input {
+    position: relative;
+    height: 40px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+.account-update input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    border: 2px solid #7abaff;
+}
+
+
+
+
+/* PASS + PICTURE COMBO */
+
+.account-update .form-pair{
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.account-update .pass-pic-box{
+    width: 40%;
+    margin-top: 20px;
+}
+
+.account-update .form-pair label {
+    margin-right: 10px;
+    color: #333;
+}
+
+.account-update .form-pair input {
+    position: relative;
+    height: 40px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 20px;
+}
+
+
+
+
+
+.address :where(input, .select-box) {
+    margin-top: 15px;
+}
+
+.account-update select {
+    /* border: none; */
+    position: relative;
+    height: 40px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+
+
+.account-update select:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    border: 2px solid #7abaff;
+}
+
+
+
+
+.account-update .reg-button {
+    height: 40px;
+    width: 100px;
+    color: #fff;
+    font-size: 1.0rem;
+    font-weight: 500;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #007bff;
+}
+.account-update .reg-button:hover {
+    background-color: #1b64b2;
+}
+
+
+
+
+
+
+
+
+/* ============ SECOND BOX ================ */
+
+
+
+.account-setting .account-card{
+    position: absolute;
+    right: 150px;
+    height: 750px;
+    width: 450px;
+    border-radius: 2rem;
+    background-color: #b3e8e3;
+    box-shadow: 0px 1rem 1.5rem rgba(0,0,0,0.5);
+    overflow: hidden;
+    font-family: Montserrat, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.account-card .account-bgr{
+    height: 170px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.account-card .account-user-img{
+    position: absolute;
+    top: 30px;
+    height: 12rem;
+    width: 12rem;
+    border-radius: 50%;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+    object-fit: cover;
+    box-sizing: border-box;
+}
+
+.account-card .card-banner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 32px;
+}
+
+
+.account-card .card-banner-space{
+    height: 80px;
+}
+
+.account-card .card-banner-big{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #404040;
+    margin-bottom: 8px;
+}
+
+.account-card .card-banner-small{
+    font-size: 14px;
+    color: #d66311;
+    margin-bottom: 17px;
+}
+
+
+.account-card .card-banner-tag{
+    width: 100%;
+    font-size: 18px;
+    font-weight: bolder;
+    color: #494949;
+    background-color: #0d9ed2;
+    border: none;
+    padding: 1rem;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 1.5rem/50%;
+    margin-bottom: 20px;
+}
+
+
+.account-card .card-banner-text{
+    text-align: justify;
+    font-size: 16px;
+    color: #494949;
+}
+
+
+
+
+
+
+
+
+
+
+/*Responsive*/
+
+
+@media screen and (max-width: 1150px) {
+    .account-setup {
+        position: absolute;
+        /* max-width: 300px; */
+        /* right: 0px;
+        left: 0px; */
+    }
+}
+
+
+@media screen and (max-width: 750px) {
+    .account-setup {
+        position: absolute;
+        /* max-width: 400px; */
+        width:80%
+        /* right: 0px;
+        left: 0px; */
+    }
+}
+
+
+
+
+@media screen and (max-width: 500px) {
+    /* .account-update .column {
+        flex-wrap: wrap;
+    } */
+
+}
