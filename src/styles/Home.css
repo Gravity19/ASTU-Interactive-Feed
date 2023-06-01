@@ -266,6 +266,7 @@
     background: #cb2d3e;
     background: linear-gradient(to bottom, #ef473a, #cb2d3e);
     color: #fafafa;
+    font-weight: 400;
 }
 
 .card__body .title {
@@ -448,6 +449,10 @@
 .card__footer .map_icon {
     height: 45px;
     width: 45px;
+}
+
+.card__footer .location h5{
+    color: #464646;
 }
 
 

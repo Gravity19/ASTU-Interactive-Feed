@@ -2,8 +2,8 @@ import React from "react";
 import {useNavigate, Link} from 'react-router-dom';
 import "../styles/Register.css";
 
-import axios from "axios";
 import { useState, useEffect } from 'react';
+import ip from '../helpers/Config.js';
 
 import login_graphics from "../assets/login-graphic.png";
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
@@ -24,14 +24,11 @@ function Register() {
 
     const [depts, setDepts] = useState([]);
 
-    useEffect(() => {
-        fetch('http://localhost:3000/api/student/getDep')
-        .then(response => response.json())
-        .then(data => setDepts(data))
+    useEffect(() => { 
+        ip.get('/api/student/getDep')
+        .then(response => setDepts(response.data))
         .catch(err => console.log(err));
     }, []);
-
-    console.log(depts);
 
 
 
@@ -55,10 +52,9 @@ function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/student/register", formData);
+            const response = await ip.post("/api/student/register", formData);
             console.log(response.data); // handle response data here
             navigate('/login');
-            
         }    
         catch (error) {
           console.log(error); // handle error here

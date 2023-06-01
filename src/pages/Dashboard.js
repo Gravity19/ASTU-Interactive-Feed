@@ -1,6 +1,6 @@
 import React from 'react';
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {useState, useEffect} from 'react';
 import axios from "axios";
 
 import "../styles/Dashboard.css";
@@ -10,6 +10,7 @@ import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
 import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
+import ip from '../helpers/Config.js';
 
 
 import { MdEmail, MdAddLocationAlt, MdCall } from "react-icons/md";
@@ -22,13 +23,30 @@ import teacher_badge from "../assets/badges/Teacher_badge.png";      //Teacher B
 
 function Dashboard() {
 
+    // Get Current User
+
+    const [name, setName] = useState('');
+
+	axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+                setName(res.data.user.user);
+            }
+            else{
+                setName("Something went wrong");
+            } 
+        })
+    }, []);
+
+
     // Modal Functionality
 
     const [Visible, setVisible] = useState(false);
 
 
     // Create Post
-
 
     const [formData, setFormData] = useState({
         content: "",
@@ -40,9 +58,8 @@ function Dashboard() {
     const handlePost = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/staff/post", formData);
+            const response = await ip.post("/api/staff/post", formData);
             console.log(response.data);     // handle response data here
-            
         }    
         catch (error) {
           console.log(error.response.data); // handle error here
@@ -231,7 +248,7 @@ function Dashboard() {
                             <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="user-img" className="user-img"/>
 
                             <div className='left'>
-                                <div className="big">Yabets Urgo</div>
+                                <div className="big">{name.fullname}</div>
                                 <img src={teacher_badge} alt="role" className="role"/>
                                 <div className="small">Computer Science</div>
                                 <div className="small"><RiAddCircleFill className='icon' /> ASTU, Adama</div>
@@ -321,7 +338,7 @@ function Dashboard() {
 
                     <div className='about'>
                         <p>About</p>
-                        <div className='entry'><MdEmail className='icon'/>YabetsUrgo@gmail.com</div>
+                        <div className='entry'><MdEmail className='icon'/>{name.email}</div>
                         <div className='entry'><BsPersonFill className='icon'/>Teacher</div>
                         <div className='entry'><MdCall className='icon'/>+251-953-6459-08</div>
                         <div className='entry'><MdAddLocationAlt className='icon'/>Ethiopia, Addis Abeba</div>

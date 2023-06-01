@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import {useState, useEffect, useRef} from 'react';
-
+import axios from "axios";
 import "../styles/NavBar.css";
 
 import { FaUser } from "react-icons/fa";
@@ -15,22 +15,44 @@ import profile_img from "../assets/img_avatar.png";
 
 function NavBar() {
 
-	// Session Management
+	const navigate = useNavigate();
+
+	// Get Current User
+
+    const [name, setName] = useState('');
 	const [authState, setAuthState]=useState(false);
 
-	useEffect(() => {
-		if(localStorage.getItem('accessToken')){
-			setAuthState(true);
-		}
-	}, []);
+	axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+				setAuthState(true);
+                setName(res.data.user.user);
+            }
+            else{
+				setAuthState(false);
+                setName("Something went wrong");
+            } 
+        })
+    }, []);
 
 
 	// Logout function
 
 	const logout = () => {
-		localStorage.removeItem("accessToken");
-		setAuthState(false);
-		window.location.reload();
+		axios.get('http://localhost:3000/api/logout')
+        .then(res => {
+            if(res.data.message === "Success"){
+				setAuthState(false);
+				navigate('/login');
+				window.location.reload();
+            }
+            else{
+				alert("error");
+            } 
+        })
+		.catch (err => console.log(err))
 	};
 
     //Pop-Up Functionality
@@ -86,7 +108,7 @@ function NavBar() {
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
-									<p>Yabets Urgo</p>
+									<p>{name.fullname}</p>
 								</div>
 
 								<ul>

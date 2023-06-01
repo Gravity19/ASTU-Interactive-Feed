@@ -85,12 +85,12 @@
 .radio-reg {
     display: flex;
     flex-wrap: wrap;
-    border-radius: 0.3rem;
+    border-radius: 25px;
     background-color: #EEE;
     box-sizing: border-box;
-    padding: 5px 8px;
+    padding: 6px 7px;
     margin-bottom: 10px;
-    width: 280px;
+    width: 260px;
     font-size: 14px;
     transform: translate(50%, 0%);
 }
@@ -109,7 +109,7 @@
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    border-radius: 0.3rem;
+    border-radius: 25px;
     border: none;
     padding: 6px 0;
     color: rgba(51, 65, 85, 1);
@@ -265,7 +265,7 @@
     align-items: center;
     justify-content: flex-start;
     margin-top: 20px;
-    gap: 15px;
+    gap: 10px;
 }
 
 .reg-form .reg-button {
@@ -286,8 +286,9 @@
 }
 
 .reg-footer p{
-	color: #6B7280;
+	color: #5d626d;
     font-size: 15px;
+    font-weight: 400;
 }
 
 .reg-footer p a {
@@ -348,6 +349,10 @@
         opacity: 0.9;
 	}
 
+    .radio-reg {
+        transform: translate(25%, 0%);
+    }
+
     .reg-form .x-y-combo{
         display: flex;
         flex-direction: column;
@@ -360,4 +365,6 @@
     .reg-form :where(.degree-option, .degree) {
         row-gap: 15px;
     }
+
+    
 }

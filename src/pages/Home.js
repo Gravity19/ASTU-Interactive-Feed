@@ -1,5 +1,7 @@
-import React from 'react'
+import React from 'react';
+import axios from "axios";
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';        //Api Fetching
 import ReactPaginate from 'react-paginate';
 
 
@@ -9,13 +11,11 @@ import NavBar from '../components/NavBar';      //NavBar
 
 
 import barc from "../assets/search.png";                //Search icon
-import utensil from "../assets/utensil.png";            //utenisil icon
+import utensil from "../assets/utensil.png";
 import trend_icon from "../assets/trend-icon.png";       //Trend icon
 
 import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
-
-import { useState, useEffect } from 'react';        //Api Fetching
 
 
 
@@ -25,13 +25,22 @@ function Home() {
     // Session Management
 
 	const [authState, setAuthState]=useState(false);
-	
-	useEffect(() => {
-		if(localStorage.getItem('accessToken')){
-			setAuthState(true);
-		}
-	}, []);
+    const [name, setName] = useState('');
 
+    axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+				setAuthState(true);
+                setName(res.data.user.user);
+            }
+            else{
+				setAuthState(false);
+                setName("Something went wrong");
+            } 
+        })
+    }, []);
 
 
     // View Post API

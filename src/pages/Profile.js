@@ -5,23 +5,28 @@ import axios from "axios";
 
 import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
+// import ip from '../helpers/Config.js';
 
 
 function Profile() {
 
+
+    // Get Current User
     const [name, setName] = useState('');
 
+    axios.defaults.withCredentials = true;
     useEffect(() => {
         axios.get('http://localhost:3000/api/user')
         .then(res => {
             if(res.data.status === "Success"){
-                setName(res.data.user.fullname);
+                setName(res.data.user.user);
             }
             else{
-                setName(res.data.message);
+                setName("Something went wrong");
             } 
         })
     }, []);
+
 
 
     return (
@@ -119,7 +124,7 @@ function Profile() {
                     <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="account-user-img" className="account-user-img"/>
 
                     <div className="card-banner-space"></div>
-                    <div className="card-banner-big">Yabets Urgo {name}</div>
+                    <div className="card-banner-big">{name.fullname}</div>
                     <div className="card-banner-small">Computer Science</div>
                     <div className="card-banner-tag">Student</div>
                     <div className="card-banner-text">Morgan has collected 

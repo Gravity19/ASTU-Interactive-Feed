@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useNavigate, Link} from 'react-router-dom';
+import axios from "axios";
 
 import "../styles/SideBar.css";
 
@@ -11,14 +12,12 @@ import discord_icon from "../assets/icons2/bxs-user-circle.png";       //Profile
 import dribble_icon from "../assets/icons2/bxs-dashboard.png";       //Dashboard icon
 import steam_icon from "../assets/icons2/bx-arrow-back.png";       //Back icon
 import reddit_icon2 from "../assets/icons2/log-out-regular-48.png";       //white reddit icon
-
-
 import user_image from "../assets/img_avatar.png";      //User image
 
 function SideBar() {
     const [isOpen, setIsOpen] = useState(false);
     const [authState, setAuthState]=useState(false);
-    const navigate = useNavigate();             // define navigation
+    const navigate = useNavigate();
 
     function toggleSidebar() {
         setIsOpen(!isOpen);
@@ -28,11 +27,18 @@ function SideBar() {
 	// Logout function
 
 	const logout = () => {
-		localStorage.removeItem("accessToken");
-		setAuthState(false);
-        navigate('/');
+		axios.get('http://localhost:3000/api/logout')
+        .then(res => {
+            if(res.data.message === "Success"){
+				setAuthState(false);
+				navigate('/login');
+            }
+            else{
+				alert("error");
+            } 
+        })
+		.catch (err => console.log(err))
 	};
-
 
 
 
