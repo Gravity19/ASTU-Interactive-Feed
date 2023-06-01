@@ -1,19 +1,15 @@
-import React, {useState , useContext} from 'react';
+import React, {useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import "../styles/login.css";
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
 import login_graphics from "../assets/login-graphic.png";
+import { IoWarningOutline } from "react-icons/io5";
 
 import axios from "axios";
 import Modal from 'react-modal';
-import { AuthContext } from '../helpers/AuthContext';
 
 function Login() {
 
-    // For Authentication Context
-    const {setAuthState}=useContext(AuthContext);
-
-    
     // POST LOGIN
 
     const [loginData, setLoginData] = useState({
@@ -24,24 +20,24 @@ function Login() {
 
     const navigate = useNavigate();             // define navigation
     const [error, setError] = useState('');     // define error
-    
+    const [authState, setAuthState]=useState(false);
+
+    axios.defaults.withCredentials = true;
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/login", loginData);
+            const response = await axios.post(
+                "http://localhost:3000/api/login",
+                loginData,
+                { withCredentials: true }
+            );
             if (response.data.error) {
-                alert(response.data.error);}
-            else{
-                localStorage.setItem('accessToken', response.data.accessToken);  //store token on localStorage
+                alert(response.data.error);
+            } else {
                 setAuthState(true);
-                navigate('/');
+                navigate("/");
             }
-
-
-            // console.log(response.data);          // handle response data here
-            // navigate('/');
-        }
-        catch (error) {
+        } catch (error) {
             if (error.response.status === 401) {
                 setError(error.response.data.message);
             } else {
@@ -49,6 +45,7 @@ function Login() {
             }
         }
     };
+
     
     const handleInputChange = (event) => {
         setLoginData({ ...loginData, [event.target.name]: event.target.value });
@@ -130,6 +127,7 @@ function Login() {
                 alignItems: 'center',
                 justifyContent: 'center',}}}>
 
+                <div className='icon'><IoWarningOutline className="image"/></div>
                 <p>{error}</p>
                 <button onClick={closeModal}>Close</button>
             </Modal>

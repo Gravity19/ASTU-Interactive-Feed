@@ -212,6 +212,7 @@
     height: 30px;
     width: 30px;
     cursor: pointer;
+    display: none;
   }
   
   .chat .header-chat .name {
@@ -459,6 +460,10 @@
     height: 80px;
   }
 
+  .chat .header-chat .icon {
+    display:block;
+  }
+
   .chat .messages-chat {
     height: 74.9vh;
     padding: 20px 20px;
@@ -467,6 +472,7 @@
   .chat .messages-chat .text {
     margin: 0 10px;
   }
+
 
   /* .chat .footer-chat {
     height: 56px;

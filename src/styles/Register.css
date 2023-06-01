@@ -265,7 +265,7 @@
     align-items: center;
     justify-content: flex-start;
     margin-top: 20px;
-    gap: 15px;
+    gap: 10px;
 }
 
 .reg-form .reg-button {
@@ -286,8 +286,9 @@
 }
 
 .reg-footer p{
-	color: #6B7280;
+	color: #5d626d;
     font-size: 15px;
+    font-weight: 400;
 }
 
 .reg-footer p a {

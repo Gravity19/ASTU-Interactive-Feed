@@ -1,9 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import "../styles/NavBar.css";
-import "../styles/HeadIcon.css";
+import axios from "axios";
+import {useNavigate, Link} from 'react-router-dom';
 import {useState, useEffect, useRef} from 'react';
 
+import "../styles/NavBar.css";
+import "../styles/HeadIcon.css";
 
 
 import { FaUser } from "react-icons/fa";
@@ -18,11 +19,11 @@ import profile_img from "../assets/img_avatar.png";
 function HeadIcon() {
 
     const [authState, setAuthState]=useState(false);
+	const navigate = useNavigate();
 
 	// Pop-Up Functionality
 
     const [open, setOpen]=useState(false);
-
 	const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -40,13 +41,40 @@ function HeadIcon() {
     }, []);
     
 
-    // Logout function
+	// Logout function
 
 	const logout = () => {
-		localStorage.removeItem("accessToken");
-		setAuthState(false);
-		window.location.reload();
+		axios.get('http://localhost:3000/api/logout')
+        .then(res => {
+            if(res.data.message === "Success"){
+				setAuthState(false);
+				navigate('/login');
+				window.location.reload();
+            }
+            else{
+				alert("error");
+            } 
+        })
+		.catch (err => console.log(err))
 	};
+
+
+	// Get Current User
+
+    const [name, setName] = useState('');
+
+	axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+                setName(res.data.user.user);
+            }
+            else{
+                setName("Something went wrong");
+            } 
+        })
+    }, []);
 
 
     return (
@@ -59,7 +87,7 @@ function HeadIcon() {
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
-									<p>Yabets Urgo</p>
+									<p>{name.fullname}</p>
 								</div>
 
 								<ul>
