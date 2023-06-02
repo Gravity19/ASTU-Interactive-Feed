@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 
 import SideBar_stud from '../components/SideBar_Stud';      //SideBar
-import HeadIcon from '../components/HeadIcon';      //HeadIcon
+import HeadIcon_stud from '../components/HeadIcon_stud';      //HeadIcon
 
 
 function Profile_stud() {
@@ -128,7 +128,7 @@ function Profile_stud() {
 
             </div>
 
-            <HeadIcon />
+            <HeadIcon_stud />
 
         </div>
     );

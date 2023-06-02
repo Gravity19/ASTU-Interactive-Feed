@@ -1,13 +1,13 @@
 import React from 'react';
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
+import { useState, useEffect } from 'react'; 
 import axios from "axios";
 
 import "../styles/Dashboard_stud.css";
 import Modal from 'react-modal';    // import modal
 
 import SideBar_Stud from '../components/SideBar_Stud';
-import HeadIcon from '../components/HeadIcon';      //HeadIcon
+import HeadIcon_stud from '../components/HeadIcon_stud';      //HeadIcon
 import { PostList } from "../helpers/PostList";
 import PostItem_stud from "../helpers/PostItem_stud";
 
@@ -34,6 +34,14 @@ function Dashboard_stud() {
     function getFile(e) {
         setFile(URL.createObjectURL(e.target.files[0]));
     }
+
+
+
+
+
+
+
+
 
 
     // const twoFunctions = (e) => {
@@ -216,7 +224,7 @@ function Dashboard_stud() {
                 
                 {/* Head Icon */}
 
-                <HeadIcon/>
+                <HeadIcon_stud/>
 
 
             </div>
