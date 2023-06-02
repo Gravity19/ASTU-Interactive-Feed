@@ -138,6 +138,7 @@
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
+      opacity: 0.7;
   }
   
   .discussion .online {
@@ -261,7 +262,7 @@
   }
 
   .chat .message-container{           /* Message Container Left */
-    /* margin-bottom: 5px; */
+    margin-bottom: 8px;
     float: left;
   }
 
@@ -269,6 +270,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-bottom: 5px;
   }
   
   .chat .messages-chat .message {
