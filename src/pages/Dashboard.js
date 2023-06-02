@@ -13,7 +13,7 @@ import PostItem from "../helpers/PostItem";
 import ip from '../helpers/Config.js';
 
 
-import { MdEmail, MdAddLocationAlt, MdCall } from "react-icons/md";
+import { MdEmail, MdAddLocationAlt, MdCall, MdVerified } from "react-icons/md";
 import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-icons/bs";
 import { FaWalking, FaSchool } from "react-icons/fa";                  //walking + School icon
 import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //upload + Add icon 
@@ -248,10 +248,10 @@ function Dashboard() {
                             <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="user-img" className="user-img"/>
 
                             <div className='left'>
-                                <div className="big">{name.fullname}</div>
+                                <div className="big">{name.fullname}<MdVerified className='verified'/></div>
                                 <img src={teacher_badge} alt="role" className="role"/>
                                 <div className="small">Computer Science</div>
-                                <div className="small"><RiAddCircleFill className='icon' /> ASTU, Adama</div>
+                                {/* <div className="small"><RiAddCircleFill className='icon' /> ASTU, Adama</div> */}
                             </div>
 
                             <Link to="/profile" className='edit-btn'>Edit Profile</Link>

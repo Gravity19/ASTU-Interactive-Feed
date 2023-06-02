@@ -232,6 +232,8 @@
 
 .card__header .card_image {
     max-width: 100%; 
+    max-height: 500px;
+    object-fit: cover;      /* Remove to stretch size */
 }
 
 .card__header .user_info{
@@ -946,7 +948,8 @@
     right: 50px;
     top: 960px;
     background-color: transparent;
-    box-shadow: -7px 7px 14px -3px rgba(0,0,0,0.44);
+    /* box-shadow: -7px 7px 14px -3px rgba(0,0,0,0.44); */
+    background: linear-gradient(to right, #FFFFFF, #ECE9E6);
 }
 
 

@@ -245,7 +245,7 @@ function Home() {
                         </div>
 
                         <div className='board-lower'>
-                            <Link className='btn-discussion' to="/profile" >Discussion</Link>
+                            <Link className='btn-discussion' to="/chat" >Discussion</Link>
                         </div>
                         
                     </div>
