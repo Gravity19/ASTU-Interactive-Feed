@@ -104,7 +104,7 @@ function NavBar() {
 						{/* DropDown */}
 
 						{open && (
-							<div className="dropdown" useRef={dropdownRef}>
+							<div className="dropdown" ref={dropdownRef}>
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />

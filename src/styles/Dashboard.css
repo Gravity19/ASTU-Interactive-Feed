@@ -543,6 +543,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all ease-in-out 0.2s;
+    transition: all .3s;
     overflow: hidden;
 }
 
@@ -563,6 +565,8 @@
     background-color: #fbfbfb;
     border: 1px solid #f9f9f9;
     border-bottom: 2px solid #f06018;
+    transition: all .1s;
+    
 }
 
 
