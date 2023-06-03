@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {useNavigate, Link} from 'react-router-dom';
 import axios from "axios";
 
@@ -24,6 +24,53 @@ function SideBar() {
     }
 
 
+    //Update Pop-Up Functionality
+
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+    
+        document.addEventListener('mousedown', handleOutsideClick);
+    
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+
+
+
+    // Get Current User
+
+    const [name, setName] = useState('');
+    const [senderType, setSenderType] = useState('');
+
+	axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+                setName(res.data.user.user);
+
+                if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType ('Student');
+                } else {
+                    setSenderType ('Staff');
+                }
+            }
+            else{
+                setName("Something went wrong");
+            } 
+        })
+    }, []);
+
+
+
+
 	// Logout function
 
 	const logout = () => {
@@ -44,14 +91,13 @@ function SideBar() {
 
     return (
         <div className="SideBar-home">
-            <div className={`sidebar ${isOpen ? "open" : ""}`}>
+            <div className={`sidebar ${isOpen ? "open" : ""}`} ref={dropdownRef}>
                 <div className="logo-details">
                     <img src={cube_icon} alt='icon' className="logo_icon"/>
-                    {/* <div className="logo_name">CodingLab</div> */}
                     <img src={menu_icon} alt='icon' id="btn" onClick={toggleSidebar}/>
                 </div>
 
-            {/* The Lists */}
+                {/* The Lists */}
                 <ul className="nav-list">
 
                     <div className="upper-nav">
@@ -88,20 +134,20 @@ function SideBar() {
                     </div>
 
 
-                {/* Lower Profile */}
+                    {/* Lower Profile */}
                     <li className="profile">
                         <div className="profile-details">
                             <img src={user_image} alt="profileImg" />
                             <div className="name_job">
-                                <div className="name">Yabets Urgo</div>
-                                <div className="job">Web designer</div>
+                                <div className="name">{name.fullname}</div>
+                                <div className="role">{senderType}</div>
                             </div>
                         </div>
 
                         <button onClick={logout} className="logout-div">
                             <img src={reddit_icon2} alt='icon' className="log_out"/>
                         </button>
-                        <span className="tooltip">Logout</span>
+                        {/* <span className="tooltip">Logout</span> */}
                     </li>
 
                 </ul>

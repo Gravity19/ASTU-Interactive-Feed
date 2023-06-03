@@ -2,23 +2,22 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import axios from "axios";
-
 import "../styles/Dashboard.css";
-import Modal from 'react-modal';    // import modal
+import Modal from 'react-modal';
 
-import SideBar from '../components/SideBar';      //SideBar
-import HeadIcon from '../components/HeadIcon';      //HeadIcon
+import SideBar from '../components/SideBar';
+import HeadIcon from '../components/HeadIcon';
 import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
 import ip from '../helpers/Config.js';
 
-
-import { MdEmail, MdAddLocationAlt, MdCall, MdVerified } from "react-icons/md";
+import { MdEmail, MdAddLocationAlt, MdCall, MdVerified, MdOutlineCreate } from "react-icons/md";
 import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-icons/bs";
-import { FaWalking, FaSchool } from "react-icons/fa";                  //walking + School icon
-import { RiAddCircleFill, RiUploadCloud2Fill } from "react-icons/ri";                  //upload + Add icon 
+import { FaWalking, FaSchool } from "react-icons/fa";
+import { RiUploadCloud2Fill } from "react-icons/ri";
 import logo from "../assets/logo1.png";
-import teacher_badge from "../assets/badges/Teacher_badge.png";      //Teacher Badge
+import Student_badge from "../assets/badges/Student_badge.png";
+import Staff_badge from "../assets/badges/Staff_badge.png";
 
 
 function Dashboard() {
@@ -26,6 +25,7 @@ function Dashboard() {
     // Get Current User
 
     const [name, setName] = useState('');
+    const [senderType, setSenderType] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -33,6 +33,12 @@ function Dashboard() {
         .then(res => {
             if(res.data.status === "Success"){
                 setName(res.data.user.user);
+
+                if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType ('Student');
+                } else {
+                    setSenderType ('Staff');
+                }
             }
             else{
                 setName("Something went wrong");
@@ -127,7 +133,7 @@ function Dashboard() {
                 <div className='Dashboard-nav'>
                     <button className='create-btn' onClick={()=>setVisible(true)}>
                         <p>Create Post</p>
-                        <RiAddCircleFill className='icon'/>
+                        <MdOutlineCreate className='icon'/>
                     </button>
 
 
@@ -249,9 +255,16 @@ function Dashboard() {
 
                             <div className='left'>
                                 <div className="big">{name.fullname}<MdVerified className='verified'/></div>
-                                <img src={teacher_badge} alt="role" className="role"/>
-                                <div className="small">Computer Science</div>
-                                {/* <div className="small"><RiAddCircleFill className='icon' /> ASTU, Adama</div> */}
+                                {senderType === 'Student' ? (
+                                <>
+                                    <img src={Student_badge} alt="role" className="role"/>
+                                    <div className="small">Computer Science</div>
+                                </>
+                                ):(
+                                    <img src={Staff_badge} alt="role" className="role"/>
+                                )}
+
+                                {/* <div className="small">Computer Science</div> */}
                             </div>
 
                             <Link to="/profile" className='edit-btn'>Edit Profile</Link>
@@ -265,7 +278,15 @@ function Dashboard() {
                         <div className='post-nav'>
                             <button className={`button ${activeTab === null ? 'active' : ''}`} onClick={() => handleClick(null)}>Feed</button>
                             <button className={`button ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleClick(1)}>Personalized</button>
-                            <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(3)}>My Posts</button>
+                            {senderType === 'Student' ? (
+                            <>
+                                <button className={`button ${activeTab === 4 ? 'active' : ''}`} onClick={() => handleClick(4)}>School</button>
+                                <button className={`button ${activeTab === 5 ? 'active' : ''}`} onClick={() => handleClick(5)}>Department</button>
+                            </>
+                            ):(
+                                <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(2)}>My Posts</button>
+                            )}
+                            
                         </div>
 
                     {activeTab === null && (
@@ -339,7 +360,7 @@ function Dashboard() {
                     <div className='about'>
                         <p>About</p>
                         <div className='entry'><MdEmail className='icon'/>{name.email}</div>
-                        <div className='entry'><BsPersonFill className='icon'/>Teacher</div>
+                        <div className='entry'><BsPersonFill className='icon'/>{senderType}</div>
                         <div className='entry'><MdCall className='icon'/>+251-953-6459-08</div>
                         <div className='entry'><MdAddLocationAlt className='icon'/>Ethiopia, Addis Abeba</div>
                     </div>

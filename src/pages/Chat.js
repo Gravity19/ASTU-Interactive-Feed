@@ -1,16 +1,38 @@
 import React from 'react';
-import { useState, useEffect } from 'react';        //Api Fetching
-import axios from 'axios';                          //Api Fetching
+import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 import "../styles/Chat.css";
 import ip from '../helpers/Config.js';
+import SideBar from '../components/SideBar';
 
-import SideBar from '../components/SideBar';      //SideBar   
-import { IoSend } from "react-icons/io5";  //send icon
+import { IoSend, IoSearch } from "react-icons/io5"; 
 import { RxChevronLeft } from "react-icons/rx"
+import { MdPostAdd } from "react-icons/md";
 
 
 function Chat() {
+
+    //Update Pop-Up Functionality
+
+    const [create, setCreate]=useState(false);
+
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setCreate(false);
+            }
+        };
+    
+        document.addEventListener('mousedown', handleOutsideClick);
+    
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+    
 
     // Get Current User
 
@@ -134,10 +156,27 @@ function Chat() {
                 <div class="row">
 
                     <section class="discussions" style={{ zIndex: zIndex1 }}>
-                        <div class="search">
+                        <div class="top-bar">
                             <div class="searchbar">
-                                {/* <i class="fa fa-search" aria-hidden="true"></i> */}
-                                <input type="text" placeholder="Search..."></input>
+                                <IoSearch className='icon'/>
+                                <input type="text" placeholder="Search..." className='input-me'></input>
+                            </div>
+                            <div class="options">
+                                <MdPostAdd className='icon' onClick={()=> setCreate(!create)}/>
+
+                                {create && (
+                                    <div className='add-chat' ref={dropdownRef}>
+                                        <p>Create Chat</p>
+                                        <input type="text" placeholder="Topic"></input>
+                                        <select name="type" id="type">
+                                            <option hidden>Participants</option>
+                                            <option value="group">All</option>
+                                            <option value="group">Student</option>
+                                            <option value="individual">Staff</option>
+                                        </select>
+                                        <button>Create</button>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
