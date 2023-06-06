@@ -472,6 +472,7 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+    padding-left: 8px;
 }
 
 .field-one .left .big{
@@ -481,11 +482,17 @@
     margin-bottom: 3px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 5px;
 }
 
-.field-one .left .big .verified{
+.field-one .left .big .verified-student{
+    height: 22px;
+    width: 22px;
+    color: #797979;
+}
+
+.field-one .left .big .verified-staff{
     height: 22px;
     width: 22px;
     color: #007bff;
