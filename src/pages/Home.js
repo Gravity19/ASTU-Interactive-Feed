@@ -180,7 +180,7 @@ function Home() {
 
                     {/* POST APi /EXPERIMENTAL */}
 
-                    {posts.map((item, i) => (
+                    {/* {posts.map((item, i) => (
                             <PostItem
                                 key={i}
 
@@ -189,7 +189,7 @@ function Home() {
                                 desc={item.content}
                             />
                         )
-                    )}
+                    )} */}
 
 
 

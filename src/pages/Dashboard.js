@@ -47,6 +47,22 @@ function Dashboard() {
     }, []);
 
 
+    
+    // Get Student Post
+
+    const [letter, setLetter] = useState([]);
+
+    useEffect(() => {
+        ip.get(`/api/staff/viewPost?depName=${name.depName}`)
+        .then(res => {setLetter(res.data);})
+        .catch(err => console.log(err));
+    }, [name.depName]);
+
+
+
+
+
+
     // Modal Functionality
 
     const [Visible, setVisible] = useState(false);
@@ -158,7 +174,7 @@ function Dashboard() {
                                 <textarea name="content" placeholder="Enter Description" onChange={handleInputChange} required></textarea>
                             </div>
 
-                        {/* -- Upload Button -- */}
+                            {/* -- Upload Button -- */}
 
                             <div className="publish-box">
                                 <input className="inputs" type="file" id="image" accept='image/*' onChange={getFile} />
@@ -170,7 +186,7 @@ function Dashboard() {
                             </div>
 
 
-                        {/* -- Radio Button -- */}
+                            {/* -- Radio Button -- */}
 
                             <div className='publish-radio'>
                                 <div className="publish-to">
@@ -223,7 +239,7 @@ function Dashboard() {
                             </div>
 
 
-                        {/* -- Switch RSVP -- */}
+                            {/* -- Switch RSVP -- */}
 
                             <div className='switch-box'>
                                 <span>RSVP</span>
@@ -231,7 +247,7 @@ function Dashboard() {
                             </div>
 
 
-                    {/* -- Radio-Button Ends -- */}
+                            {/* -- Radio-Button Ends -- */}
 
                             <div className='bottom-btn'>
                                 <button className='publish'>Publish<BsFillBookmarkPlusFill/></button>
@@ -244,6 +260,7 @@ function Dashboard() {
 
                 </div>
 
+                {/* -- Field One -- */}
                 
                 <div className='field-one'>
 
@@ -254,17 +271,22 @@ function Dashboard() {
                             <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="user-img" className="user-img"/>
 
                             <div className='left'>
-                                <div className="big">{name.fullname}<MdVerified className='verified'/></div>
+
                                 {senderType === 'Student' ? (
                                 <>
+                                    <div className="big">{name.fullname}<MdVerified className='verified-student'/></div>
                                     <img src={Student_badge} alt="role" className="role"/>
-                                    <div className="small">Computer Science</div>
+                                    <div className="small">{name.Name}</div>
                                 </>
                                 ):(
+                                <>
+                                    <div className="big">{name.fullname}<MdVerified className='verified-staff'/></div>
                                     <img src={Staff_badge} alt="role" className="role"/>
+                                </>
                                 )}
 
                                 {/* <div className="small">Computer Science</div> */}
+
                             </div>
 
                             <Link to="/profile" className='edit-btn'>Edit Profile</Link>
@@ -277,17 +299,18 @@ function Dashboard() {
                     <div className='posts'>
                         <div className='post-nav'>
                             <button className={`button ${activeTab === null ? 'active' : ''}`} onClick={() => handleClick(null)}>Feed</button>
-                            <button className={`button ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleClick(1)}>Personalized</button>
                             {senderType === 'Student' ? (
                             <>
-                                <button className={`button ${activeTab === 4 ? 'active' : ''}`} onClick={() => handleClick(4)}>School</button>
-                                <button className={`button ${activeTab === 5 ? 'active' : ''}`} onClick={() => handleClick(5)}>Department</button>
+                                <button className={`button ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleClick(1)}>Personalized</button>
                             </>
                             ):(
-                                <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(2)}>My Posts</button>
+                                <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(3)}>My Posts</button>
                             )}
                             
                         </div>
+
+
+                    {/* ==== SPECIFIC CONTENT ==== */}
 
                     {activeTab === null && (
                     <>
@@ -327,7 +350,7 @@ function Dashboard() {
 
                             {/* POST Custom */}
 
-                            {PostList.map((Item, keys) => {
+                            {/* {PostList.map((Item, keys) => {
                                 return (
                                     <PostItem
                                         key={keys}
@@ -344,9 +367,18 @@ function Dashboard() {
                                         loc={Item.loc}
                                     />
                                 );
-                            })}
+                            })} */}
 
-                            <PostItem/>
+                    {letter.map((item, i) => (
+                            <PostItem
+                                key={i}
+
+                                user_name={item.staffName}
+                                loc={item.eventLocation}
+                                desc={item.content}
+                            />
+                        )
+                    )}
 
                         </div>
                     </>
