@@ -317,7 +317,7 @@
   .chat .messages-chat {
     padding: 25px 35px;
     background-color: white;
-    height: 540px;
+    height: 562px;
     overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
@@ -327,7 +327,7 @@
   .chat .messages-null {
     padding: 25px 35px;
     background-color: white;
-    height: 560px;
+    height: 562px;
     overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
@@ -388,15 +388,32 @@
     max-width: 500px;
   }
 
-  .chat .messages-chat .name-text{
+  .chat .messages-chat .name-text-blue{
     font-family:'Montserrat', sans-serif;
     font-size: 10pt;
     font-weight: 700;
-    /* padding-bottom: 5px; */
-    color:#78a3b0;
-    /* text-align: left; */
+    color:#639aab;
     margin-bottom: 4px;
   }
+
+  .chat .messages-chat .name-text-red{
+    font-family:'Montserrat', sans-serif;
+    font-size: 10pt;
+    font-weight: 700;
+    color: rgb(209, 102, 102);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .chat .messages-chat .name-text-red .icon{
+    color: #676767;
+    height: 17px;
+    width: 17px;
+  }
+
+
 
   .chat .messages-chat .focus-text{
     font-family:'Montserrat', sans-serif;
