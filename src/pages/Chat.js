@@ -9,6 +9,9 @@ import SideBar from '../components/SideBar';
 import { IoSend, IoSearch } from "react-icons/io5"; 
 import { RxChevronLeft } from "react-icons/rx"
 import { MdPostAdd } from "react-icons/md";
+import { VscVerified } from "react-icons/vsc";
+
+
 
 
 function Chat() {
@@ -38,6 +41,7 @@ function Chat() {
 
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
+    const [userType, setUserType] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -47,9 +51,11 @@ function Chat() {
                 setName(res.data.user.user);
 
                 if (res.data.user.user.hasOwnProperty('studentId')) {   // sender type declaration
-                    setSenderType ('student');
+                    setSenderType('Student');
+                    setUserType('student');
                 } else {
-                    setSenderType ('staff');
+                    setSenderType('Staff');
+                    setUserType('staff');
                 }
             }
             else{
@@ -65,12 +71,19 @@ function Chat() {
     const [messages, setMessages] = useState('');
 
     const sendMessage = async () => {
-        const type= senderType;
-        const userId = name.studentId;
+        const type= userType;
+
+        let user = '';
+        if (userType === 'student') {
+            user = name.studentId;
+        } else if (userType === 'staff') {
+            user = name.staffId;
+        }
+
         const chatId = activeChatID;
         const message = messages;
         try {
-        const data = {message: message, userId: userId, senderType: type, chatId: chatId};
+        const data = {message: message, userId: user, senderType: type, chatId: chatId};
 
         const response = await axios.post('http://localhost:3000/api/student/conv', data);
         console.log(response.data);
@@ -83,6 +96,48 @@ function Chat() {
     const handleMessageChange = (event) => {
         setMessages(event.target.value);
     };
+
+
+
+    // Create Chat
+
+
+    const [chatData, setChatData] = useState({
+        topic: '',
+        restrictedMode: '0',
+    });
+    
+    const handleChatChange = (e) => {
+        setChatData({ ...chatData, [e.target.name]: e.target.value });
+    };
+    
+    const handleChatCreation = () => {
+        let userID = '';
+        if (userType === 'student') {
+            userID = name.studentId;
+        } else if (userType === 'staff') {
+            userID = name.staffId;
+        }
+
+        const payload = {
+            topic: chatData.topic,
+            categoryId: "8",
+            creatorType: userType,
+            creatorId: userID,
+            restrictedMode: chatData.restrictedMode,
+        };
+    
+        axios.post('http://localhost:3000/api/student/chat', payload)
+        .then((response) => {
+            console.log('Chat created successfully:', response.data);
+            setCreate(false);
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error creating chat:', error);
+        });
+    };
+
 
 
 
@@ -102,19 +157,19 @@ function Chat() {
     };
 
 
-    // View Chat API
+    // Get Chat API
 
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
-        ip.get('/api/student/getchat')
+        ip.get(`/api/student/getchat?userType=${userType}`)
         .then(res => {setChats(res.data)})
         .catch(err => console.log(err));
-    }, []);
+    }, [userType]);
 
 
 
-    // View Convo API
+    // Get Conversation API
 
     const [message, setMessage] = useState([]);
     const [chatId, setChatId] = useState(null);
@@ -167,14 +222,13 @@ function Chat() {
                                 {create && (
                                     <div className='add-chat' ref={dropdownRef}>
                                         <p>Create Chat</p>
-                                        <input type="text" placeholder="Topic"></input>
-                                        <select name="type" id="type">
-                                            <option hidden>Participants</option>
-                                            <option value="group">All</option>
-                                            <option value="group">Student</option>
-                                            <option value="individual">Staff</option>
+                                        <input type="text" placeholder="Topic" name="topic" value={chatData.topic} onChange={handleChatChange} required/>
+                                        <select name="restrictedMode" id="restrictedMode" value={chatData.restrictedMode} onChange={handleChatChange} required>
+                                            <option hidden>Type</option>
+                                            <option value="0">Open</option>
+                                            <option value="1">Restricted</option>
                                         </select>
-                                        <button>Create</button>
+                                        <button onClick={handleChatCreation}>Create</button>
                                     </div>
                                 )}
                             </div>
@@ -241,7 +295,7 @@ function Chat() {
                                 {/* <div class="response-time"> 15h04</div> */}
                             </div>
 
-                            ) : messages.senderType === 'staff' && messages.userid === name.staffId ? (
+                            ) : messages.senderType === 'Staff' && messages.userid === name.staffId ? (
 
                             <div class="message-container-right">
                                 <div class="message text-only">
@@ -258,8 +312,19 @@ function Chat() {
                                 <div class="message">
                                     <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}></div>
                                     <div class="text">
-                                        <div className='name-text'>{messages.from}</div>
+
+                                    {messages.senderType === 'Staff' ? (
+                                    <>
+                                        <div className='name-text-red'>{messages.from} <VscVerified className='icon'/></div>
                                         <div className='focus-text'>{messages.message}</div>
+                                    </>
+                                    ) : (
+                                    <>
+                                        <div className='name-text-blue'>{messages.from}</div>
+                                        <div className='focus-text'>{messages.message}</div>
+                                    </>
+                                    )}
+
                                     </div>
                                 </div>
                                 {/* <p class="time"> 15h09</p> */}

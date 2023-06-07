@@ -32,9 +32,9 @@ function Register() {
 
 
 
-    // POST Registration
+    // Student Registration
 
-    const navigate = useNavigate();             // define navigation
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         fullname: "",
@@ -44,9 +44,7 @@ function Register() {
         year: "",
         depId: "",
         // schoolYear: "",
-        // birthDate: "",
         // degreeType: "UG",
-        // department: "",
     });
     
     const handleSubmit = async (event) => {
@@ -64,6 +62,35 @@ function Register() {
     const handleInputChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
+
+
+    // Staff Registration
+
+
+    const [staffData, setStaffData] = useState({
+        fullname: "",
+        email: "",
+        password: "",
+    });
+    
+    const handleStaffSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await ip.post("/api/staff/stReg", staffData);
+            console.log(response.data);
+            navigate('/login');
+        }    
+        catch (error) {
+            console.log(error);
+        }
+    };
+    
+    const handleStaffChange = (event) => {
+        setStaffData({ ...staffData, [event.target.name]: event.target.value });
+    };
+
+
+
 
 
 
@@ -189,21 +216,20 @@ function Register() {
             <>
                 <div className="reg-title">Registration<p>staff</p></div>
 
-                <form onSubmit={handleSubmit} className="reg-form">
+                <form onSubmit={handleStaffSubmit} className="reg-form">
 
-                    <div className="x-y-combo">
-                        <div className="x-y-box">
-                            <label htmlFor="fullname">Full Name</label>
-                            <input type="text" name="fullname" id="fullname" placeholder="Enter full name" onChange={handleInputChange} required />
-                        </div>
-
-                        <div className="x-y-box">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleInputChange} required />
-                        </div>
+                    <div className="reg-input-box">
+                        <label htmlFor="fullname">Full Name</label>
+                        <input type="text" name="fullname" id="fullname" placeholder="Enter full name" onChange={handleStaffChange} required />
                     </div>
 
-                    <div className="x-y-combo">
+                    <div className="reg-input-box">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleStaffChange} required />
+                    </div>
+                    
+
+                    {/* <div className="x-y-combo">
                         <div className="x-y-box">
                             <label htmlFor="password">Password</label>
                             <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleInputChange} required />
@@ -213,28 +239,13 @@ function Register() {
                             <label htmlFor="picture">Picture</label>
                             <input type="text" name="picture" id="picture" placeholder="Enter picture" onChange={handleInputChange} required />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="reg-input-box">
-                        <label htmlFor="year">Year</label>
-                        <input type="text" name="year" id="year" placeholder="Enter year" onChange={handleInputChange} required />
+                        <label htmlFor="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleStaffChange} required />
                     </div>
 
-                    <div className="reg-input-box address">
-                        <div className="column">
-                            <div className="select-box">
-                                <select id="depId" name="depId" onChange={handleInputChange} required>
-                                    <option hidden>Department</option>
-                                    {depts.map((Depart, i) => (
-                                        <option key={i} value={Depart.depId}>{Depart.name}</option>
-                                        )
-                                    )}
-                                </select>
-                            </div>
-
-                             {/* <input type="text" placeholder="Enter your city" required />  */}
-                        </div>
-                    </div>
 
                     <div className="reg-footer">
                         <button className="reg-button">Register</button>

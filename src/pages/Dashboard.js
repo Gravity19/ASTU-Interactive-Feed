@@ -22,6 +22,8 @@ import Staff_badge from "../assets/badges/Staff_badge.png";
 
 function Dashboard() {
 
+    const [Visible, setVisible] = useState(false);
+
     // Get Current User
 
     const [name, setName] = useState('');
@@ -60,38 +62,49 @@ function Dashboard() {
 
 
 
+    // Get MyPost
+    
+
+    const [myPost, SetMyPost] = useState([]);
+
+    useEffect(() => {
+        ip.get(`/api/staff/myPost?staffId=${name.staffId}`)
+        .then(res => {SetMyPost(res.data);})
+        .catch(err => console.log(err));
+    }, [name.staffId]);
 
 
-
-    // Modal Functionality
-
-    const [Visible, setVisible] = useState(false);
 
 
     // Create Post
+    
+
 
     const [formData, setFormData] = useState({
         content: "",
         staffId: "",
         categoryId: "",
-        // rsvp: "",
+        // eventLocation: "",
     });
-    
+
     const handlePost = async (event) => {
         event.preventDefault();
         try {
-            const response = await ip.post("/api/staff/post", formData);
-            console.log(response.data);     // handle response data here
-        }    
-        catch (error) {
-          console.log(error.response.data); // handle error here
+            const updatedFormData = {
+                ...formData,
+                staffId: name.staffId  // Add staff ID to the formData object
+            };
+    
+            const response = await ip.post("/api/staff/post", updatedFormData);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response.data);
         }
-
+    
         setVisible(false);
     };
     
-
-    // -------
+    
 
     const handleInputChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -304,7 +317,7 @@ function Dashboard() {
                                 <button className={`button ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleClick(1)}>Personalized</button>
                             </>
                             ):(
-                                <button className={`button ${activeTab === 3 ? 'active' : ''}`} onClick={() => handleClick(3)}>My Posts</button>
+                                <button className={`button ${activeTab === 2 ? 'active' : ''}`} onClick={() => handleClick(2)}>My Posts</button>
                             )}
                             
                         </div>
@@ -348,41 +361,51 @@ function Dashboard() {
                     <>
                         <div className='post-list'>
 
-                            {/* POST Custom */}
+                        {letter.map((item, i) => (
+                                <PostItem
+                                    key={i}
 
-                            {/* {PostList.map((Item, keys) => {
-                                return (
-                                    <PostItem
-                                        key={keys}
-                                        
-                                        user_name={Item.user_name}
-                                        user_image={Item.user_image}
-                                        user_badge={Item.user_badge}
-                                        card_image={Item.card_image}
-                                        tag= {Item.tag}
-                                        title= {Item.title}
-                                        desc= {Item.desc}
-                                        time={Item.time}
-                                        date={Item.date}
-                                        loc={Item.loc}
-                                    />
-                                );
-                            })} */}
-
-                    {letter.map((item, i) => (
-                            <PostItem
-                                key={i}
-
-                                user_name={item.staffName}
-                                loc={item.eventLocation}
-                                desc={item.content}
-                            />
-                        )
-                    )}
+                                    user_name={item.staffName}
+                                    loc={item.eventLocation}
+                                    desc={item.content}
+                                />
+                            )
+                        )}
 
                         </div>
                     </>
                     )}
+
+
+                    {activeTab === 2 && (
+                    <>
+                        {myPost.length > 0 ? (
+                        <div className='post-list'>
+
+                        {myPost.map((item, i) => (
+                                <PostItem
+                                    key={i}
+
+                                    user_name={item.staffName}
+                                    loc={item.eventLocation}
+                                    desc={item.content}
+                                />
+                            )
+                        )}
+
+                        </div>
+                        ) : (
+                            <div className='post-list'>
+                                <p className='no-post'>You have not posted yet</p>
+                            </div>
+                        )}
+                    </>
+                    )}
+
+
+
+
+
 
 
                     </div>
