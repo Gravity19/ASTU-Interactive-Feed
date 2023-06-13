@@ -6,10 +6,11 @@ import "../styles/Chat.css";
 import ip from '../helpers/Config.js';
 import SideBar from '../components/SideBar';
 
-import { IoSend, IoSearch } from "react-icons/io5"; 
+import { IoSend, IoSearch, IoWarningOutline, IoOptionsSharp } from "react-icons/io5"; 
 import { RxChevronLeft } from "react-icons/rx"
 import { MdPostAdd } from "react-icons/md";
 import { VscVerified } from "react-icons/vsc";
+
 
 
 
@@ -18,6 +19,9 @@ function Chat() {
 
     //Update Pop-Up Functionality
 
+    // const [delChat, setDelChat]=useState(false);
+    const [deletePop, setDeletePop]=useState(false);
+    const [settingPop, setSettingPop]=useState(false);
     const [create, setCreate]=useState(false);
 
     const dropdownRef = useRef(null);
@@ -26,6 +30,8 @@ function Chat() {
         const handleOutsideClick = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setCreate(false);
+                setDeletePop(false);
+                setSettingPop(false);
             }
         };
     
@@ -174,6 +180,8 @@ function Chat() {
     const [message, setMessage] = useState([]);
     const [chatId, setChatId] = useState(null);
     const [topic, setTopic] = useState([]);
+    const [creatorId, setCreatorId] = useState([]);
+    const [creatorType, setCreatorType] = useState([]);
 
     useEffect(() => {
         ip.get(`/api/student/getconv?chatId=${chatId}`)
@@ -198,6 +206,12 @@ function Chat() {
         // setConversation(false);
         handleClickDiv1();
     }
+
+
+
+    // Delete Chat Pop-UP
+
+
 
     return (
         <div className="user-home">
@@ -245,6 +259,8 @@ function Chat() {
                                         setActiveChatID(chat.chatId);
                                         handleChatBtn(chat.chatId);
                                         setTopic(chat.topic);
+                                        setCreatorType(chat.creatorType);
+                                        setCreatorId(chat.creatorId);
                                         event.stopPropagation(); // To prevent event bubbling
                                     }}
                                     >
@@ -255,6 +271,7 @@ function Chat() {
                                     <p className="message">Let's meet for a coffee CSS word-wrap property is used to break the long words.</p>
                                 </div>
                                 <div className="timer">{chat.chatId}</div>
+                                
                             </div>
 
                         </div>
@@ -276,6 +293,40 @@ function Chat() {
                         <div class="header-chat">
                             <RxChevronLeft className='icon'  onClick={handleClickDiv2}/>
                             <p class="name">{topic}</p>
+                            <IoOptionsSharp  className='setting'onClick={()=> setSettingPop(!settingPop)}/>
+
+
+                            {settingPop && (
+                                <div className="setting-pop" ref={dropdownRef}>
+
+                                {userType === 'student' && creatorType === 'student' && creatorId === name.studentId ? (
+                                    <div className="line" onClick={()=>{setSettingPop(!settingPop); setDeletePop(!deletePop);}} >delete</div>
+                                ) : userType === 'staff' && creatorType === 'staff' && creatorId === name.staffId ? (
+                                    <div className="line" onClick={()=>{setSettingPop(!settingPop); setDeletePop(!deletePop);}} >delete</div>
+                                ) : (
+                                    null
+                                )}
+
+
+                                    <div className="line" onClick={()=> setSettingPop(!settingPop)}>Exit</div>
+                                </div>
+                            )}
+
+
+
+                            {deletePop && (
+
+                            <div className='delete' ref={dropdownRef}>
+                                
+                                <div className='icon'><IoWarningOutline className="image"/></div>
+                                <p>Are you sure you want to delete this chat ?</p>
+                                <button onClick={()=> setDeletePop(!deletePop)}>Delete</button>
+                            </div>
+
+                            )}
+
+
+
                         </div>
 
                         

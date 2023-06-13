@@ -9,7 +9,7 @@ import "../styles/HeadIcon.css";
 
 import { FaUser } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
-import { MdArrowForwardIos, MdDashboardCustomize } from "react-icons/md";
+import { MdArrowForwardIos, MdDashboardCustomize, MdVerified } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 
 import profile_img from "../assets/img_avatar.png";
@@ -62,6 +62,7 @@ function HeadIcon() {
 	// Get Current User
 
     const [name, setName] = useState('');
+	const [senderType, setSenderType] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -69,6 +70,12 @@ function HeadIcon() {
         .then(res => {
             if(res.data.status === "Success"){
                 setName(res.data.user.user);
+
+				if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType ('Student');
+                } else {
+                    setSenderType ('Staff');
+                }
             }
             else{
                 setName("Something went wrong");
@@ -87,7 +94,23 @@ function HeadIcon() {
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
-									<p>{name.fullname}</p>
+									{/* <p>{name.fullname}<MdVerified/></p> */}
+
+									{senderType === 'Student' ? (
+									<>
+										<p>{name.fullname}<MdVerified className='verified-student'/></p>
+									</>
+									):(
+									<>
+										<p>{name.fullname}<MdVerified className='verified-staff'/></p>
+									</>
+									)}
+
+									{!authState && (
+										<Link to="/login"></Link>
+									)
+									}
+
 								</div>
 
 								<ul>

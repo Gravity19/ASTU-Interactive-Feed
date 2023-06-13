@@ -9,13 +9,14 @@ import { IoOptionsOutline } from "react-icons/io5";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { FaWalking, FaSchool } from "react-icons/fa";
 
+// import imagg from "../../../back-end/Back2/Images/Post_Image/1686332036147.png";
 import logo from "../assets/logo1.png";
 import B507 from "../assets/loc/b507.png";
 import B508 from "../assets/loc/b508.png";
 import B509 from "../assets/loc/b509.png";
 
 
-function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc}) {
+function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc, day}) {
 
 
     const [Popup, setPopup] = useState(false);      //modal Functionality
@@ -224,7 +225,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             <div className="supplies">
                                 <img src={date_icon} alt="date_icon" className="date_icon"/>
                                 <div className="date_info">
-                                    <h5>{date}</h5>
+                                    <h5>{day}</h5>
                                     <small>{time}</small>
                                 </div>
                             </div>

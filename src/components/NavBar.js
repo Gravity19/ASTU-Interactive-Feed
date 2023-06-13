@@ -6,7 +6,7 @@ import "../styles/NavBar.css";
 
 import { FaUser } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
-import { MdArrowForwardIos, MdDashboardCustomize } from "react-icons/md";
+import { MdArrowForwardIos, MdDashboardCustomize, MdVerified } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 
 
@@ -21,6 +21,7 @@ function NavBar() {
 
     const [name, setName] = useState('');
 	const [authState, setAuthState]=useState(false);
+	const [senderType, setSenderType] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -29,6 +30,12 @@ function NavBar() {
             if(res.data.status === "Success"){
 				setAuthState(true);
                 setName(res.data.user.user);
+
+				if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType ('Student');
+                } else {
+                    setSenderType ('Staff');
+                }
             }
             else{
 				setAuthState(false);
@@ -108,7 +115,16 @@ function NavBar() {
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
 									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
-									<p>{name.fullname}</p>
+
+									{senderType === 'Student' ? (
+									<>
+										<p>{name.fullname}<MdVerified className='verified-student'/></p>
+									</>
+									):(
+									<>
+										<p>{name.fullname}<MdVerified className='verified-staff'/></p>
+									</>
+									)}
 								</div>
 
 								<ul>

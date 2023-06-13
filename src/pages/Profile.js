@@ -13,6 +13,7 @@ function Profile() {
 
     // Get Current User
     const [name, setName] = useState('');
+    const [senderType, setSenderType] = useState('');
 
     axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -20,6 +21,12 @@ function Profile() {
         .then(res => {
             if(res.data.status === "Success"){
                 setName(res.data.user.user);
+
+                if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType ('Student');
+                } else {
+                    setSenderType ('Staff');
+                }
             }
             else{
                 setName("Something went wrong");
@@ -126,10 +133,8 @@ function Profile() {
                     <div className="card-banner-space"></div>
                     <div className="card-banner-big">{name.fullname}</div>
                     <div className="card-banner-small">Computer Science</div>
-                    <div className="card-banner-tag">Student</div>
-                    <div className="card-banner-text">Morgan has collected 
-                    ants since they were six years old and now has many dozen 
-                    ants but none in their pants.</div>
+                    <div className="card-banner-tag">{senderType}</div>
+                    <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae.</div>
                     
                 </div>
 
