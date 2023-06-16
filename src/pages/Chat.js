@@ -7,7 +7,7 @@ import ip from '../helpers/Config.js';
 import SideBar from '../components/SideBar';
 
 import { IoSend, IoSearch, IoWarningOutline, IoOptionsSharp } from "react-icons/io5"; 
-import { RxChevronLeft } from "react-icons/rx"
+import { RxChevronLeft } from "react-icons/rx";
 import { MdPostAdd } from "react-icons/md";
 import { VscVerified } from "react-icons/vsc";
 

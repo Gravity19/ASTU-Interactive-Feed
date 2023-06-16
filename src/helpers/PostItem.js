@@ -4,22 +4,26 @@ import Modal from 'react-modal';
 
 import date_icon from "../assets/date_icon.png";
 import map_icon from "../assets/map_icon.png";
+
 import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsFillHeartFill, BsRobot } from "react-icons/bs";
 import { IoOptionsOutline } from "react-icons/io5";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { FaWalking, FaSchool } from "react-icons/fa";
+import { IoWarningOutline } from "react-icons/io5"; 
 
-// import imagg from "../../../back-end/Back2/Images/Post_Image/1686332036147.png";
+
+import ip from '../helpers/Config.js';
 import logo from "../assets/logo1.png";
 import B507 from "../assets/loc/b507.png";
 import B508 from "../assets/loc/b508.png";
 import B509 from "../assets/loc/b509.png";
 
 
-function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc, day}) {
+function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc, day, postId}) {
 
 
-    const [Popup, setPopup] = useState(false);      //modal Functionality
+    const [Popup, setPopup] = useState(false); 
+    const [deletePop, setDeletePop]=useState(false);
 
     //Update Pop-Up Functionality
     const [open, setOpen]=useState(false);          //Update Functionality
@@ -34,6 +38,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                 setOpen(false);
                 setSummary(false);
                 setLocate(false);
+                setDeletePop(false);
             }
         };
     
@@ -78,6 +83,25 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
     const imageSrc = getImageByLoc(loc)
 
+
+    // Delete Post
+
+
+    const deletePost = () => {
+        const requestBody = {
+            postId: postId
+        };
+
+        ip.delete('/api/staff/deletePost', { data: requestBody })
+        .then(response => {
+            console.log(response.data);
+            setDeletePop(!deletePop);
+            window.location.reload();
+        })
+        .catch(err => console.log(err));
+    };
+
+
     return (
         <div className="card">
 
@@ -93,7 +117,17 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                 {open && (
                                 <div className="update" ref={dropdownRef}>
                                     <div className="line" onClick={()=>{setPopup(true); setOpen(!open);}} >Update</div>
+                                    <div className="line" onClick={()=>{setOpen(!open); setDeletePop(!deletePop);}} >Delete</div>
                                     <div className="line" onClick={()=> setOpen(!open)}>Exit</div>
+                                </div>
+                                )}
+
+                                {deletePop && (
+                                <div className='delete' ref={dropdownRef}>
+                                    <div className='icon'><IoWarningOutline className="image"/></div>
+                                    <p>Are you sure you want to delete this Post ?</p>
+                                    <button onClick={deletePost}>Delete</button>
+                                    <button className='cancel' onClick={()=> setDeletePop(false)}>Cancel</button>
                                 </div>
                                 )}
 
@@ -111,7 +145,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                     <form className='publish-form'>
                                         <div className="publish-box">
                                             <label htmlFor="staffId">Title</label>
-                                            <input className="inputs" type='text' name="staffId" placeholder="Place Your title here"/>
+                                            <input className="inputs" type='text' name="staffId" placeholder={title}/>
                                         </div>
 
                                         <div className="publish-box">

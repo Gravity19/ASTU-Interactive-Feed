@@ -185,6 +185,11 @@
     opacity: 90%;
 }
 
+
+
+/* Options pop-up */
+
+
 .card__header .options {
     position: absolute;
     height: 25px;
@@ -197,6 +202,8 @@
 .card__header .options:active {
     opacity: 85%;
 }
+
+
 
 .card__header .update {
     background-color: #efefef;
@@ -214,6 +221,7 @@
     right: 20px;
     top: 45px;
     opacity: 95%;
+    z-index: 1;
 }
 
 .card__header .line{
@@ -229,6 +237,88 @@
 
 
 
+
+.card__header .delete{
+    position: absolute;
+    right: 35px;
+    top: 95px;
+    max-width: 300px;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 15px 20px -5px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 2;
+}
+
+.card__header .delete .icon {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FEE2E2;
+    color: #DC2626;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 9999px;
+    margin-bottom: 20px;
+}
+
+.card__header .delete .image{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.card__header .delete p{
+    color: #818080;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    margin-bottom: 20px;
+}
+
+
+.card__header .delete button{
+    padding: 0.5rem 1rem;
+    background-color: #DC2626;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    justify-content: center;
+    width: 100%;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-color: transparent;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.card__header .delete button:hover{
+    background-color: #c12b2b;
+}
+
+.card__header .delete .cancel{
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid rgb(90, 90, 90);
+    color: #000000;
+}
+
+.card__header .delete .cancel:hover{
+    background-color: rgb(241, 241, 241);
+}
+
+
+
+/* OPtion Pop-up ends */
 
 .card__header .card_image {
     max-width: 100%; 

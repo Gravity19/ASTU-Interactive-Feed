@@ -69,7 +69,9 @@ function Dashboard() {
     useEffect(() => {
         ip.get(`/api/staff/myPost?staffId=${name.staffId}`)
         .then(res => {SetMyPost(res.data);})
-        .catch(err => console.log(err));
+        .catch(err => 
+            console.log("there is something wrong in get MyPost")
+        );
     }, [name.staffId]);
 
 
@@ -82,7 +84,6 @@ function Dashboard() {
         .then(response => setDepts(response.data))
         .catch(err => console.log(err));
     }, []);
-
 
 
 
@@ -437,6 +438,7 @@ function Dashboard() {
                                     title={item.title}
                                     day={formattedDate}
                                     time={formattedTime}
+                                    postId={item.postId}
                                     />
                                 );
                                 })}
