@@ -111,6 +111,7 @@ function Chat() {
     const [chatData, setChatData] = useState({
         topic: '',
         restrictedMode: '0',
+        categoryId: '',
     });
     
     const handleChatChange = (e) => {
@@ -127,7 +128,7 @@ function Chat() {
 
         const payload = {
             topic: chatData.topic,
-            categoryId: "8",
+            categoryId: chatData.categoryId,
             creatorType: userType,
             creatorId: userID,
             restrictedMode: chatData.restrictedMode,
@@ -209,7 +210,15 @@ function Chat() {
 
 
 
-    // Delete Chat Pop-UP
+    // Get Department
+
+    const [depts, setDepts] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/student/getDep')
+        .then(response => setDepts(response.data))
+        .catch(err => console.log(err));
+    }, []);
 
 
 
@@ -237,10 +246,20 @@ function Chat() {
                                     <div className='add-chat' ref={dropdownRef}>
                                         <p>Create Chat</p>
                                         <input type="text" placeholder="Topic" name="topic" value={chatData.topic} onChange={handleChatChange} required/>
+                                        
                                         <select name="restrictedMode" id="restrictedMode" value={chatData.restrictedMode} onChange={handleChatChange} required>
                                             <option hidden>Type</option>
                                             <option value="0">Open</option>
                                             <option value="1">Restricted</option>
+                                        </select>
+
+                                        <select name="categoryId" id="categoryId" value={chatData.categoryId} onChange={handleChatChange} required>
+                                            <option hidden>Type</option>
+                                            <option value="8">Open</option>
+                                            {depts.map((Depart, i) => (
+                                                <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                                )
+                                            )}
                                         </select>
                                         <button onClick={handleChatCreation}>Create</button>
                                     </div>
