@@ -49,8 +49,10 @@
     width: 100%;
     margin-top: 20px;
 }
-.account-div label {
-    color: #333;
+.account-update label {
+    color: #808080;
+    font-size: 14px;
+    font-weight: 600;
 }
 .account-update .account-div input {
     position: relative;
@@ -87,10 +89,6 @@
     margin-top: 20px;
 }
 
-.account-update .form-pair label {
-    margin-right: 10px;
-    color: #333;
-}
 
 .account-update .form-pair input {
     position: relative;
@@ -105,6 +103,25 @@
     padding: 0 20px;
 }
 
+
+.account-update .Preference{
+    display: flex;
+    gap: 15px;
+}
+
+.account-update .Preference .add{
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #438bd7;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
 
 
 
@@ -138,8 +155,7 @@
 
 
 .account-update .reg-button {
-    height: 40px;
-    width: 100px;
+    padding: 10px 12px;
     color: #fff;
     font-size: 1.0rem;
     font-weight: 500;

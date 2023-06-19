@@ -3,7 +3,6 @@ import avatar_img2 from "../assets/img_avatar2.png";      //User image2
 import teacher_badge from "../assets/badges/Teacher_badge.png";      //Teacher Badge
 import Staff_badge from "../assets/badges/Staff_badge.png";      //Staff Badge
 import card1 from "../assets/retro.jpg";    //card image 1
-import card2 from "../assets/stue.jpg";    //card image 2
 
 
 
@@ -22,7 +21,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit",
         summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus.  Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit",
         time: "7:35 PM",
-        date: "Today",
+        day: "Today",
         loc: "B-507",
     },
 
@@ -36,7 +35,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit",
         summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus.",
         time: "7:35 PM",
-        date: "Yesterday",
+        day: "Yesterday",
         loc: "B-508",
     },
 
@@ -50,7 +49,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -64,7 +63,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -78,7 +77,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -92,7 +91,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -106,7 +105,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -120,7 +119,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -134,7 +133,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -148,7 +147,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -162,7 +161,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -176,7 +175,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 
@@ -190,7 +189,7 @@ export const PostList = [
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem! perferendis molestiae non nemo doloribus.",
         summary: "sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus Lorem ipsum dolor",
         time: "7:35 PM",
-        date: "Thursday",
+        day: "Thursday",
         loc: "Space",
     },
 

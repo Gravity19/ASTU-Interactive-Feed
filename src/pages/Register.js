@@ -35,12 +35,14 @@ function Register() {
     // Student Registration
 
     const navigate = useNavigate();
+    const [error, setError] = useState('');
+    const [picture, setImage] = useState(null);
 
     const [formData, setFormData] = useState({
         fullname: "",
         email: "",
         password: "",
-        picture: "",
+        picture: picture,
         year: "",
         depId: "",
         // schoolYear: "",
@@ -50,18 +52,42 @@ function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await ip.post("/api/student/register", formData);
-            console.log(response.data); // handle response data here
+            const response = await ip.post("/api/student/register", {
+                ...formData,
+                picture,
+            },
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            setFormData({});
+            setImage("");
+
+            console.log(response.data);
             navigate('/login');
         }    
         catch (error) {
-          console.log(error); // handle error here
+            if (error.response.status === 400) {
+                setError(error.response.data.message);
+            } else {
+                console.log(error);
+            } 
         }
     };
-    
+
     const handleInputChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
+
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
+
 
 
     // Staff Registration
@@ -71,17 +97,34 @@ function Register() {
         fullname: "",
         email: "",
         password: "",
+        picture: picture,
     });
     
     const handleStaffSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await ip.post("/api/staff/stReg", staffData);
+            const response = await ip.post("/api/staff/stReg", {
+                ...staffData,
+                picture,
+            },
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            setStaffData({});
+            setImage("");
+
             console.log(response.data);
             navigate('/login');
         }    
         catch (error) {
-            console.log(error);
+            if (error.response.status === 400) {
+                setError(error.response.data.message);
+            } else {
+                console.log(error);
+            } 
         }
     };
     
@@ -149,7 +192,7 @@ function Register() {
 
                         <div className="x-y-box">
                             <label htmlFor="picture">Picture</label>
-                            <input type="text" name="picture" id="picture" placeholder="Enter picture" onChange={handleInputChange} required />
+                            <input type="file" name="picture" id="picture" accept="image/*" onChange={handleImageChange} />
                         </div>
                     </div>
 
@@ -207,6 +250,7 @@ function Register() {
                         <button className="reg-button">Register</button>
                         <p>Already have an account? <a href="/login">Login</a></p>
                     </div>
+                    <div className="error">{error}</div>
                     
                 </form>
             </>
@@ -229,28 +273,29 @@ function Register() {
                     </div>
                     
 
-                    {/* <div className="x-y-combo">
+                    <div className="x-y-combo">
                         <div className="x-y-box">
                             <label htmlFor="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleInputChange} required />
+                            <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleStaffChange} required />
                         </div>
 
                         <div className="x-y-box">
                             <label htmlFor="picture">Picture</label>
-                            <input type="text" name="picture" id="picture" placeholder="Enter picture" onChange={handleInputChange} required />
+                            <input type="file" name="picture" id="picture" accept="image/*" onChange={handleImageChange} />
                         </div>
-                    </div> */}
+                    </div>
 
-                    <div className="reg-input-box">
+                    {/* <div className="reg-input-box">
                         <label htmlFor="password">Password</label>
                         <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleStaffChange} required />
-                    </div>
+                    </div> */}
 
 
                     <div className="reg-footer">
                         <button className="reg-button">Register</button>
                         <p>Already have an account? <a href="/login">Login</a></p>
                     </div>
+                    <div className="error">{error}</div>
                     
                 </form>
             </>

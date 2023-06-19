@@ -63,28 +63,40 @@ function Dashboard() {
 
 
     // Get MyPost
-    
 
     const [myPost, SetMyPost] = useState([]);
 
     useEffect(() => {
         ip.get(`/api/staff/myPost?staffId=${name.staffId}`)
         .then(res => {SetMyPost(res.data);})
-        .catch(err => console.log(err));
+        .catch(err => 
+            console.log("there is something wrong in get MyPost")
+        );
     }, [name.staffId]);
 
+
+    // Get Department
+
+    const [depts, setDepts] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/student/getDep')
+        .then(response => setDepts(response.data))
+        .catch(err => console.log(err));
+    }, []);
 
 
 
     // Create Post
-    
 
+    const [image, setImage] = useState(null);
 
     const [formData, setFormData] = useState({
+        title: "",
         content: "",
         staffId: "",
         categoryId: "",
-        // eventLocation: "",
+        eventLocation: "",
     });
 
     const handlePost = async (event) => {
@@ -92,23 +104,37 @@ function Dashboard() {
         try {
             const updatedFormData = {
                 ...formData,
-                staffId: name.staffId  // Add staff ID to the formData object
+                staffId: name.staffId,
+                image: image,
             };
-    
-            const response = await ip.post("/api/staff/post", updatedFormData);
+
+            const response = await ip.post("/api/staff/post", updatedFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            
+            setFormData({});
+            setImage("");
+
             console.log(response.data);
+            setVisible(false);
         } catch (error) {
             console.log(error.response.data);
         }
     
-        setVisible(false);
     };
-    
     
 
     const handleInputChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
 
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
     };
 
 
@@ -122,10 +148,10 @@ function Dashboard() {
     }
 
 
-    // const twoFunctions = (e) => {
-    //     getFile(e);
-    //     handleInputChange(e);
-    // }
+    const twoFunctions = (e) => {
+        getFile(e);
+        handleImageChange(e);
+    }
 
 
 
@@ -178,8 +204,13 @@ function Dashboard() {
 
                         <form className='publish-form' onSubmit={handlePost}>
                             <div className="publish-box">
-                                <label htmlFor="staffId">Title</label>
-                                <input className="inputs" type='text' name="staffId" placeholder="Place Your title here" onChange={handleInputChange} />
+                                <label htmlFor="title">Title</label>
+                                <input className="inputs" type='text' name="title" placeholder="Place Your title here" onChange={handleInputChange} />
+                            </div>
+
+                            <div className="publish-box">
+                                <label htmlFor="eventLocation">Location</label>
+                                <input className="inputs" type='text' name="eventLocation" placeholder="Location" onChange={handleInputChange} />
                             </div>
 
                             <div className="publish-box">
@@ -190,7 +221,7 @@ function Dashboard() {
                             {/* -- Upload Button -- */}
 
                             <div className="publish-box">
-                                <input className="inputs" type="file" id="image" accept='image/*' onChange={getFile} />
+                                <input className="inputs" type="file" id="image" accept='image/*' onChange={twoFunctions} />
                                 <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
 
                                 {file && (
@@ -241,11 +272,12 @@ function Dashboard() {
 
 
                             {answer === 'department' && (
-                                <select id="depId" name="depId"   required>
+                                <select id="depId" name="depId" required>
                                     <option hidden>Department</option>
-                                    <option>Computer Science</option>
-                                    <option>Mechanical Engineering</option>
-                                    <option>Civil Engineering</option>
+                                    {depts.map((Depart, i) => (
+                                        <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                        )
+                                    )}
                                 </select>
                             )}
 
@@ -344,7 +376,7 @@ function Dashboard() {
                                         title= {Item.title}
                                         desc= {Item.desc}
                                         time={Item.time}
-                                        date={Item.date}
+                                        day={Item.day}
                                         loc={Item.loc}
                                     />
                                 );
@@ -359,20 +391,27 @@ function Dashboard() {
                     
                     {activeTab === 1 && (
                     <>
-                        <div className='post-list'>
+                        {myPost.length > 0 ? (
+                            <div className='post-list'>
 
-                        {letter.map((item, i) => (
-                                <PostItem
-                                    key={i}
+                            {letter.map((item, i) => (
+                                    <PostItem
+                                        key={i}
 
-                                    user_name={item.staffName}
-                                    loc={item.eventLocation}
-                                    desc={item.content}
-                                />
-                            )
+                                        user_name={item.staffName}
+                                        loc={item.eventLocation}
+                                        desc={item.content}
+                                        title={item.title}
+                                    />
+                                )
+                            )}
+
+                            </div>
+                        ) : (
+                            <div className='post-list'>
+                                <p className='no-post'>There is no post yet ..</p>
+                            </div>
                         )}
-
-                        </div>
                     </>
                     )}
 
@@ -380,20 +419,27 @@ function Dashboard() {
                     {activeTab === 2 && (
                     <>
                         {myPost.length > 0 ? (
-                        <div className='post-list'>
+                            <div className='post-list'>
+                                {myPost.map((item, i) => {
+                                    
+                                const postDate = new Date(item.createdAt);
+                                const formattedDate = postDate.toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',});
+                                const formattedTime = postDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true,});
 
-                        {myPost.map((item, i) => (
-                                <PostItem
+                                return (
+                                    <PostItem
                                     key={i}
-
                                     user_name={item.staffName}
                                     loc={item.eventLocation}
                                     desc={item.content}
-                                />
-                            )
-                        )}
-
-                        </div>
+                                    title={item.title}
+                                    day={formattedDate}
+                                    time={formattedTime}
+                                    postId={item.postId}
+                                    />
+                                );
+                                })}
+                            </div>
                         ) : (
                             <div className='post-list'>
                                 <p className='no-post'>You have not posted yet</p>

@@ -6,10 +6,11 @@ import "../styles/Chat.css";
 import ip from '../helpers/Config.js';
 import SideBar from '../components/SideBar';
 
-import { IoSend, IoSearch } from "react-icons/io5"; 
-import { RxChevronLeft } from "react-icons/rx"
+import { IoSend, IoSearch, IoWarningOutline, IoOptionsSharp } from "react-icons/io5"; 
+import { RxChevronLeft } from "react-icons/rx";
 import { MdPostAdd } from "react-icons/md";
 import { VscVerified } from "react-icons/vsc";
+
 
 
 
@@ -18,6 +19,9 @@ function Chat() {
 
     //Update Pop-Up Functionality
 
+    // const [delChat, setDelChat]=useState(false);
+    const [deletePop, setDeletePop]=useState(false);
+    const [settingPop, setSettingPop]=useState(false);
     const [create, setCreate]=useState(false);
 
     const dropdownRef = useRef(null);
@@ -26,6 +30,8 @@ function Chat() {
         const handleOutsideClick = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setCreate(false);
+                setDeletePop(false);
+                setSettingPop(false);
             }
         };
     
@@ -42,6 +48,7 @@ function Chat() {
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
     const [userType, setUserType] = useState('');
+    const [userId, setUserId] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -53,10 +60,16 @@ function Chat() {
                 if (res.data.user.user.hasOwnProperty('studentId')) {   // sender type declaration
                     setSenderType('Student');
                     setUserType('student');
+                    setUserId(res.data.user.user.studentId);
                 } else {
                     setSenderType('Staff');
                     setUserType('staff');
+                    setUserId(res.data.user.user.staffId);
                 }
+
+                // if (res.data.user.user.pref !== null) {
+                //     setPrefer(true);
+                // }
             }
             else{
                 setName("Something went wrong");
@@ -105,6 +118,7 @@ function Chat() {
     const [chatData, setChatData] = useState({
         topic: '',
         restrictedMode: '0',
+        categoryId: '',
     });
     
     const handleChatChange = (e) => {
@@ -121,7 +135,7 @@ function Chat() {
 
         const payload = {
             topic: chatData.topic,
-            categoryId: "8",
+            categoryId: chatData.categoryId,
             creatorType: userType,
             creatorId: userID,
             restrictedMode: chatData.restrictedMode,
@@ -157,15 +171,63 @@ function Chat() {
     };
 
 
+
+    // Check if user has preferences
+
+    const [prefer, setPrefer] = useState(false);
+
+    useEffect(() => {
+        ip.get('/api/staff/getOpt', {
+            params: {
+                userType: userType,
+                userId: userId,
+            },
+        })
+
+        .then(res => {
+            if (res.data.success === true) {
+                setPrefer(true);
+            }
+        })
+        .catch(err => console.log(err));
+    }, [userId, userType]);
+
+
+
+    // OPtion change Advanced or General
+
+    const [selectedOption, setSelectedOption] = useState('general');
+    const [passId, setPassId] = useState('');
+
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+
+        if (e.target.value === 'general') {
+            setPassId('');
+        } else if (e.target.value === 'advanced') {
+            setPassId(userId);
+        }
+    };
+
     // Get Chat API
 
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
-        ip.get(`/api/student/getchat?userType=${userType}`)
-        .then(res => {setChats(res.data)})
+        // ip.get(`/api/student/getchat?userType=${userType}&userId=${userId}`)
+        ip.get('/api/student/getchat', {
+            params: {
+                userType: userType,
+                userId: passId,
+            },
+        })
+        
+        .then(res => {
+            setChats(res.data);
+            // console.log(prefer);
+        })
         .catch(err => console.log(err));
-    }, [userType]);
+    }, [passId, userType]);
 
 
 
@@ -174,6 +236,8 @@ function Chat() {
     const [message, setMessage] = useState([]);
     const [chatId, setChatId] = useState(null);
     const [topic, setTopic] = useState([]);
+    const [creatorId, setCreatorId] = useState([]);
+    const [creatorType, setCreatorType] = useState([]);
 
     useEffect(() => {
         ip.get(`/api/student/getconv?chatId=${chatId}`)
@@ -199,6 +263,20 @@ function Chat() {
         handleClickDiv1();
     }
 
+
+
+    // Get Department
+
+    const [depts, setDepts] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/student/getDep')
+        .then(response => setDepts(response.data))
+        .catch(err => console.log(err));
+    }, []);
+
+
+
     return (
         <div className="user-home">
             
@@ -216,6 +294,23 @@ function Chat() {
                                 <IoSearch className='icon'/>
                                 <input type="text" placeholder="Search..." className='input-me'></input>
                             </div>
+
+                            {prefer && (
+
+                            <div className='chat-option'>
+                                <label>
+                                    <input type="radio" value="general" checked={selectedOption === 'general'} onChange={handleOptionChange}/>
+                                    <span>General</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="advanced" checked={selectedOption === 'advanced'} onChange={handleOptionChange}/>
+                                    <span>Advanced</span>
+                                </label>
+                            </div>
+
+                            )}
+
                             <div class="options">
                                 <MdPostAdd className='icon' onClick={()=> setCreate(!create)}/>
 
@@ -223,10 +318,20 @@ function Chat() {
                                     <div className='add-chat' ref={dropdownRef}>
                                         <p>Create Chat</p>
                                         <input type="text" placeholder="Topic" name="topic" value={chatData.topic} onChange={handleChatChange} required/>
+                                        
                                         <select name="restrictedMode" id="restrictedMode" value={chatData.restrictedMode} onChange={handleChatChange} required>
                                             <option hidden>Type</option>
                                             <option value="0">Open</option>
                                             <option value="1">Restricted</option>
+                                        </select>
+
+                                        <select name="categoryId" id="categoryId" value={chatData.categoryId} onChange={handleChatChange} required>
+                                            <option hidden>Type</option>
+                                            <option value="8">Open</option>
+                                            {depts.map((Depart, i) => (
+                                                <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                                )
+                                            )}
                                         </select>
                                         <button onClick={handleChatCreation}>Create</button>
                                     </div>
@@ -245,6 +350,8 @@ function Chat() {
                                         setActiveChatID(chat.chatId);
                                         handleChatBtn(chat.chatId);
                                         setTopic(chat.topic);
+                                        setCreatorType(chat.creatorType);
+                                        setCreatorId(chat.creatorId);
                                         event.stopPropagation(); // To prevent event bubbling
                                     }}
                                     >
@@ -255,6 +362,7 @@ function Chat() {
                                     <p className="message">Let's meet for a coffee CSS word-wrap property is used to break the long words.</p>
                                 </div>
                                 <div className="timer">{chat.chatId}</div>
+                                
                             </div>
 
                         </div>
@@ -276,6 +384,40 @@ function Chat() {
                         <div class="header-chat">
                             <RxChevronLeft className='icon'  onClick={handleClickDiv2}/>
                             <p class="name">{topic}</p>
+                            <IoOptionsSharp  className='setting'onClick={()=> setSettingPop(!settingPop)}/>
+
+
+                            {settingPop && (
+                                <div className="setting-pop" ref={dropdownRef}>
+
+                                {userType === 'student' && creatorType === 'student' && creatorId === name.studentId ? (
+                                    <div className="line" onClick={()=>{setSettingPop(!settingPop); setDeletePop(!deletePop);}} >delete</div>
+                                ) : userType === 'staff' && creatorType === 'staff' && creatorId === name.staffId ? (
+                                    <div className="line" onClick={()=>{setSettingPop(!settingPop); setDeletePop(!deletePop);}} >delete</div>
+                                ) : (
+                                    null
+                                )}
+
+
+                                    <div className="line" onClick={()=> setSettingPop(!settingPop)}>Exit</div>
+                                </div>
+                            )}
+
+
+
+                            {deletePop && (
+
+                            <div className='delete' ref={dropdownRef}>
+                                
+                                <div className='icon'><IoWarningOutline className="image"/></div>
+                                <p>Are you sure you want to delete this chat ?</p>
+                                <button onClick={()=> setDeletePop(!deletePop)}>Delete</button>
+                            </div>
+
+                            )}
+
+
+
                         </div>
 
                         

@@ -2,6 +2,7 @@ import React from 'react';
 import "../styles/Profile.css";
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import ip from '../helpers/Config.js';
 
 import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
@@ -13,6 +14,7 @@ function Profile() {
 
     // Get Current User
     const [name, setName] = useState('');
+    const [senderType, setSenderType] = useState('');
 
     axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -20,11 +22,28 @@ function Profile() {
         .then(res => {
             if(res.data.status === "Success"){
                 setName(res.data.user.user);
+
+                if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType ('Student');
+                } else {
+                    setSenderType ('Staff');
+                }
             }
             else{
                 setName("Something went wrong");
             } 
         })
+    }, []);
+
+
+    // Get Department
+
+    const [depts, setDepts] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/student/getDep')
+        .then(response => setDepts(response.data))
+        .catch(err => console.log(err));
     }, []);
 
 
@@ -39,26 +58,31 @@ function Profile() {
                 <form className="account-update"> 
                     <div className="account-div">
                         <label htmlFor="fullname">Full Name</label>
-                        <input type="text" name="fullname" id="fullname" placeholder="Enter full name"   required />
+                        <input type="text" name="fullname" id="fullname" placeholder={name.fullname}   required />
                     </div>
 
                     <div className="account-div">
                         <label htmlFor="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et"   required />
+                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et" value={name.email}   required />
+                    </div>
+
+                    <div className="account-div">
+                        <label htmlFor="Picture">Picture</label>
+                        <input type="file" name="picture" id="picture" accept="image/*" />
                     </div>
 
 
-                    <div className="form-pair">
+                    {/* <div className="form-pair">
                         <div className="x-y-box">
                             <label htmlFor="password">Full Name</label>
                             <input type="password" name="password" id="password" placeholder="Enter Name"   required />
                         </div>
 
                         <div className="x-y-box">
-                            <label htmlFor="picture">Email</label>
+                            <label htmlFor="picture">Picture</label>
                             <input type="text" name="picture" id="picture" placeholder="Enter picture"   required />
                         </div>
-                    </div>
+                    </div> */}
 
 
 
@@ -83,12 +107,8 @@ function Profile() {
                     </div> */}
 
 
-                    <div className="account-div">
-                        <label htmlFor="year">year</label>
-                        <input type="text" name="year" id="year" placeholder="Enter year"   required />
-                    </div>
-                    
 
+                    {/* 
                     <div className="account-div address">
                             <div className="select-box">
                                 <select id="depId" name="depId"   required>
@@ -96,22 +116,33 @@ function Profile() {
                                     <option>Computer Science</option>
                                     <option>Mechanical Engineering</option>
                                     <option>Civil Engineering</option>
-
-                                {/* 
-                                    {depts.map((Depart, i) => (
-                                        <option key={i} value={Depart.depId}>{Depart.name}</option>
-                                        )
-                                    )}
-                                */}
-
                                 </select>
                             </div>
+                    </div> */}
+
+                    <button className="reg-button">Update</button>
+                
+
+
+                    <div className="account-div">
+                        <label htmlFor="option">Preference</label>
+
+                        <div className='Preference'>
+                            <select id="depId" name="depId">
+                                <option hidden>Category</option>
+                                {depts.map((Depart, i) => (
+                                    <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                    )
+                                )}
+                            </select>
+
+                            <div className='add'>Add+</div>
+                        </div>
 
                     </div>
 
-                    <button className="reg-button">Update</button>
-                    
                 </form>
+
             </div>
 
 
@@ -126,10 +157,8 @@ function Profile() {
                     <div className="card-banner-space"></div>
                     <div className="card-banner-big">{name.fullname}</div>
                     <div className="card-banner-small">Computer Science</div>
-                    <div className="card-banner-tag">Student</div>
-                    <div className="card-banner-text">Morgan has collected 
-                    ants since they were six years old and now has many dozen 
-                    ants but none in their pants.</div>
+                    <div className="card-banner-tag">{senderType}</div>
+                    <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae.</div>
                     
                 </div>
 
