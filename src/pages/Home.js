@@ -1,20 +1,19 @@
 import React from 'react';
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';        //Api Fetching
+import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
-
+import ip from '../helpers/Config.js';
 import "../styles/Home.css";
-import Footer from '../components/Footer';      //Footer
-import NavBar from '../components/NavBar';      //NavBar
+import Footer from '../components/Footer';
+import NavBar from '../components/NavBar';
 
-
-import barc from "../assets/search.png";                //Search icon
+import barc from "../assets/search.png";
 import utensil from "../assets/utensil.png";
-import trend_icon from "../assets/trend-icon.png";       //Trend icon
+import trend_icon from "../assets/trend-icon.png";
 
-import { PostList } from "../helpers/PostList";
+// import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
 
 
@@ -43,14 +42,13 @@ function Home() {
     }, []);
 
 
-    // View Post API
+    // Get All post
 
-    const [posts, setPosts] = useState([]);
+    const [allPost, setAllPost] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/student/ViewPost')
-        .then(response => response.json())
-        .then(data => setPosts(data))
+        ip.get('/api/staff/viewPost')
+        .then(res => {setAllPost(res.data);})
         .catch(err => console.log(err));
     }, []);
 
@@ -62,33 +60,40 @@ function Home() {
     const postsPerPage = 4;
     const pagesVisited = pageNumber * postsPerPage;
 
-    const displayPosts = PostList
+    const displayPosts = allPost
         .slice(pagesVisited, pagesVisited + postsPerPage)
-        .map((Item, keys) => {
+        .map((item, i) => {
+
+            const postDate = new Date(item.createdAt);
+            const formattedDate = postDate.toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',});
+            const formattedTime = postDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true,});
+
             return (
                 <PostItem
-                    key={keys}
+                    key={i}
                     
-                    user_name={Item.user_name}
-                    user_image={Item.user_image}
-                    user_badge={Item.user_badge}
-                    card_image={Item.card_image}
-                    tag= {Item.tag}
-                    title= {Item.title}
-                    desc= {Item.desc}
-                    sum= {Item.summary}
-                    time={Item.time}
-                    date={Item.date}
-                    loc={Item.loc}
+                    user_name={item.staffName}
+                    user_image={item.staffImage}
+                    loc={item.eventLocation}
+                    desc={item.content}
+                    title={item.title}
+                    day={formattedDate}
+                    time={formattedTime}
+                    postId={item.postId}
+                    card_image={item.image}
+                    tag={item.categoryName}
+                    summarizable={item.summarizable}
+                    posterId={item.staffId}
                 />
             );
         });
 
-    const pageCount = Math.ceil(PostList.length / postsPerPage);
+    const pageCount = Math.ceil(allPost.length / postsPerPage);
 
     const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
+
 
 
     return (
@@ -137,31 +142,6 @@ function Home() {
 
             <div className='post'>
 
-                    {/* POST Custom */}
-            
-                    {/* {PostList.map((Item, keys) => {
-                        return (
-                            <PostItem
-                                key={keys}
-                                
-                                user_name={Item.user_name}
-                                user_image={Item.user_image}
-                                user_badge={Item.user_badge}
-                                card_image={Item.card_image}
-                                tag= {Item.tag}
-                                title= {Item.title}
-                                desc= {Item.desc}
-                                sum= {Item.summary}
-                                time={Item.time}
-                                date={Item.date}
-                                loc={Item.loc}
-                            />
-                        );
-                    })}
-
-                    <PostItem/>
-
-                    */}
 
                     {displayPosts}
 
@@ -178,7 +158,7 @@ function Home() {
                     />
 
 
-                    {/* POST APi /EXPERIMENTAL */}
+                    {/* POST APi */}
 
                     {/* {posts.map((item, i) => (
                             <PostItem

@@ -7,7 +7,6 @@ import Modal from 'react-modal';
 
 import SideBar from '../components/SideBar';
 import HeadIcon from '../components/HeadIcon';
-import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
 import ip from '../helpers/Config.js';
 
@@ -46,6 +45,17 @@ function Dashboard() {
                 setName("Something went wrong");
             } 
         })
+    }, []);
+
+
+    // Get All post
+
+    const [allPost, setAllPost] = useState([]);
+
+    useEffect(() => {
+        ip.get('/api/staff/viewPost')
+        .then(res => {setAllPost(res.data);})
+        .catch(err => console.log(err));
     }, []);
 
 
@@ -361,28 +371,30 @@ function Dashboard() {
                     <>
                         <div className='post-list'>
 
-                            {/* POST Custom */}
+                            {allPost.map((item, i) => {
+                                    
+                                const postDate = new Date(item.createdAt);
+                                const formattedDate = postDate.toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',});
+                                const formattedTime = postDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true,});
 
-                            {PostList.map((Item, keys) => {
                                 return (
                                     <PostItem
-                                        key={keys}
-                                        
-                                        user_name={Item.user_name}
-                                        user_image={Item.user_image}
-                                        user_badge={Item.user_badge}
-                                        card_image={Item.card_image}
-                                        tag= {Item.tag}
-                                        title= {Item.title}
-                                        desc= {Item.desc}
-                                        time={Item.time}
-                                        day={Item.day}
-                                        loc={Item.loc}
+                                        key={i}
+                                        user_name={item.staffName}
+                                        user_image={item.staffImage}
+                                        loc={item.eventLocation}
+                                        desc={item.content}
+                                        title={item.title}
+                                        day={formattedDate}
+                                        time={formattedTime}
+                                        postId={item.postId}
+                                        card_image={item.image}
+                                        tag={item.categoryName}
+                                        summarizable={item.summarizable}
+                                        posterId={item.staffId}
                                     />
                                 );
                             })}
-
-                            <PostItem/>
 
                         </div>
                     </>
@@ -391,20 +403,34 @@ function Dashboard() {
                     
                     {activeTab === 1 && (
                     <>
-                        {myPost.length > 0 ? (
+                        {letter.length > 0 ? (
                             <div className='post-list'>
 
-                            {letter.map((item, i) => (
-                                    <PostItem
-                                        key={i}
-
-                                        user_name={item.staffName}
-                                        loc={item.eventLocation}
-                                        desc={item.content}
-                                        title={item.title}
-                                    />
-                                )
-                            )}
+                                {letter.map((item, i) => {
+                                    
+                                    const postDate = new Date(item.createdAt);
+                                    const formattedDate = postDate.toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',});
+                                    const formattedTime = postDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true,});
+    
+                                    return (
+                                        <PostItem
+                                            key={i}
+                                            
+                                            user_name={item.staffName}
+                                            user_image={item.staffImage}
+                                            loc={item.eventLocation}
+                                            desc={item.content}
+                                            title={item.title}
+                                            day={formattedDate}
+                                            time={formattedTime}
+                                            postId={item.postId}
+                                            card_image={item.image}
+                                            tag={item.categoryName}
+                                            summarizable={item.summarizable}
+                                            posterId={item.staffId}
+                                        />
+                                    );
+                                })}
 
                             </div>
                         ) : (
@@ -428,14 +454,19 @@ function Dashboard() {
 
                                 return (
                                     <PostItem
-                                    key={i}
-                                    user_name={item.staffName}
-                                    loc={item.eventLocation}
-                                    desc={item.content}
-                                    title={item.title}
-                                    day={formattedDate}
-                                    time={formattedTime}
-                                    postId={item.postId}
+                                        key={i}
+                                        user_name={item.staffName}
+                                        user_image={item.staffImage}
+                                        loc={item.eventLocation}
+                                        desc={item.content}
+                                        title={item.title}
+                                        day={formattedDate}
+                                        time={formattedTime}
+                                        postId={item.postId}
+                                        card_image={item.image}
+                                        tag={item.categoryName}
+                                        summarizable={item.summarizable}
+                                        posterId={item.staffId}
                                     />
                                 );
                                 })}
