@@ -106,6 +106,24 @@ function Profile() {
 
                     </div> */}
 
+
+
+                    {/* 
+                    <div className="account-div address">
+                            <div className="select-box">
+                                <select id="depId" name="depId"   required>
+                                    <option hidden>Department</option>
+                                    <option>Computer Science</option>
+                                    <option>Mechanical Engineering</option>
+                                    <option>Civil Engineering</option>
+                                </select>
+                            </div>
+                    </div> */}
+
+                    <button className="reg-button">Update</button>
+                
+
+
                     <div className="account-div">
                         <label htmlFor="option">Preference</label>
 
@@ -121,24 +139,10 @@ function Profile() {
                             <div className='add'>Add+</div>
                         </div>
 
-                        
                     </div>
-                    
-{/* 
-                    <div className="account-div address">
-                            <div className="select-box">
-                                <select id="depId" name="depId"   required>
-                                    <option hidden>Department</option>
-                                    <option>Computer Science</option>
-                                    <option>Mechanical Engineering</option>
-                                    <option>Civil Engineering</option>
-                                </select>
-                            </div>
-                    </div> */}
 
-                    <button className="reg-button">Update</button>
-                    
                 </form>
+
             </div>
 
 

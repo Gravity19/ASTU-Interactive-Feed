@@ -274,9 +274,6 @@ function Dashboard() {
                             {answer === 'department' && (
                                 <select id="depId" name="depId" required>
                                     <option hidden>Department</option>
-                                    {/* <option>Computer Science</option>
-                                    <option>Mechanical Engineering</option>
-                                    <option>Civil Engineering</option> */}
                                     {depts.map((Depart, i) => (
                                         <option key={i} value={Depart.depId}>{Depart.name}</option>
                                         )

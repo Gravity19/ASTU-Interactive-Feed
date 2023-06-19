@@ -97,7 +97,7 @@
     height: 40px;
     background-color: #FFF;
     color: #a3a3a3;
-    width: 70%;
+    width: 50%;
     padding: 0 20px;
     border-radius: 50px;
     border: 1px solid #EEEEEE;
@@ -114,6 +114,14 @@
     font-family: 'Montserrat', sans-serif;;
   }
 
+  /* Top-Bar Middle */
+
+  .discussions .top-bar .chat-option{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+  }
 
   /* Top-Bar Right */
 

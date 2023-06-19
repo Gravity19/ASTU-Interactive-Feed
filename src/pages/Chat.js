@@ -48,6 +48,7 @@ function Chat() {
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
     const [userType, setUserType] = useState('');
+    const [userId, setUserId] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -59,10 +60,16 @@ function Chat() {
                 if (res.data.user.user.hasOwnProperty('studentId')) {   // sender type declaration
                     setSenderType('Student');
                     setUserType('student');
+                    setUserId(res.data.user.user.studentId);
                 } else {
                     setSenderType('Staff');
                     setUserType('staff');
+                    setUserId(res.data.user.user.staffId);
                 }
+
+                // if (res.data.user.user.pref !== null) {
+                //     setPrefer(true);
+                // }
             }
             else{
                 setName("Something went wrong");
@@ -164,15 +171,63 @@ function Chat() {
     };
 
 
+
+    // Check if user has preferences
+
+    const [prefer, setPrefer] = useState(false);
+
+    useEffect(() => {
+        ip.get('/api/staff/getOpt', {
+            params: {
+                userType: userType,
+                userId: userId,
+            },
+        })
+
+        .then(res => {
+            if (res.data.success === true) {
+                setPrefer(true);
+            }
+        })
+        .catch(err => console.log(err));
+    }, [userId, userType]);
+
+
+
+    // OPtion change Advanced or General
+
+    const [selectedOption, setSelectedOption] = useState('general');
+    const [passId, setPassId] = useState('');
+
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+
+        if (e.target.value === 'general') {
+            setPassId('');
+        } else if (e.target.value === 'advanced') {
+            setPassId(userId);
+        }
+    };
+
     // Get Chat API
 
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
-        ip.get(`/api/student/getchat?userType=${userType}`)
-        .then(res => {setChats(res.data)})
+        // ip.get(`/api/student/getchat?userType=${userType}&userId=${userId}`)
+        ip.get('/api/student/getchat', {
+            params: {
+                userType: userType,
+                userId: passId,
+            },
+        })
+        
+        .then(res => {
+            setChats(res.data);
+            // console.log(prefer);
+        })
         .catch(err => console.log(err));
-    }, [userType]);
+    }, [passId, userType]);
 
 
 
@@ -239,6 +294,23 @@ function Chat() {
                                 <IoSearch className='icon'/>
                                 <input type="text" placeholder="Search..." className='input-me'></input>
                             </div>
+
+                            {prefer && (
+
+                            <div className='chat-option'>
+                                <label>
+                                    <input type="radio" value="general" checked={selectedOption === 'general'} onChange={handleOptionChange}/>
+                                    <span>General</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="advanced" checked={selectedOption === 'advanced'} onChange={handleOptionChange}/>
+                                    <span>Advanced</span>
+                                </label>
+                            </div>
+
+                            )}
+
                             <div class="options">
                                 <MdPostAdd className='icon' onClick={()=> setCreate(!create)}/>
 
