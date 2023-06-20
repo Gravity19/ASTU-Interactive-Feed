@@ -15,6 +15,8 @@ function Profile() {
     // Get Current User
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
+    const [userType, setUserType] = useState('');
+    const [userId, setUserId] = useState('');
 
     axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -25,8 +27,12 @@ function Profile() {
 
                 if (res.data.user.user.hasOwnProperty('studentId')) {
                     setSenderType ('Student');
+                    setUserType('student');
+                    setUserId(res.data.user.user.studentId);
                 } else {
                     setSenderType ('Staff');
+                    setUserType('staff');
+                    setUserId(res.data.user.user.staffId);
                 }
             }
             else{
@@ -34,6 +40,33 @@ function Profile() {
             } 
         })
     }, []);
+
+    // Create Option/Preference
+
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+
+    const createOption = async () => {
+
+        try {
+            const data = {
+                categoryId: document.getElementById('depId').value,
+                userId: userId,
+                userType: senderType,
+            };
+        
+            const response = await axios.post('http://localhost:3000/api/staff/createOpt', data);
+            console.log(response.data);
+            setMessage(response.data.message);
+            setError('');
+        } catch (error) {
+
+            // console.log(error.response.data.message);
+
+            setError(error.response.data.message);
+            setMessage('');
+        }
+    };
 
 
     // Get Department
@@ -129,15 +162,16 @@ function Profile() {
 
                         <div className='Preference'>
                             <select id="depId" name="depId">
-                                <option hidden>Category</option>
                                 {depts.map((Depart, i) => (
                                     <option key={i} value={Depart.depId}>{Depart.name}</option>
                                     )
                                 )}
                             </select>
 
-                            <div className='add'>Add+</div>
+                            <div className='add' onClick={createOption}>Add+</div>
                         </div>
+                        <p className='add-message'>{message}</p>
+                        <p className='add-error'>{error}</p>
 
                     </div>
 

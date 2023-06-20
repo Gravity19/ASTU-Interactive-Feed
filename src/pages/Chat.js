@@ -67,9 +67,6 @@ function Chat() {
                     setUserId(res.data.user.user.staffId);
                 }
 
-                // if (res.data.user.user.pref !== null) {
-                //     setPrefer(true);
-                // }
             }
             else{
                 setName("Something went wrong");

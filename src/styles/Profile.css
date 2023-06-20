@@ -107,6 +107,7 @@
 .account-update .Preference{
     display: flex;
     gap: 15px;
+    margin-bottom: 5px;
 }
 
 .account-update .Preference .add{
@@ -121,6 +122,21 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+
+.account-update .add-message{
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(6, 126, 6);
+    opacity: 0.8;
+    padding-left: 3px;
+}
+.account-update .add-error{
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(158, 50, 42);
+    opacity: 0.8;
+    padding-left: 3px;
 }
 
 
