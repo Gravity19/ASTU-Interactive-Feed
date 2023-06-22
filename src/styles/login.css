@@ -114,12 +114,13 @@
 	padding-left: 1rem;
 	padding-right: 1rem;
 	place-content: center;
+	cursor: pointer;
 }
 
-.login-form .input-container span svg {
-	color: #999b9f;
-	width: 1rem;
-	height: 1rem;
+.login-form .input-container span .svg {
+	color: #8a8a8a;
+	width: 20px;
+	height: 20px;
 }
 
 

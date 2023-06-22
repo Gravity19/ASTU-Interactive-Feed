@@ -4,6 +4,7 @@ import "../styles/login.css";
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
 import login_graphics from "../assets/login-graphic.png";
 import { IoWarningOutline } from "react-icons/io5";
+import { BiShowAlt, BiHide } from "react-icons/bi";
 
 import axios from "axios";
 import Modal from 'react-modal';
@@ -57,6 +58,14 @@ function Login() {
         setError('');
     };
 
+    // Show and Hide Password
+
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const handlePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+
 
 
     return (
@@ -90,12 +99,13 @@ function Login() {
                         <input placeholder="Email" type="email" name="email" id="email" onChange={handleInputChange} required/>
                     </div>
                     <div class="input-container">
-                        <input placeholder="Password" type="password" name="password" id="password" onChange={handleInputChange} required/>
-                        <span>
-                            <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-                            </svg>
+                        <input placeholder="Password" type={passwordVisible ? 'text' : 'password'} name="password" id="password" onChange={handleInputChange} required/>
+                        <span onClick={handlePasswordVisibility}>
+                            {passwordVisible ? (
+                                <BiHide className='svg'/>
+                            ) : (
+                                <BiShowAlt className='svg'/>
+                            )}
                         </span>
                     </div>
 
