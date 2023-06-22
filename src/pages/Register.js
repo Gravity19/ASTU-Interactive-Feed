@@ -66,7 +66,7 @@ function Register() {
             setImage("");
 
             console.log(response.data);
-            navigate('/login');
+            // navigate('/login');
         }    
         catch (error) {
             if (error.response.status === 400) {

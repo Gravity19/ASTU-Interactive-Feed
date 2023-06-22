@@ -12,6 +12,7 @@ import { IoLogOut } from "react-icons/io5";
 
 import logo from "../assets/logo2.png";
 import profile_img from "../assets/img_avatar.png";
+import user_avatar from '../assets/user_avatar.png';
 
 function NavBar() {
 
@@ -80,6 +81,20 @@ function NavBar() {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, []);
+
+
+
+	// Default User image
+
+    let user_img = '';
+    let user_image = name.picture;
+
+    if (user_image === null || user_image === undefined) {
+        user_img = user_avatar;
+    } else {
+        user_img = user_image.replace('Images', '');
+        user_img = `http://localhost:3000${user_img}`;
+    }
     
 
     return (
@@ -106,7 +121,7 @@ function NavBar() {
 						{/* <a href="/Profile" className='loj'>Profile</a> */}
 
 
-						<img onClick={()=> setOpen(!open)} src={profile_img} alt='Profile-img' className='profile-img' />
+						<img onClick={()=> setOpen(!open)} src={user_img} alt='Profile-img' className='profile-img' />
 
 						{/* DropDown */}
 
@@ -114,7 +129,7 @@ function NavBar() {
 							<div className="dropdown" ref={dropdownRef}>
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
-									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
+									<img src={user_img} alt='Profile-img' className='profile-img-min' />
 
 									{senderType === 'Student' ? (
 									<>
