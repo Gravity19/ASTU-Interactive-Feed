@@ -156,6 +156,7 @@
 }
 
 .reg-form .reg-input-box {
+    position: relative;
     width: 100%;
     margin-top: 20px;
 }
@@ -181,7 +182,7 @@
 
 
 
-/* PASS + PICTURE COMBO */
+/* Two DIV COMBO */
 
 .reg-form .x-y-combo{
     display: flex;
@@ -209,16 +210,80 @@
 
 
 
+/* Modal - Image */
+
+
+.reg-input-box [type="file"]{
+    /* opacity: 0; */
+    cursor: pointer;
+    width: 160px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.reg-input-box .upload{
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid #475e78;
+    background-color: #475e78;
+    border-radius: 20px;
+    color: #ededed;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.reg-input-box .image .icon{
+    height: 20px;
+    width: 20px;
+    position: relative;
+    /* top: 2px; */
+}
+
+
+.reg-input-box .image{
+    position: absolute;
+    left: 290px;
+    bottom: 200px;
+    height: 80px;
+    width: 80px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 9px 1px rgba(104,54,54,0.63);
+}
+
+
+.reg-input-box .student-img{
+    position: absolute;
+    left: 290px;
+    bottom: -10px;
+}
+
+.reg-input-box .staff-img{
+    position: absolute;
+    left: 290px;
+    bottom: -10px;
+}
 
 
 
+
+/*  */
+
+.reg-form .address-box{
+    position: relative;
+    top: -5px;
+}
 
 
 .reg-form .column {
     display: flex;
     column-gap: 15px;
 }
-.reg-form .degree-box {
+/* .reg-form .degree-box {
     margin-top: 20px;
 }
 .degree-box h3 {
@@ -245,10 +310,13 @@
 }
 .degree label {
     color: #707070;
-}
-.address :where(input, .select-box) {
+} */
+
+
+/* .address :where(input, .select-box) {
     margin-top: 15px;
-}
+} */
+
 .select-box select {
     height: 100%;
     width: 100%;

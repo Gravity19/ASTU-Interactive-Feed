@@ -7,6 +7,7 @@ import ip from '../helpers/Config.js';
 
 import login_graphics from "../assets/login-graphic.png";
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
+import { RiUploadCloud2Fill } from "react-icons/ri";
 
 function Register() {
 
@@ -17,6 +18,7 @@ function Register() {
 
     const handleOptionChange = (e) => {
         setSelectedOption(e.target.value);
+        setFile(null);
     };
 
 
@@ -66,7 +68,7 @@ function Register() {
             setImage("");
 
             console.log(response.data);
-            // navigate('/login');
+            navigate('/login');
         }    
         catch (error) {
             if (error.response.status === 400) {
@@ -86,6 +88,21 @@ function Register() {
         const file = e.target.files[0];
         setImage(file);
     };
+
+
+    // Upload Image Preview
+
+    const [file, setFile] = useState();
+
+    function getFile(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
+
+    const twoFunctions = (e) => {
+        getFile(e);
+        handleImageChange(e);
+    }
 
 
 
@@ -178,13 +195,13 @@ function Register() {
                         </div>
 
                         <div className="x-y-box">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleInputChange} required />
+                            <label htmlFor="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleInputChange} required />
                         </div>
                     </div>
 
 
-                    <div className="x-y-combo">
+                    {/* <div className="x-y-combo">
                         <div className="x-y-box">
                             <label htmlFor="password">Password</label>
                             <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleInputChange} required />
@@ -194,13 +211,28 @@ function Register() {
                             <label htmlFor="picture">Picture</label>
                             <input type="file" name="picture" id="picture" accept="image/*" onChange={handleImageChange} />
                         </div>
+                    </div> */}
+
+                    <div className="reg-input-box">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et" onChange={handleInputChange} required />
                     </div>
 
 
                     <div className="reg-input-box">
+                        <input type="file" name="picture" id="picture" accept="image/*" onChange={twoFunctions} />
+                        <label htmlFor="picture" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
+
+                        {file && (
+                                    <img src={file} alt="Uploaded" className="image student-img" />
+                        )}
+                    </div>
+
+
+                    {/* <div className="reg-input-box">
                         <label htmlFor="year">Year</label>
                         <input type="text" name="year" id="year" placeholder="Enter year" onChange={handleInputChange} required />
-                    </div>
+                    </div> */}
 {/*
 
                     <div className="column">
@@ -230,7 +262,7 @@ function Register() {
                     </div>
 */}
 
-                    <div className="reg-input-box address">
+                    <div className="reg-input-box address-box" >
                         <div className="column">
                             <div className="select-box">
                                 <select id="depId" name="depId" onChange={handleInputChange} required>
@@ -273,7 +305,7 @@ function Register() {
                     </div>
                     
 
-                    <div className="x-y-combo">
+                    {/* <div className="x-y-combo">
                         <div className="x-y-box">
                             <label htmlFor="password">Password</label>
                             <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleStaffChange} required />
@@ -283,12 +315,23 @@ function Register() {
                             <label htmlFor="picture">Picture</label>
                             <input type="file" name="picture" id="picture" accept="image/*" onChange={handleImageChange} />
                         </div>
-                    </div>
+                    </div> */}
 
-                    {/* <div className="reg-input-box">
+                    <div className="reg-input-box">
                         <label htmlFor="password">Password</label>
                         <input type="password" name="password" id="password" placeholder="Enter Password" onChange={handleStaffChange} required />
-                    </div> */}
+                    </div>
+
+                    {/* -- Upload Button -- */}
+
+                    <div className="reg-input-box">
+                        <input type="file" name="picture" id="picture" accept="image/*" onChange={twoFunctions} />
+                        <label htmlFor="picture" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
+
+                        {file && (
+                                    <img src={file} alt="Uploaded" className="image staff-img" />
+                        )}
+                    </div>
 
 
                     <div className="reg-footer">
