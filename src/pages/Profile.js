@@ -8,6 +8,8 @@ import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
 import user_avatar from '../assets/user_avatar.png';
 
+import { RiUploadCloud2Fill } from "react-icons/ri";
+
 
 function Profile() {
 
@@ -40,6 +42,28 @@ function Profile() {
             } 
         })
     }, []);
+
+
+    // Update Profile
+
+
+    // Upload Image Preview
+
+    const [file, setFile] = useState();
+
+    function getFile(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
+
+    const twoFunctions = (e) => {
+        getFile(e);
+        // handleImageChange(e);
+    }
+
+
+
+
 
     // Create Option/Preference
 
@@ -112,9 +136,13 @@ function Profile() {
                         <input type="email" name="email" id="email" placeholder="example@astu.edu.et" value={name.email}   required />
                     </div>
 
-                    <div className="account-div">
-                        <label htmlFor="Picture">Picture</label>
-                        <input type="file" name="picture" id="picture" accept="image/*" />
+                    <div className="account-div-box">
+                        <input type="file" name="picture" id="picture" accept="image/*" onChange={twoFunctions} />
+                        <label htmlFor="picture" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
+
+                        {file && (
+                                    <img src={file} alt="Uploaded" className="image staff-img" />
+                        )}
                     </div>
 
 

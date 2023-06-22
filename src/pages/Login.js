@@ -3,11 +3,9 @@ import {useNavigate, Link} from 'react-router-dom';
 import "../styles/login.css";
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
 import login_graphics from "../assets/login-graphic.png";
-import { IoWarningOutline } from "react-icons/io5";
 import { BiShowAlt, BiHide } from "react-icons/bi";
 
 import axios from "axios";
-import Modal from 'react-modal';
 
 function Login() {
 
@@ -52,11 +50,6 @@ function Login() {
         setLoginData({ ...loginData, [event.target.name]: event.target.value });
     };
 
-
-    // Error Modal
-    const closeModal = () => {
-        setError('');
-    };
 
     // Show and Hide Password
 
@@ -120,6 +113,7 @@ function Login() {
 
 
                     <button class="submit" type="submit">Log in</button>
+                    <div className="error">{error}</div>
                 </form>
 
             </div>
@@ -127,20 +121,6 @@ function Login() {
             <div className='closing-tag'>
                 Copyright Ⓒ 2023 AstuFeed by ASTU Design inc. All rights reserved
             </div>
-
-
-            {/* MODAL ERROR POP UP */}
-
-            <Modal className ="modal-pop" isOpen={!!error} onRequestClose={closeModal} contentLabel="Error message" ariaHideApp={false} style={{overlay: {
-                backgroundColor: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',}}}>
-
-                <div className='icon'><IoWarningOutline className="image"/></div>
-                <p>{error}</p>
-                <button onClick={closeModal}>Close</button>
-            </Modal>
 
         </div>
     );
