@@ -80,17 +80,16 @@ function Profile() {
             };
         
             const response = await axios.post('http://localhost:3000/api/staff/createOpt', data);
-            console.log(response.data);
+            window.location.reload();
             setMessage(response.data.message);
             setError('');
         } catch (error) {
-
-            // console.log(error.response.data.message);
-
             setError(error.response.data.message);
             setMessage('');
         }
     };
+
+
 
 
     // Get Department
@@ -102,6 +101,42 @@ function Profile() {
         .then(response => setDepts(response.data))
         .catch(err => console.log(err));
     }, []);
+
+
+
+    // Get Option/Preference
+
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/staff/getOpt', {
+            params: {
+                userType: senderType,
+                userId: userId,
+            },
+        })
+        .then(response => setOptions(response.data.data))
+        .catch(err => console.log(err));
+    }, [senderType, userId]);
+
+
+
+    // Delete Options/Preference
+
+    const deleteOption = (optionId) => {
+        ip.delete('/api/staff/deleteOpt', {
+            params: {
+                userId: userId,
+                userType: senderType,
+                optionId: optionId,
+            },
+        })
+        .then(response => {
+            window.location.reload();
+        })
+        .catch(err => console.log(err));
+    };
+
 
 
     // Default User image
@@ -233,7 +268,17 @@ function Profile() {
                     <div className="card-banner-big">{name.fullname}</div>
                     <div className="card-banner-small">Computer Science</div>
                     <div className="card-banner-tag">{senderType}</div>
-                    <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae.</div>
+                    <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+
+                    <div className="card-banner-options">
+                    {options.map((option, i) => (
+                            <span key={i}>
+                                {option.categoryName}
+                                <div className='close' onClick={() => deleteOption(option.optionId)}>x</div>
+                            </span>
+                        )
+                    )}
+                    </div>
                     
                 </div>
 
