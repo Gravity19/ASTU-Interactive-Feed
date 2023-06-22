@@ -6,13 +6,13 @@ import {useState, useEffect, useRef} from 'react';
 import "../styles/NavBar.css";
 import "../styles/HeadIcon.css";
 
-
 import { FaUser } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
 import { MdArrowForwardIos, MdDashboardCustomize, MdVerified } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 
-import profile_img from "../assets/img_avatar.png";
+// import profile_img from "../assets/img_avatar.png";
+import user_avatar from '../assets/user_avatar.png';
 
 
 
@@ -84,16 +84,29 @@ function HeadIcon() {
     }, []);
 
 
+	// Default User image
+
+    let user_img = '';
+    let user_image = name.picture;
+
+    if (user_image === null || user_image === undefined) {
+        user_img = user_avatar;
+    } else {
+        user_img = user_image.replace('Images', '');
+        user_img = `http://localhost:3000${user_img}`;
+    }
+
+
     return (
         <div className='HeadIcon'>
-                        <img onClick={()=> setOpen(!open)} src={profile_img} alt='Profile-img' className='profile-img' />
+                        <img onClick={()=> setOpen(!open)} src={user_img} alt='Profile-img' className='profile-img' />
 
                         {open && (
 
                         <div className="dropdown" ref={dropdownRef}>
 								<div className='triangle'></div>
 								<div className='dropdown-pro'>
-									<img src={profile_img} alt='Profile-img' className='profile-img-min' />
+									<img src={user_img} alt='Profile-img' className='profile-img-min' />
 									{/* <p>{name.fullname}<MdVerified/></p> */}
 
 									{senderType === 'Student' ? (

@@ -10,13 +10,16 @@ import HeadIcon from '../components/HeadIcon';
 import PostItem from "../helpers/PostItem";
 import ip from '../helpers/Config.js';
 
-import { MdEmail, MdAddLocationAlt, MdCall, MdVerified, MdOutlineCreate } from "react-icons/md";
-import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill } from "react-icons/bs";
+import { MdEmail, MdAddLocationAlt, MdCall, MdVerified, MdOutlineCreate, MdDescription } from "react-icons/md";
+import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill, BsPinMapFill } from "react-icons/bs";
 import { FaWalking, FaSchool } from "react-icons/fa";
+import { HiPencilAlt } from "react-icons/hi";
 import { RiUploadCloud2Fill } from "react-icons/ri";
+
 import logo from "../assets/logo1.png";
 import Student_badge from "../assets/badges/Student_badge.png";
 import Staff_badge from "../assets/badges/Staff_badge.png";
+import user_avatar from '../assets/user_avatar.png';
 
 
 function Dashboard() {
@@ -127,7 +130,7 @@ function Dashboard() {
             
             setFormData({});
             setImage("");
-
+            window.location.reload();
             console.log(response.data);
             setVisible(false);
         } catch (error) {
@@ -189,6 +192,18 @@ function Dashboard() {
         setActiveTab(tab);
     }
 
+    // Default User image
+
+    let user_img = '';
+    let user_image = name.picture;
+
+    if (user_image === null || user_image === undefined) {
+        user_img = user_avatar;
+    } else {
+        user_img = user_image.replace('Images', '');
+        user_img = `http://localhost:3000${user_img}`;
+    }
+
 
     return (
         <div>
@@ -214,18 +229,13 @@ function Dashboard() {
 
                         <form className='publish-form' onSubmit={handlePost}>
                             <div className="publish-box">
-                                <label htmlFor="title">Title</label>
+                                <label htmlFor="title">Title<HiPencilAlt/></label>
                                 <input className="inputs" type='text' name="title" placeholder="Place Your title here" onChange={handleInputChange} />
                             </div>
 
                             <div className="publish-box">
-                                <label htmlFor="eventLocation">Location</label>
-                                <input className="inputs" type='text' name="eventLocation" placeholder="Location" onChange={handleInputChange} />
-                            </div>
-
-                            <div className="publish-box">
-                                <label htmlFor="content">Description</label>
-                                <textarea name="content" placeholder="Enter Description" onChange={handleInputChange} required></textarea>
+                                <label htmlFor="content">Description<MdDescription/></label>
+                                <textarea name="content" placeholder="Enter Description" onChange={handleInputChange}></textarea>
                             </div>
 
                             {/* -- Upload Button -- */}
@@ -296,9 +306,26 @@ function Dashboard() {
 
                             {/* -- Switch RSVP -- */}
 
-                            <div className='switch-box'>
+                            {/* <div className='switch-box'>
                                 <span>RSVP</span>
                                 <input className="switch" type="checkbox"/>
+                            </div> */}
+
+                            {/* Location */}
+
+                            <div className='switch-box'>
+                                <span>Location <BsPinMapFill/></span>
+                                <select id="eventLocation" name="eventLocation" className='location-box' onChange={handleInputChange}>
+                                    <option hidden>Area</option>
+                                    <option value='Space'>Space</option>
+                                    <option value='B-507'>B-507</option>
+                                    <option value='B-508'>B-508</option>
+                                    <option value='Registrar'>Registrar</option>
+                                    <option value='Library'>Library</option>
+                                    <option value='Lab'>Lab</option>
+                                    <option value='Finance'>Finance</option>
+                                    <option value='Astu Stadium'>Astu Stadium</option>
+                                </select>
                             </div>
 
 
@@ -323,7 +350,7 @@ function Dashboard() {
                         <img src="https://images.unsplash.com/photo-1545703549-7bdb1d01b734?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="account-bgr" className="bgr"/>
 
                         <div className="detail">
-                            <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="user-img" className="user-img"/>
+                            <img src={user_img} alt="user-img" className="user-img"/>
 
                             <div className='left'>
 
@@ -369,34 +396,41 @@ function Dashboard() {
 
                     {activeTab === null && (
                     <>
-                        <div className='post-list'>
+                        {allPost.length > 0 ? (
+                            <div className='post-list'>
 
-                            {allPost.map((item, i) => {
+                                {allPost.map((item, i) => {
                                     
-                                const postDate = new Date(item.createdAt);
-                                const formattedDate = postDate.toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',});
-                                const formattedTime = postDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true,});
+                                    const postDate = new Date(item.createdAt);
+                                    const formattedDate = postDate.toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',});
+                                    const formattedTime = postDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true,});
 
-                                return (
-                                    <PostItem
-                                        key={i}
-                                        user_name={item.staffName}
-                                        user_image={item.staffImage}
-                                        loc={item.eventLocation}
-                                        desc={item.content}
-                                        title={item.title}
-                                        day={formattedDate}
-                                        time={formattedTime}
-                                        postId={item.postId}
-                                        card_image={item.image}
-                                        tag={item.categoryName}
-                                        summarizable={item.summarizable}
-                                        posterId={item.staffId}
-                                    />
-                                );
-                            })}
+                                    return (
+                                        <PostItem
+                                            key={i}
+                                            
+                                            user_name={item.staffName}
+                                            user_image={item.staffImage}
+                                            loc={item.eventLocation}
+                                            desc={item.content}
+                                            title={item.title}
+                                            day={formattedDate}
+                                            time={formattedTime}
+                                            postId={item.postId}
+                                            card_image={item.image}
+                                            tag={item.categoryName}
+                                            summarizable={item.summarizable}
+                                            posterId={item.staffId}
+                                        />
+                                    );
+                                })}
 
-                        </div>
+                            </div>
+                        ) : (
+                            <div className='post-list'>
+                                <p className='no-post'>There is no post yet ..</p>
+                            </div>
+                        )}
                     </>
                     )}
 

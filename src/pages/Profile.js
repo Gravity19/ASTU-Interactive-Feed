@@ -6,7 +6,7 @@ import ip from '../helpers/Config.js';
 
 import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
-// import ip from '../helpers/Config.js';
+import user_avatar from '../assets/user_avatar.png';
 
 
 function Profile() {
@@ -78,6 +78,19 @@ function Profile() {
         .then(response => setDepts(response.data))
         .catch(err => console.log(err));
     }, []);
+
+
+    // Default User image
+
+    let user_img = '';
+    let user_image = name.picture;
+
+    if (user_image === null || user_image === undefined) {
+        user_img = user_avatar;
+    } else {
+        user_img = user_image.replace('Images', '');
+        user_img = `http://localhost:3000${user_img}`;
+    }
 
 
 
@@ -186,7 +199,7 @@ function Profile() {
 
 
                 <div className="card-banner">
-                    <img src="https://i.pinimg.com/564x/bf/d6/b5/bfd6b5ead3e81c7d0ff530a2a6c98de3.jpg" alt="account-user-img" className="account-user-img"/>
+                    <img src={user_img} alt="account-user-img" className="account-user-img"/>
 
                     <div className="card-banner-space"></div>
                     <div className="card-banner-big">{name.fullname}</div>

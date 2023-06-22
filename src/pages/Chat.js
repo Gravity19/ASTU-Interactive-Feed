@@ -273,6 +273,26 @@ function Chat() {
     }, []);
 
 
+    // Delete Chat
+
+    const deleteChat = () => {
+        const requestBody = {
+            chatId: chatId,
+            creatorId: userId,
+            creatorType: userType,
+        };
+
+        ip.delete('/api/staff/deleteChat', { data: requestBody })
+        .then(response => {
+            console.log(response.data);
+            // console.log(requestBody);
+            setDeletePop(!deletePop);
+            window.location.reload();
+        })
+        .catch(err => console.log(err));
+    };
+
+
 
     return (
         <div className="user-home">
@@ -408,7 +428,7 @@ function Chat() {
                                 
                                 <div className='icon'><IoWarningOutline className="image"/></div>
                                 <p>Are you sure you want to delete this chat ?</p>
-                                <button onClick={()=> setDeletePop(!deletePop)}>Delete</button>
+                                <button onClick={deleteChat}>Delete</button>
                             </div>
 
                             )}

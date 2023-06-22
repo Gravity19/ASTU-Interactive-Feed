@@ -7,14 +7,16 @@ import axios from "axios";
 import date_icon from "../assets/date_icon.png";
 import map_icon from "../assets/map_icon.png";
 import avatar_img1 from "../assets/img_avatar.png";
+// import avatar_img1 from '../assets/user_avatar.png';
 // import Staff_badge from "../assets/badges/Staff_badge.png";
 
-import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsFillHeartFill, BsRobot } from "react-icons/bs";
+import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsFillHeartFill, BsRobot, BsPinMapFill, BsBookmarkCheckFill } from "react-icons/bs";
 import { IoOptionsOutline } from "react-icons/io5";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { FaWalking, FaSchool } from "react-icons/fa";
 import { IoWarningOutline } from "react-icons/io5"; 
-import { MdVerified } from "react-icons/md";
+import { MdVerified, MdDescription } from "react-icons/md";
+import { HiPencilAlt } from "react-icons/hi";
 
 
 // Maps
@@ -82,23 +84,6 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
     }, []);
     
 
-    // Upload Image Preview
-
-    const [file, setFile] = useState();
-
-    function getFile(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
-    }
-
-
-    // Radio Button Functionality
-
-    const [answer, setAnswer] = useState('');
-
-    const handlePostChange = (e) => {
-        const selectedAnswer = e.target.value;
-        setAnswer(selectedAnswer);
-    };
 
 
     // mapping location to image
@@ -116,6 +101,82 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
     const imageSrc = getImageByLoc(loc)
 
+
+
+
+    // Update Post
+
+    const [image, setImage] = useState(null);
+
+    const [formData, setFormData] = useState({
+        title: "",
+        content: "",
+        // staffId: "",
+        // categoryId: "",
+        eventLocation: "",
+    });
+
+    const handleUpdatePost = async (event) => {
+        event.preventDefault();
+        try {
+            const updatedFormData = {
+                ...formData,
+                // staffId: name.staffId,
+                postId: "20",
+                image: image,
+            };
+    
+            const response = await ip.put("/api/staff/updatePost", updatedFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+    
+            setFormData({});
+            setImage("");
+    
+            console.log(response.data);
+            console.log(updatedFormData)
+            // setVisible(false);
+        } catch (error) {
+            console.log(error.response.data);
+        }
+    };
+    
+
+    const handleUpdateChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
+
+    // Upload Image Preview
+
+    const [file, setFile] = useState();
+
+    function getFile(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
+
+    const twoFunctions = (e) => {
+        getFile(e);
+        handleImageChange(e);
+    }
+
+    // Radio Button Functionality
+
+    const [answer, setAnswer] = useState('');
+
+    const handlePostChange = (e) => {
+        const selectedAnswer = e.target.value;
+        setAnswer(selectedAnswer);
+    };
 
 
 
@@ -172,6 +233,10 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                 <h5 className="user_name">{user_name}</h5>
                                 {/* <img src={user_badge} alt="user_badge" className="user_badge"/> */}
                                 <MdVerified className="user_badge"/>
+                                
+                                {userType === "Staff" && posterId === name.staffId && (
+                                <BsBookmarkCheckFill className="my-post-icon"/>
+                                )}
 
                                 <IoOptionsOutline className="options" onClick={()=> setOpen(!open)}/>
 
@@ -207,21 +272,22 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
                                     <img src={logo} alt='Astu-logo' className='logo'/>
 
-                                    <form className='publish-form'>
+                                    <form className='publish-form' onSubmit={handleUpdatePost}>
+
                                         <div className="publish-box">
-                                            <label htmlFor="staffId">Title</label>
-                                            <input className="inputs" type='text' name="staffId" placeholder={title}/>
+                                            <label htmlFor="title">Title<HiPencilAlt/></label>
+                                            <input className="inputs" type='text' name="title" placeholder={title} onChange={handleUpdateChange} />
                                         </div>
 
                                         <div className="publish-box">
-                                            <label htmlFor="content">Description</label>
-                                            <textarea className="input"  name="content" placeholder="Enter Description" required>{desc}</textarea>
+                                            <label htmlFor="content">Description<MdDescription/></label>
+                                            <textarea name="content" placeholder="Enter Description" onChange={handleUpdateChange}>{desc}</textarea>
                                         </div>
 
                                     {/* -- Upload Button -- */}
 
                                         <div className="publish-box">
-                                            <input  className="inputs" type="file" id="image" accept='image/*' onChange={getFile} />
+                                            <input  className="inputs" type="file" id="image" accept='image/*' onChange={twoFunctions} />
                                             <label htmlFor="image" className='upload'><RiUploadCloud2Fill className='icon'/>Upload Image</label>
 
                                             {file && (
@@ -282,7 +348,25 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
                                         </div>
 
-                                {/* -- Radio-Button Ends -- */}
+                                        {/* -- Location -- */}
+
+                                        <div className='switch-box'>
+                                            <span>Location<BsPinMapFill/></span>
+                                            <select id="eventLocation" name="eventLocation" className='location-box' onChange={handleUpdateChange}>
+                                                <option hidden>Area</option>
+                                                <option value='Space'>Space</option>
+                                                <option value='B-507'>B-507</option>
+                                                <option value='B-508'>B-508</option>
+                                                <option value='Registrar'>Registrar</option>
+                                                <option value='Library'>Library</option>
+                                                <option value='Lab'>Lab</option>
+                                                <option value='Finance'>Finance</option>
+                                                <option value='Astu Stadium'>Astu Stadium</option>
+                                            </select>
+                                        </div>
+
+
+                                        {/* -- Radio-Button Ends -- */}
 
                                         <div className='bottom-btn'>
                                             <button className='publish'>Update<BsFillBookmarkPlusFill/></button>

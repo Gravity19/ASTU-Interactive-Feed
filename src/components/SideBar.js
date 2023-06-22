@@ -12,7 +12,7 @@ import discord_icon from "../assets/icons2/bxs-user-circle.png";       //Profile
 import dribble_icon from "../assets/icons2/bxs-dashboard.png";       //Dashboard icon
 import steam_icon from "../assets/icons2/bx-arrow-back.png";       //Back icon
 import reddit_icon2 from "../assets/icons2/log-out-regular-48.png";       //white reddit icon
-import user_image from "../assets/img_avatar.png";      //User image
+import user_avatar from '../assets/user_avatar.png';
 
 function SideBar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -88,6 +88,19 @@ function SideBar() {
 	};
 
 
+    // Default User image
+
+    let user_img = '';
+    let user_image = name.picture;
+
+    if (user_image === null || user_image === undefined) {
+        user_img = user_avatar;
+    } else {
+        user_img = user_image.replace('Images', '');
+        user_img = `http://localhost:3000${user_img}`;
+    }
+
+
 
     return (
         <div className="SideBar-home">
@@ -137,7 +150,7 @@ function SideBar() {
                     {/* Lower Profile */}
                     <li className="profile">
                         <div className="profile-details">
-                            <img src={user_image} alt="profileImg" />
+                            <img src={user_img} alt="profileImg" />
                             <div className="name_job">
                                 <div className="name">{name.fullname}</div>
                                 <div className="role">{senderType}</div>

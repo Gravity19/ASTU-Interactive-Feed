@@ -190,6 +190,18 @@
 /* Options pop-up */
 
 
+.card__header .my-post-icon{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    right: 75px;
+    top: 0;
+    opacity: 90%;
+    color: #2178d6;
+}
+
+
+
 .card__header .options {
     position: absolute;
     height: 25px;
