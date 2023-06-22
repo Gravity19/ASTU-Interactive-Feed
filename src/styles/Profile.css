@@ -46,7 +46,8 @@
 /* Reg Input Box */
 
 .account-update .account-div {
-    width: 100%;
+    position: relative;
+    /* width: 100%; */
     margin-top: 20px;
 }
 .account-update label {
@@ -104,6 +105,72 @@
 }
 
 
+/* -- UPload Image -- */
+
+.account-div-box{
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+.account-div-box [type="file"]{
+    /* opacity: 0; */
+    cursor: pointer;
+    width: 160px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    opacity: 0.1;
+}
+
+.account-div-box .upload{
+    position: absolute;
+    top: 0px;
+    /* left: 0px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid #475e78;
+    background-color: #475e78;
+    border-radius: 20px;
+    color: #ededed;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.account-div-box .image .icon{
+    height: 20px;
+    width: 20px;
+    position: relative;
+    /* top: 2px; */
+}
+
+
+.account-div-box .image{
+    position: absolute;
+    left: 290px;
+    bottom: 200px;
+    height: 80px;
+    width: 80px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 9px 1px rgba(104,54,54,0.63);
+}
+
+
+.account-div-box .staff-img{
+    position: absolute;
+    left: 290px;
+    top: -10px;
+}
+
+
+
+
+
+
+/* -- Preference Add */
+
 .account-update .Preference{
     display: flex;
     gap: 15px;
@@ -113,7 +180,7 @@
 .account-update .Preference .add{
     padding: 10px;
     border-radius: 4px;
-    background-color: #438bd7;
+    background-color: #454545;
     font-size: 12px;
     font-weight: 600;
     color: white;
@@ -141,13 +208,14 @@
 
 
 
+/* --  -- */
+
 
 .address :where(input, .select-box) {
     margin-top: 15px;
 }
 
 .account-update select {
-    /* border: none; */
     position: relative;
     height: 40px;
     width: 100%;
