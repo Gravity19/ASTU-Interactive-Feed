@@ -109,11 +109,16 @@ function Login() {
                             <option value="staff">Staff</option>
                             <option value="admin">Admin</option>
                         </select>
+
+                        <p class="signup-link forgot"><a href="/forgot">Forgot Password</a></p>
                     </div>
 
 
+
+
                     <button class="submit" type="submit">Log in</button>
-                    <div className="error">{error}</div>
+                    {/* <p class="signup-link">No account? <a href="/register"> Create an Account</a></p> */}
+                    <div className="error-log">{error}</div>
                 </form>
 
             </div>

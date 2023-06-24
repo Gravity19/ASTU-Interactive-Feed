@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 
-.footer{
+.footer-main{
 	position: absolute;
 	background-color: #cbcaca;
     padding: 60px 0;
@@ -11,7 +11,7 @@
 }
 
 
-/* .footer::before{
+/* .footer-main::before{
     content: '';
     position: relative;
     top: 0;
@@ -21,16 +21,16 @@
 	z-index: 6;
 } */
 
-.footer .container{
+.footer-main .container-foot{
 	max-width: 1170px;
 	margin:auto;
 }
 
-.row{
+.footer-main .row{
 	display: flex;
 	flex-wrap: wrap;
 }
-ul{
+.footer-main ul{
 	list-style: none;
 }
 

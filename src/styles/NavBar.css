@@ -207,6 +207,7 @@
 .dropdown li{
 	margin-bottom: 5px;
 	text-align: left;
+	list-style: none;
 }
 
 

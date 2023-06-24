@@ -282,7 +282,7 @@ function Register() {
                         <button className="reg-button">Register</button>
                         <p>Already have an account? <a href="/login">Login</a></p>
                     </div>
-                    <div className="error">{error}</div>
+                    <div className="error-reg">{error}</div>
                     
                 </form>
             </>
@@ -338,7 +338,7 @@ function Register() {
                         <button className="reg-button">Register</button>
                         <p>Already have an account? <a href="/login">Login</a></p>
                     </div>
-                    <div className="error">{error}</div>
+                    <div className="error-reg">{error}</div>
                     
                 </form>
             </>

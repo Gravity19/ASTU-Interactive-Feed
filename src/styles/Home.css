@@ -609,10 +609,16 @@
     transform: scale(1.1);
 }
 
-.like-container input:checked ~ .svg {
+.like-container .svg-red {
     fill: #E3474F;
     animation: like_effect 400ms ease;
 }
+
+
+/* .like-container input:checked ~ .svg {
+    fill: #E3474F;
+    animation: like_effect 400ms ease;
+} */
 
 
 @keyframes like_effect {
