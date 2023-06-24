@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 
 import SideBar from '../components/SideBar';
 import HeadIcon from '../components/HeadIcon';
+import Notify from '../components/Notify';
 import PostItem from "../helpers/PostItem";
 import ip from '../helpers/Config.js';
 
@@ -67,11 +68,13 @@ function Dashboard() {
 
     const [letter, setLetter] = useState([]);
 
+    let depart = name.ShortedName;
+
     useEffect(() => {
-        ip.get(`/api/staff/viewPost?depName=${name.depName}`)
+        ip.get(`/api/student/viewPost?depName=${depart}`)
         .then(res => {setLetter(res.data);})
         .catch(err => console.log(err));
-    }, [name.depName]);
+    }, [depart]);
 
 
 
@@ -93,8 +96,19 @@ function Dashboard() {
     const [depts, setDepts] = useState([]);
 
     useEffect(() => { 
-        ip.get('/api/student/getDep')
+        ip.get('/api/staff/getDep')
         .then(response => setDepts(response.data))
+        .catch(err => console.log(err));
+    }, []);
+
+
+    // Get School
+
+    const [school, setSchool] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/staff/getSchool')
+        .then(response => setSchool(response.data))
         .catch(err => console.log(err));
     }, []);
 
@@ -263,7 +277,7 @@ function Dashboard() {
                                     </div>  
                                     
                                     <div className="audience">
-                                        <input className='inputs' type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={DosFunctions}/>                                    
+                                        <input className='inputs' type="radio" name="category"  value="school" checked={answer === 'school'} onChange={DosFunctions}/>                                    
                                         <div className='Radio-tile'>
                                             <FaSchool className='icon'/>
                                             <span>SCL</span>
@@ -271,7 +285,7 @@ function Dashboard() {
                                     </div>
 
                                     <div className="audience">
-                                        <input className='inputs' type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={DosFunctions}/>
+                                        <input className='inputs' type="radio" name="category" value="department" checked={answer === 'department'} onChange={DosFunctions}/>
                                         <div className='Radio-tile'>
                                             <FaWalking className='icon'/>
                                             <span>DEPT</span>
@@ -282,20 +296,21 @@ function Dashboard() {
 
 
                             {answer === 'school' && (
-                                <select id="depId" name="depId" required>
+                                <select id="depId" name="categoryId" onChange={handleInputChange} required>
                                     <option hidden>School</option>
-                                    <option>SOEEC</option>
-                                    <option>SOASE</option>
-                                    <option>SEOSCE</option>
+                                    {school.map((scl, i) => (
+                                        <option key={i} value={scl.categoryId}>{scl.ShortedName}</option>
+                                        )
+                                    )}
                                 </select>
                             )}
 
 
                             {answer === 'department' && (
-                                <select id="depId" name="depId" required>
+                                <select id="depId" name="categoryId" onChange={handleInputChange} required>
                                     <option hidden>Department</option>
                                     {depts.map((Depart, i) => (
-                                        <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                        <option key={i} value={Depart.categoryId}>{Depart.name}</option>
                                         )
                                     )}
                                 </select>
@@ -358,7 +373,7 @@ function Dashboard() {
                                 <>
                                     <div className="big">{name.fullname}<MdVerified className='verified-student'/></div>
                                     <img src={Student_badge} alt="role" className="role"/>
-                                    <div className="small">{name.Name}</div>
+                                    <div className="small">{name.depName}</div>
                                 </>
                                 ):(
                                 <>
@@ -538,6 +553,8 @@ function Dashboard() {
                 {/* Head Icon */}
 
                 <HeadIcon/>
+
+                <Notify/>
 
 
             </div>

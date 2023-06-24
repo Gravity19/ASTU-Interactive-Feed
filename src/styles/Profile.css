@@ -31,9 +31,9 @@
 
 .account-setup .title {
     position: relative;
-    font-size: 1.5rem;
-    color: #333;
-    font-weight: 500;
+    font-size: 1.4rem;
+    color: #6d6d6d;
+    font-weight: 600;
 }
 
 
@@ -239,7 +239,7 @@
 
 
 .account-update .reg-button {
-    padding: 10px 12px;
+    padding: 8px 12px;
     color: #fff;
     font-size: 1.0rem;
     font-weight: 500;
@@ -248,7 +248,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease;
-    background-color: #007bff;
+    background-color: #1c528d;
 }
 .account-update .reg-button:hover {
     background-color: #1b64b2;
@@ -266,9 +266,9 @@
 
 
 .account-setting .account-card{
-    position: absolute;
-    right: 150px;
-    height: 550px;
+    position: relative;
+    right: -400px;
+    padding-bottom: 20px;
     width: 350px;
     border-radius: 2rem;
     background-color: #fff;
@@ -328,21 +328,60 @@
     width: 100%;
     font-size: 17px;
     font-weight: bolder;
-    color: #494949;
-    background-color: #ffd01a;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: #fbce1b;
     border: none;
-    padding: 1rem;
+    padding: 10px;
     outline: none;
     box-sizing: border-box;
-    border-radius: 1.5rem/50%;
+    border-radius: 20px;
     margin-bottom: 20px;
 }
 
 
 .account-card .card-banner-text{
     text-align: justify;
-    font-size: 16px;
-    color: #494949;
+    font-size: 15px;
+    font-weight: 600;
+    color: #7d7d7d;
+}
+
+.account-card .card-banner-options{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top:  10px;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.account-card .card-banner-options span{
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 5px 8px;
+    background: #cb2d3e;
+    background: linear-gradient(to bottom, #ef473a, #cb2d3e);
+    color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    opacity: 0.95;
+}
+
+.account-card .card-banner-options .close{
+    font-size: 15px;
+    font-weight: 600;
+    color: #bbbbbb;
+    cursor: pointer;
+    padding: 0px 3px;
+}
+
+.account-card .card-banner-options .close:hover{
+    background-color: #c23b48;
+    color: #d1d1d1;
 }
 
 
@@ -358,31 +397,54 @@
 
 
 @media screen and (max-width: 1150px) {
+    .account-setting{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: 50px;
+        padding: 10px 0px;
+        padding-left: 50px;
+    }
+    
     .account-setup {
-        position: absolute;
-        /* max-width: 300px; */
-        /* right: 0px;
-        left: 0px; */
+        position: relative;
+        left: 0px;
+        max-width: 700px;
+    }
+
+    .account-card{
+        position: relative;
+        /* right: 0px; */
+        left: 0px;
+    }
+
+}
+
+
+@media screen and (max-width: 780px) {
+    .account-setting {
+        padding: 0px 40px;
+        padding-top: 20px;
+        position: relative;
+        left: 30px;
     }
 }
 
 
-@media screen and (max-width: 750px) {
+
+@media screen and (max-width: 680px) {
     .account-setup {
-        position: absolute;
-        /* max-width: 400px; */
-        width:80%
-        /* right: 0px;
-        left: 0px; */
+        padding: 40px 30px;
     }
 }
 
 
 
 
-@media screen and (max-width: 500px) {
-    /* .account-update .column {
+/* @media screen and (max-width: 500px) {
+    .account-update .column {
         flex-wrap: wrap;
-    } */
+    }
 
-}
+} */
