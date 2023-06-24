@@ -58,7 +58,7 @@ function Notify() {
                         <img src={user_avatar2} alt='icon-img'/>
 
                         <div className='block'>
-                            <div className='line'><b>Nati</b> has made to your post <b>Java Developers</b></div>
+                            <div className='line'><b>Nati</b> has liked your post <b>Java Developers</b></div>
                             <div className='loc'>Stadium</div>
                         </div>
                     </div>

@@ -4,11 +4,10 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
-import Forgot from './pages/Forgot';
-import Reset from './pages/Reset';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Admin from './admin/App.js';
 import AdminDashboard from "./admin/scenes/AdminDash";
 import AdminBanApprove from "./admin/scenes/AdminBA";
 import AdminDelete from "./admin/scenes/AdminDP";
@@ -24,10 +23,9 @@ function App() {
         <Router>
           <Routes>
             <Route path='/' exact element={<Home />} />
+            <Route path='/ad' exact element={<Admin/>} />
             <Route path="/about" exact element={<About/>} />
             <Route path="/login" exact element={<Login/>} />
-            <Route path="/forgot" exact element={<Forgot/>} />
-            <Route path="/reset" exact element={<Reset/>} />
             <Route path="/register" exact element={<Register/>} />
             <Route path="/dashboard" exact element={<Dashboard/>} />
             <Route path="/profile" exact element={<Profile/>} />

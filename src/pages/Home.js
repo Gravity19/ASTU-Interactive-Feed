@@ -84,6 +84,7 @@ function Home() {
                     tag={item.categoryName}
                     summarizable={item.summarizable}
                     posterId={item.staffId}
+                    likes={item.likes}
                 />
             );
         });

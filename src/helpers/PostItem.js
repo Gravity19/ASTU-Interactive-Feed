@@ -26,7 +26,7 @@ import B508 from "../assets/loc/b508.png";
 import B509 from "../assets/loc/b509.png";
 
 
-function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, sum, time, date, loc, day, postId, summarizable, posterId}) {
+function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, time, date, loc, day, postId, summarizable, posterId, likes}) {
 
 
     const [Popup, setPopup] = useState(false); 
@@ -82,7 +82,6 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, []);
-    
 
 
 
@@ -111,8 +110,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
     const [formData, setFormData] = useState({
         title: "",
         content: "",
-        // staffId: "",
-        // categoryId: "",
+        categoryId: "",
         eventLocation: "",
     });
 
@@ -121,23 +119,23 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         try {
             const updatedFormData = {
                 ...formData,
-                // staffId: name.staffId,
-                postId: "20",
-                image: image,
+                staffId: name.staffId,
+                postId: postId,
+                // image: image,
             };
     
             const response = await ip.put("/api/staff/updatePost", updatedFormData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
+                // headers: {
+                //     "Content-Type": "multipart/form-data",
+                // },
             });
     
             setFormData({});
             setImage("");
     
             console.log(response.data);
-            console.log(updatedFormData)
-            // setVisible(false);
+            setPopup(false);
+            window.location.reload();
         } catch (error) {
             console.log(error.response.data);
         }
@@ -174,9 +172,39 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
     const [answer, setAnswer] = useState('');
 
     const handlePostChange = (e) => {
-        const selectedAnswer = e.target.value;
+        const selectedAnswer = e.target.value;              // Make the value of the button the Selected Answer 
         setAnswer(selectedAnswer);
     };
+
+
+    const DosFunctions = (e) => { 
+        handleUpdateChange(e);
+        handlePostChange(e);
+        
+    }
+
+
+
+    // Get Department
+
+    const [depts, setDepts] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/staff/getDep')
+        .then(response => setDepts(response.data))
+        .catch(err => console.log(err));
+    }, []);
+
+
+    // Get School
+
+    const [school, setSchool] = useState([]);
+
+    useEffect(() => { 
+        ip.get('/api/staff/getSchool')
+        .then(response => setSchool(response.data))
+        .catch(err => console.log(err));
+    }, []);
 
 
 
@@ -220,6 +248,21 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         Staff_img = `http://localhost:3000${Staff_img}`;
     }
 
+
+    // Like Logic
+
+    const [likeCount, setLikeCount] = useState(likes);
+    const [liked, setLiked] = useState(false);
+
+
+    const handleLike = () => {
+        setLiked(!liked);
+        setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+    
+        // Simulate saving the updated like count to the database
+        // Here you can make an API call to update the likes count in your database
+        // Once the data is successfully saved, you can reload the page to fetch the updated count
+    };
 
 
     return (
@@ -298,55 +341,57 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
                                     {/* -- Radio Button -- */}
 
-                                        <div className='publish-radio'>
-                                            <div className="publish-to">
-                                                <div className="audience">
-                                                    <input className="inputs" type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={handlePostChange} />
-                                                    <div className='Radio-tile'>
-                                                        <BsFillPeopleFill className='icon'/>
-                                                        <span>ALL</span>
-                                                    </div>
-                                                </div>  
-                                                
-                                                <div className="audience">
-                                                    <input className="inputs" type="radio" name="categoryId"  value="school" checked={answer === 'school'} onChange={handlePostChange}/>                                    
-                                                    <div className='Radio-tile'>
-                                                        <FaSchool className='icon'/>
-                                                        <span>SCL</span>
-                                                    </div>
+                                    <div className='publish-radio'>
+                                        <div className="publish-to">
+                                            <div className="audience">
+                                                <input className='inputs' type="radio" name='categoryId' value="1" checked={answer === '1'} onChange={DosFunctions} />
+                                                <div className='Radio-tile'>
+                                                    <BsFillPeopleFill className='icon'/>
+                                                    <span>ALL</span>
                                                 </div>
-
-                                                <div className="audience">
-                                                    <input className="inputs" type="radio" name="categoryId" value="department" checked={answer === 'department'} onChange={handlePostChange}/>
-                                                    <div className='Radio-tile'>
-                                                        <FaWalking className='icon'/>
-                                                        <span>DEPT</span>
-                                                    </div>
+                                            </div>  
+                                            
+                                            <div className="audience">
+                                                <input className='inputs' type="radio" name="category"  value="school" checked={answer === 'school'} onChange={DosFunctions}/>                                    
+                                                <div className='Radio-tile'>
+                                                    <FaSchool className='icon'/>
+                                                    <span>SCL</span>
                                                 </div>
                                             </div>
+
+                                            <div className="audience">
+                                                <input className='inputs' type="radio" name="category" value="department" checked={answer === 'department'} onChange={DosFunctions}/>
+                                                <div className='Radio-tile'>
+                                                    <FaWalking className='icon'/>
+                                                    <span>DEPT</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
 
                                         {answer === 'school' && (
-                                            <select id="depId" name="depId" required>
-                                                <option hidden>School</option>
-                                                <option>SOEEC</option>
-                                                <option>SOASE</option>
-                                                <option>SEOSCE</option>
-                                            </select>
+                                        <select id="depId" name="categoryId" onChange={handleUpdateChange} required>
+                                            <option hidden>School</option>
+                                            {school.map((scl, i) => (
+                                                <option key={i} value={scl.categoryId}>{scl.ShortedName}</option>
+                                                )
+                                            )}
+                                        </select>
                                         )}
 
 
                                         {answer === 'department' && (
-                                            <select id="depId" name="depId"   required>
-                                                <option hidden>Department</option>
-                                                <option>Computer Science</option>
-                                                <option>Mechanical Engineering</option>
-                                                <option>Civil Engineering</option>
-                                            </select>
+                                        <select id="depId" name="categoryId" onChange={handleUpdateChange} required>
+                                            <option hidden>Department</option>
+                                            {depts.map((Depart, i) => (
+                                                <option key={i} value={Depart.categoryId}>{Depart.name}</option>
+                                                )
+                                            )}
+                                        </select>
                                         )}
 
-                                        </div>
+                                    </div>
 
                                         {/* -- Location -- */}
 
@@ -395,7 +440,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             <p className='desc'>{desc}</p>
 
 
-                            {summarizable === "1" &&(
+                            {summarizable !== "0" &&(
                             <button className="summary-btn" onClick={()=> setSummary(!open)}>
                                 <p>Summarize</p>
                             </button>
@@ -404,7 +449,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             {summary && (
                             <div className="summary" ref={dropdownRef}>
                                 <div className="upper"><span>Summary</span><BsRobot className="icon"/></div>
-                                <p>{sum}</p>
+                                <p>{summarizable}</p>
                                 <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><defs><linearGradient id="gradient" x1="12%" y1="83%" x2="88%" y2="17%"><stop offset="5%" stop-color="#cb2d3e"></stop><stop offset="95%" stop-color="#f78da7"></stop></linearGradient></defs><path d="M 0,400 C 0,400 0,133 0,133 C 144.10714285714283,151.96428571428572 288.21428571428567,170.92857142857142 406,174 C 523.7857142857143,177.07142857142858 615.2500000000001,164.25 734,148 C 852.7499999999999,131.75 998.7857142857142,112.07142857142857 1121,109 C 1243.2142857142858,105.92857142857143 1341.607142857143,119.46428571428572 1440,133 C 1440,133 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="url(#gradient)" fill-opacity="0.53" class="transition-all duration-300 ease-in-out delay-150 path-0"></path><defs><linearGradient id="gradient" x1="12%" y1="83%" x2="88%" y2="17%"><stop offset="5%" stop-color="#cb2d3e"></stop><stop offset="95%" stop-color="#f78da7"></stop></linearGradient></defs><path d="M 0,400 C 0,400 0,266 0,266 C 134.42857142857144,249.64285714285714 268.8571428571429,233.28571428571428 396,223 C 523.1428571428571,212.71428571428572 643.0000000000001,208.49999999999997 765,224 C 886.9999999999999,239.50000000000003 1011.1428571428571,274.7142857142857 1124,285 C 1236.857142857143,295.2857142857143 1338.4285714285716,280.6428571428571 1440,266 C 1440,266 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="url(#gradient)" fill-opacity="1" class="transition-all duration-300 ease-in-out delay-150 path-1"></path></svg>
                             </div>
                             )}
@@ -436,9 +481,9 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             
                             <div className="like-heart">
                                 <label class="like-container">
-                                    <input type="checkbox"/><BsFillHeartFill className="svg"/>
+                                    <input type="checkbox" onClick={handleLike}/><BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`}/>
                                 </label>
-                                <p>5</p>
+                                <p>{likeCount}</p>
                             </div>
                         </div>
         </div>

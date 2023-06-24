@@ -72,6 +72,10 @@
 }
 
 
+.login-form .forgot {
+	text-align: right;
+}
+
 
 
 
@@ -124,6 +128,13 @@
 }
 
 
+.login-form .login__choice {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	/* margin-bottom: 15px; */
+}
+
 
 .login__choice select{
 	float: left;
@@ -131,7 +142,6 @@
 	margin-bottom: 15px;
 	position: relative;
     height: 30px;
-    /* width: 100%; */
     outline: none;
     font-size: 1rem;
     color: #707070;
@@ -165,7 +175,7 @@
 	background-color: #05a88d;
 }
 
-.login-form .error{
+.login-form .error-log{
     color: rgb(224, 80, 80);
     font-size: 13px;
     font-weight: 600;
@@ -236,7 +246,45 @@
 
 
 
+/* -- Addition to Forgot Page -- */
 
+.login-form  .reset-email{
+	margin-bottom: 10px;
+}
+
+.login-form b{
+	color: #325fc8;
+}
+
+.reset-form{
+	height: 320px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.reset-form .sent{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	font-size: 17px;
+	font-weight: 600;
+	color: #747881;
+}
+
+.reset-form .icon{
+	height: 35px;
+	width: 35px;
+	color: #05a88d;
+}
+
+
+
+/* -- Addition to Reset Page -- */
+
+.login-form .reset-btn{
+	margin-top: 10px;
+}
 
 
 
