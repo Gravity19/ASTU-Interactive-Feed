@@ -6,6 +6,8 @@ import ip from '../helpers/Config.js';
 
 import SideBar from '../components/SideBar';      //SideBar
 import HeadIcon from '../components/HeadIcon';      //HeadIcon
+import Notify from '../components/Notify';
+
 import user_avatar from '../assets/user_avatar.png';
 
 import { RiUploadCloud2Fill } from "react-icons/ri";
@@ -239,7 +241,7 @@ function Profile() {
                         <div className='Preference'>
                             <select id="depId" name="depId">
                                 {depts.map((Depart, i) => (
-                                    <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                    <option key={i} value={Depart.categoryId}>{Depart.name}</option>
                                     )
                                 )}
                             </select>
@@ -266,7 +268,7 @@ function Profile() {
 
                     <div className="card-banner-space"></div>
                     <div className="card-banner-big">{name.fullname}</div>
-                    <div className="card-banner-small">Computer Science</div>
+                    <div className="card-banner-small">{name.depName}</div>
                     <div className="card-banner-tag">{senderType}</div>
                     <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
 
@@ -285,6 +287,7 @@ function Profile() {
             </div>
 
             <HeadIcon />
+            <Notify />
 
         </div>
     );

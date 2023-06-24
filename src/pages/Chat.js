@@ -238,7 +238,7 @@ function Chat() {
 
     useEffect(() => {
         ip.get(`/api/student/getconv?chatId=${chatId}`)
-        .then(res => {setMessage(res.data);})
+        .then(res => {setMessage(res.data.Results);})
         .catch(err => console.log(err));
     }, [chatId]);
 
@@ -344,9 +344,9 @@ function Chat() {
 
                                         <select name="categoryId" id="categoryId" value={chatData.categoryId} onChange={handleChatChange} required>
                                             <option hidden>Type</option>
-                                            <option value="8">Open</option>
+                                            <option value="1">Open</option>
                                             {depts.map((Depart, i) => (
-                                                <option key={i} value={Depart.depId}>{Depart.name}</option>
+                                                <option key={i} value={Depart.categoryId}>{Depart.name}</option>
                                                 )
                                             )}
                                         </select>
@@ -443,7 +443,7 @@ function Chat() {
                         {message.map((messages, i) => (
                         <div key={i}>
 
-                            {messages.senderType === 'Student' && messages.userid === name.studentId ? (
+                            {messages.senderType === 'Student' && messages.userId === name.studentId ? (
 
                             <div class="message-container-right">
                                 <div class="message text-only">
@@ -454,7 +454,7 @@ function Chat() {
                                 {/* <div class="response-time"> 15h04</div> */}
                             </div>
 
-                            ) : messages.senderType === 'Staff' && messages.userid === name.staffId ? (
+                            ) : messages.senderType === 'Staff' && messages.userId === name.staffId ? (
 
                             <div class="message-container-right">
                                 <div class="message text-only">
