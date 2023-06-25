@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import TextField from "@mui/material/TextField";
 import '../styles/banapprove.css';
 import './common.css';
+
 import Sidebar from "./global/Sidebar";
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
@@ -14,18 +16,20 @@ function BanApprove() {
   const [selectedAction, setSelectedAction] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  
+  const [query, setSearchQuery] = useState('');
 
   // Fetch staff accounts on component mount
   useEffect(() => {
     fetchStaffAccounts();
-  }, []);
+  }, [query]);
 
   // Fetch staff accounts from the server
   const fetchStaffAccounts = () => {
     axios
-      .get(`${apiUrl}/admin/getStaff`)
+      .get(`${apiUrl}/staff/searchStaff?keyword=${query}`)
       .then((response) => {
-        console.log(response.data);
+        
         setStaffAccounts(response.data);
       })
       .catch((error) => {
@@ -132,7 +136,33 @@ function BanApprove() {
       </div>
       <div className="adminContent">
     <div className="ban-approve-container">
-      <h2>Ban/Approve Staff Account</h2>
+
+    <h2>Ban/Approve Staff Account</h2>
+
+    <TextField
+  id="search-bar"
+  className="text"
+  onInput={(e) => {
+    setSearchQuery(e.target.value);
+  }}
+  label="search staff by His name"
+  variant="outlined"
+  placeholder="Search..."
+  size="small"
+  style={{
+    width: "60%",
+    marginBottom: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f2f2f2",
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+  }}
+  InputProps={{
+    style: {
+      paddingLeft: "10px",
+    },
+  }}
+/>
+
       <table>
         <thead>
           <tr>
