@@ -45,12 +45,28 @@ function Home() {
     // Get All post
 
     const [allPost, setAllPost] = useState([]);
+    const [write, setWrite] = useState('');
+
+    const handleInputChange = (event) => {
+        setWrite(event.target.value);
+    };
 
     useEffect(() => {
-        ip.get('/api/staff/viewPost')
+
+        // ip.get('/api/staff/viewPost', {
+        //     params: {
+        //         keyword: write,
+        //     },
+        // })
+
+        ip.get('/api/admin/searchPost', {
+            params: {
+                keyword: write,
+            },
+        })
         .then(res => {setAllPost(res.data);})
         .catch(err => console.log(err));
-    }, []);
+    }, [write]);
 
 
     // Pagination 
@@ -125,7 +141,7 @@ function Home() {
                     <img src={barc} alt='barc' className='bicon'/>
                     
                     <i className="uil uil-search"></i>
-                    <input type="text" placeholder="Search here..." />
+                    <input type="text" placeholder="Search here..." onInput={handleInputChange}/>
                     <button className="button">Search</button> 
                 </div>
 

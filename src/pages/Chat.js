@@ -5,11 +5,13 @@ import axios from 'axios';
 import "../styles/Chat.css";
 import ip from '../helpers/Config.js';
 import SideBar from '../components/SideBar';
+import user_avatar from '../assets/user_avatar.png';
 
-import { IoSend, IoSearch, IoWarningOutline, IoOptionsSharp } from "react-icons/io5"; 
+import { IoSend, IoSearch, IoWarningOutline, IoOptionsSharp, IoCreate } from "react-icons/io5"; 
 import { RxChevronLeft } from "react-icons/rx";
-import { MdPostAdd } from "react-icons/md";
+import { BsFileEarmarkPlusFill } from "react-icons/bs";
 import { VscVerified } from "react-icons/vsc";
+import { FcAddDatabase } from "react-icons/fc";
 
 
 
@@ -169,7 +171,7 @@ function Chat() {
 
 
 
-    // Check if user has preferences
+    // get user preferences
 
     const [prefer, setPrefer] = useState(false);
 
@@ -293,6 +295,19 @@ function Chat() {
     };
 
 
+    // Default chat user image
+
+    let user_img = '';
+    let user_image = messages.picture;
+
+    if (user_image === null || user_image === undefined) {
+        user_img = user_avatar;
+    } else {
+        user_img = user_image.replace('Images', '');
+        user_img = `http://localhost:3000${user_img}`;
+    }
+
+
 
     return (
         <div className="user-home">
@@ -329,7 +344,7 @@ function Chat() {
                             )}
 
                             <div class="options">
-                                <MdPostAdd className='icon' onClick={()=> setCreate(!create)}/>
+                                <FcAddDatabase className='icon' onClick={()=> setCreate(!create)}/>
 
                                 {create && (
                                     <div className='add-chat' ref={dropdownRef}>
@@ -442,6 +457,20 @@ function Chat() {
 
                         {message.map((messages, i) => (
                         <div key={i}>
+                            {(() => {
+
+                                let user_img = '';
+                                let user_image = messages.picture;
+
+                                if (user_image === null || user_image === undefined) {
+                                user_img = user_avatar;
+                                } else {
+                                user_img = user_image.replace('Images', '');
+                                user_img = `http://localhost:3000${user_img}`;
+                                }
+
+                            return (
+                            <>
 
                             {messages.senderType === 'Student' && messages.userId === name.studentId ? (
 
@@ -467,9 +496,11 @@ function Chat() {
 
                             ) : (
 
-                            <div class="message-container">
-                                <div class="message">
-                                    <div class="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}></div>
+                            <div className="message-container">
+                                <div className="message">
+                                    {/* <div className="photo" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80)'}}></div> */}
+                                    <img className="photo" src={user_img} alt='Profile-img' />
+                                    
                                     <div class="text">
 
                                     {messages.senderType === 'Staff' ? (
@@ -490,7 +521,9 @@ function Chat() {
                             </div>
 
                             )}
-                                
+
+                            </>
+                            );})()}        
 
                         </div>
                         ))}

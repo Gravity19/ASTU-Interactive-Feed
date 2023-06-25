@@ -1,5 +1,7 @@
 import React from 'react';
 import {useState, useEffect, useRef} from 'react';
+import axios from 'axios';
+import ip from '../helpers/Config.js';
 
 import "../styles/Notify.css";
 
@@ -8,6 +10,40 @@ import user_avatar from '../assets/img_avatar.png';
 import user_avatar2 from '../assets/img_avatar2.png';
 
 function Notify() {
+
+
+    // Get Current User
+
+    const [name, setName] = useState('');
+    const [senderType, setSenderType] = useState('');
+    const [userType, setUserType] = useState('');
+    const [userId, setUserId] = useState('');
+
+	axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+                setName(res.data.user.user);
+
+                if (res.data.user.user.hasOwnProperty('studentId')) {   // sender type declaration
+                    setSenderType('Student');
+                    setUserType('student');
+                    setUserId(res.data.user.user.studentId);
+                } else {
+                    setSenderType('Staff');
+                    setUserType('staff');
+                    // setUserId(res.data.user.user.staffId);
+                }
+
+            }
+            else{
+                setName("Something went wrong");
+            } 
+        })
+    }, []);
+
+
 
 	// Pop-Up Functionality
 
@@ -29,13 +65,61 @@ function Notify() {
     }, []);
 
 
+
+    // get Notifications
+
+    const [notification, setNotification] = useState('');
+    const [notifyNum, setNotifyNum] = useState('');
+
+    useEffect(() => {
+        ip.get('/api/staff/getRsvp', {
+            params: {
+                userType: 'Student',
+                userId: userId,
+            },
+        })
+
+        .then(response => {
+            setNotification(response.data);
+            setNotifyNum(notification.totalRsvp);
+
+        })
+        .catch(err => console.log(err));
+    }, [userId, open, notification.totalRsvp]);
+
+
+    // update Notification
+
+
+    const updateNotification = () => {
+        const requestBody = {
+            rsvpData: notification.rsvpData,
+            userType: 'Student',
+            userId: userId,
+        };
+
+        ip.put('/api/staff/putRsvp', requestBody )
+        .then(response => {
+            console.log(response.data);
+            // console.log(requestBody);
+        })
+        .catch(err => console.log(err));
+    };
+
+    
+
+
+
+
     return (
         <div className='head-notify'>
 
-            <div className='notification' onClick={()=> setOpen(!open)}>
+            <div className='notification' onClick={()=>{setOpen(!open); updateNotification(); setNotifyNum(0)}}>
                 <div className='perspective'>
                     <MdNotifications className='icon'/>
-                    <span>5</span>
+                    {notifyNum !== 0 &&
+                        <span>{notifyNum}</span>
+                    }
                 </div>
             </div>
 
@@ -45,23 +129,20 @@ function Notify() {
 
                     <p>Notifications</p>
 
-                    <div className='content'>
-                        <img src={user_avatar} alt='icon-img'/>
+                    <div className='content-scroll'>
+                        {notification.rsvpData.map((notfic, i) => (
+                        <div className='content' key={i} >
+                            <img src={user_avatar} alt='icon-img'/>
 
-                        <div className='block'>
-                            <div className='line'><b>Yabets</b> has made to your post <b>Python Developers</b></div>
-                            <div className='loc'>Space</div>
+                            <div className='block'>
+                                {/* <div className='line'><b>Yabets</b> has made to your post <b>Python Developers</b></div> */}
+                                <div className='line'><b>{notfic.text}</b></div>
+                                <div className='loc'>Space</div>
+                            </div>
                         </div>
+                        ))}
                     </div>
 
-                    <div className='content'>
-                        <img src={user_avatar2} alt='icon-img'/>
-
-                        <div className='block'>
-                            <div className='line'><b>Nati</b> has liked your post <b>Java Developers</b></div>
-                            <div className='loc'>Stadium</div>
-                        </div>
-                    </div>
 
                 </div>
             )}
