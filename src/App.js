@@ -9,6 +9,7 @@ import Reset from './pages/Reset';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import AdminLogin from './admin/scenes/AdminLogin';
 import AdminDashboard from "./admin/scenes/AdminDash";
 import AdminBanApprove from "./admin/scenes/AdminBA";
 import AdminDelete from "./admin/scenes/AdminDP";
@@ -25,7 +26,7 @@ function App() {
           <Routes>
             <Route path='/' exact element={<Home />} />
             <Route path="/about" exact element={<About/>} />
-            <Route path="/login" exact element={<Login/>} />
+            <Route path="/login" exact element={<Login/>} /> 
             <Route path="/forgot" exact element={<Forgot/>} />
             <Route path="/reset" exact element={<Reset/>} />
             <Route path="/register" exact element={<Register/>} />
@@ -33,6 +34,7 @@ function App() {
             <Route path="/profile" exact element={<Profile/>} />
             <Route path="/chat" exact element={<Chat/>} />
             <Route path="/admin" exact element={<AdminDashboard/>} />
+            <Route path="/admin/login" exact element={<AdminLogin/>} />
             <Route path="/admin/delete" exact element={<AdminDelete/>} />
             <Route path="/admin/banapprove" exact element={<AdminBanApprove/>} />
             <Route path="/admin/addsd" exact element={<AdminAddsd/>} />

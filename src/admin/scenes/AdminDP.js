@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import TextField from "@mui/material/TextField";
+
 import '../styles/delete.css';
 import './common.css';
 import Sidebar from "./global/Sidebar";
@@ -10,6 +12,9 @@ const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
 function DeletePost() {
   const [posts, setPosts] = useState([]);
   const [message, setMessage] = useState('');
+
+  const [query, setSearchQuery] = useState('');
+
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
@@ -19,16 +24,15 @@ function DeletePost() {
   useEffect(() => {
     // Fetch posts on component mount
     axios
-      .get(`${apiUrl}/staff/viewPost`)
+      .get(`${apiUrl}/staff/viewPost?keyword=${query}`)
       .then((response) => {
-        console.log(response.data);
         setPosts(response.data);
       })
       .catch((error) => {
         console.log(error);
         setError('Failed to fetch posts. Please try again later.');
       });
-  }, []);
+  }, [query]);
 
   const handleDelete = (postId) => {
     // Set the confirmation flag and post ID to delete
@@ -77,6 +81,32 @@ function DeletePost() {
       <div className="adminContent">
     <div className='delete-container'>
       <h2>Delete Post</h2>
+      
+      <TextField
+  id="search-bar"
+  className="text"
+  onInput={(e) => {
+    setSearchQuery(e.target.value);
+  }}
+  label="Search For Post"
+  variant="outlined"
+  placeholder="Search..."
+  size="small"
+  style={{
+    width: "60%",
+    marginBottom: "10px",
+    borderRadius: "5px",
+    backgroundColor: "#f2f2f2",
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+  }}
+  InputProps={{
+    style: {
+      paddingLeft: "10px",
+    },
+  }}
+/>
+
+
       <table>
         <thead>
           <tr>

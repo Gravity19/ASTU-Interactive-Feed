@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import {useNavigate, Link} from 'react-router-dom';
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { IoLogOut } from "react-icons/io5";
+import { MdArrowForwardIos} from "react-icons/md";
 
-// Define a reusable menu item component
+import ip from "../../../helpers/Config.js";
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -30,16 +33,67 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-// Define the Sidebar component
 const Sidebar = () => {
+  const [name, setName] = useState("");
+  const [senderType, setSenderType] = useState("");
+  const [userType, setUserType] = useState("");
+  const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [authState, setAuthState]=useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    ip.get("api/user")
+      .then((res) => {
+        if (res.data.status === "Success") {
+          setName(res.data.user.user);
+          if (res.data.user.user.hasOwnProperty("adminId")) {
+            setSenderType("Admin");
+            setUserType("admin");
+            setUserId(res.data.user.user.adminId);
+          }
+        } else {
+          setName("Something went wrong");
+        }
+      })
+      .catch((error) => {
+        setName("Something went wrong");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  // Manage the state of the sidebar (collapsed/expanded) and the selected menu item
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  
-  // Render the sidebar component
+
+  useEffect(() => {
+    if (!loading && !senderType) {
+      window.location.href = "/";
+    }
+  }, [loading, senderType]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const logout = () => {
+		ip.get('api/logout')
+        .then(res => {
+            if(res.data.message === "Success"){
+				setAuthState(false);
+				navigate('/admin/login');
+				window.location.reload();
+            }
+            else{
+				alert("error");
+            } 
+        })
+		.catch (err => console.log(err))
+	};
+
   return (
     <Box
       sx={{
@@ -62,8 +116,6 @@ const Sidebar = () => {
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
-          {/* Render the logo and menu icon */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
@@ -79,17 +131,13 @@ const Sidebar = () => {
                 alignItems="top-left"
                 ml="15px"
               >
-                <Typography variant="h5" color={colors.grey[100]}>
-                  ADMINIS
-                </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
             )}
           </MenuItem>
-
-          {/* Render user profile */}
+          
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
@@ -97,8 +145,15 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user2.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                  src={`${name.picture}`}style={{
+                    cursor: "pointer",
+                    borderRadius: "20%",
+                    borderColor: "red",
+                    borderWidth: "1px",
+                    borderStyle: "solid",
+                    boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
+                    transition: "transform 0.3s",
+                  }}
                 />
               </Box>
               <Box textAlign="center">
@@ -108,17 +163,17 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Marishet
+                  {name.fullname}
                 </Typography>
                 <Typography variant="h6" color={colors.greenAccent[500]}>
-                  ASTU-IF Admins
+                  ASTU-IF Admin
                 </Typography>
+
               </Box>
             </Box>
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            {/* Render menu items */}
             <Item
               title="Dashboard"
               to="/admin"
@@ -148,9 +203,9 @@ const Sidebar = () => {
               Users Management
             </Typography>
             <Item
-              title="Ban or Approve "
+              title="Ban or Approve"
               to="/admin/banapprove"
-              icon={<CheckCircleIcon  />}
+              icon={<CheckCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -175,7 +230,25 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+
+          <Button
+                onClick={logout}
+                style={{
+                  backgroundColor: 'red',
+                  color: 'white',
+                  padding: '10px 20px',
+                  fontSize: '10px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  align:'right'
+                }}
+              >
+                 <p>Logout</p>
+          </Button>
           </Box>
+
+          
+          
         </Menu>
       </ProSidebar>
     </Box>
