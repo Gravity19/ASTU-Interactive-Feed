@@ -62,7 +62,7 @@
     color: #9e9ea7;
 }
 
-.Dashboard .search-bar .input:focus, input:hover {
+.Dashboard .search-bar .input:focus, .Dashboard input:hover {
     outline: none;
     border-color: rgba(234,76,137,0.4);
     background-color: #fff;
