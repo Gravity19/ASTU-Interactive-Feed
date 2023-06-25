@@ -169,7 +169,7 @@ function Chat() {
 
 
 
-    // Check if user has preferences
+    // get user preferences
 
     const [prefer, setPrefer] = useState(false);
 

@@ -15,7 +15,7 @@ import { MdEmail, MdAddLocationAlt, MdVerified, MdOutlineCreate, MdDescription, 
 import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill, BsPinMapFill} from "react-icons/bs";
 import { FaWalking, FaSchool, FaBook } from "react-icons/fa";
 import { HiPencilAlt } from "react-icons/hi";
-import { BiBook } from "react-icons/bi";
+import { BiBook, BiSearchAlt } from "react-icons/bi";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 
 
@@ -44,8 +44,10 @@ function Dashboard() {
 
                 if (res.data.user.user.hasOwnProperty('studentId')) {
                     setSenderType ('Student');
+                    setActiveTab(1);
                 } else {
                     setSenderType ('Staff');
+                    setActiveTab(2);
                 }
             }
             else{
@@ -69,29 +71,63 @@ function Dashboard() {
     
     // Get Student Post
 
-    const [letter, setLetter] = useState([]);
-
     let depart = name.ShortedName;
 
+    const [letter, setLetter] = useState([]);
+    const [write, setWrite] = useState('');
+
+    const handleSearchChange = (event) => {
+        setWrite(event.target.value);
+    };
+
     useEffect(() => {
-        ip.get(`/api/student/viewPost?depName=${depart}`)
+
+        // ip.get('/api/student/viewPost', {
+        //     params: {
+        //         depName: depart,
+        //         keyword: write,
+        //     },
+        // })
+
+        ip.get('/api/admin/searchPost', {
+            params: {
+                keyword: write,
+            },
+        })
         .then(res => {setLetter(res.data);})
         .catch(err => console.log(err));
-    }, [depart]);
+    }, [write, depart]);
 
 
 
     // Get MyPost
 
     const [myPost, SetMyPost] = useState([]);
+    const [staffWrite, setStaffWrite] = useState('');
+
+    const handleSearchStaffChange = (event) => {
+        setStaffWrite(event.target.value);
+    };
 
     useEffect(() => {
-        ip.get(`/api/staff/myPost?staffId=${name.staffId}`)
+        // ip.get('/api/staff/myPost', {
+        //     params: {
+        //         staffId: name.staffId,
+        //         keyword: staffWrite,
+        //     },
+        // })
+
+        ip.get('/api/admin/searchPost', {
+            params: {
+                keyword: staffWrite,
+            },
+        })
         .then(res => {SetMyPost(res.data);})
         .catch(err => 
             console.log("there is something wrong in get MyPost")
         );
-    }, [name.staffId]);
+    }, [name.staffId, staffWrite]);
+
 
 
     // Get Department
@@ -227,6 +263,22 @@ function Dashboard() {
             <SideBar />
             <div className='Dashboard'>
 
+                {/* -- Search Bar -- */}
+
+                {senderType === "Student" ?(
+                <div class="search-bar" >
+                    <BiSearchAlt className='icon'/>
+                    <input placeholder="Search" type="search" class="input" onInput={handleSearchChange}/>
+                </div>
+                ):(
+                <div class="search-bar search-staff" >
+                    <BiSearchAlt className='icon'/>
+                    <input placeholder="Bamboo" type="search" class="input" onInput={handleSearchStaffChange}/>
+                </div>
+                )}
+                
+                {/* -- -- */}
+
                 <div className='Dashboard-nav'>
 
                     {senderType === "Staff" &&(
@@ -234,8 +286,7 @@ function Dashboard() {
                         <p>Create Post</p>
                         <MdOutlineCreate className='icon'/>
                     </button>
-                    )
-                    }
+                    )}
 
 
                 {/* Modal Body */}
@@ -564,7 +615,10 @@ function Dashboard() {
 
                 <HeadIcon/>
 
-                <Notify/>
+                {senderType === "Student" &&(
+                    <Notify/>
+                )}
+
 
 
             </div>
