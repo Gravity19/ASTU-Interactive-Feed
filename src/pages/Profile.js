@@ -51,6 +51,23 @@ function Profile() {
 
 
 
+    // Get Current User [Database]
+
+	const [currentUser, setCurrentUser] = useState('');
+
+	useEffect(() => {
+        ip.get('/api/currentUser', {
+            params: {
+                userId: userId,
+				userType: senderType,
+            },
+        })
+        .then(res => {setCurrentUser(res.data.user);})
+        .catch(err =>console.log(err))
+    }, [userId, senderType]);
+
+
+
     // Upload Image Preview
 
     const [file, setFile] = useState();
@@ -146,7 +163,7 @@ function Profile() {
     // Default User image
 
     let user_img = '';
-    let user_image = name.picture;
+    let user_image = currentUser.picture;
 
     if (user_image === null || user_image === undefined) {
         user_img = user_avatar;
@@ -167,12 +184,12 @@ function Profile() {
                 <form className="account-update"> 
                     <div className="account-div">
                         <label htmlFor="fullname">Full Name</label>
-                        <input type="text" name="fullname" id="fullname" placeholder={name.fullname}   required />
+                        <input type="text" name="fullname" id="fullname" placeholder={currentUser.fullname}   required />
                     </div>
 
                     <div className="account-div">
                         <label htmlFor="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et" value={name.email}   required />
+                        <input type="email" name="email" id="email" placeholder="example@astu.edu.et" value={currentUser.email}   required />
                     </div>
 
                     <div className="account-div-box">
@@ -251,8 +268,8 @@ function Profile() {
                     <img src={user_img} alt="account-user-img" className="account-user-img"/>
 
                     <div className="card-banner-space"></div>
-                    <div className="card-banner-big">{name.fullname}</div>
-                    <div className="card-banner-small">{name.depName}</div>
+                    <div className="card-banner-big">{currentUser.fullname}</div>
+                    <div className="card-banner-small">{currentUser.depName}</div>
                     <div className="card-banner-tag">{senderType}</div>
                     <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
 
@@ -271,7 +288,10 @@ function Profile() {
             </div>
 
             <HeadIcon />
-            <Notify />
+
+            {senderType === 'Student' &&(
+                <Notify />
+            )}
 
         </div>
     );

@@ -72,8 +72,9 @@ function Reset() {
 
             const response = await ip.post("/api/student/changePassword", updatedFormData);
             setSent(true);
-            console.log(response)
-            navigate("/profile");
+            setTimeout(() => {
+                navigate("/profile");
+            }, 2000); // (2 seconds)
         } catch (error) {
             if (error.response.status === 400) {
                 setError(error.response.data.message);
@@ -147,7 +148,7 @@ function Reset() {
                 </>
 
                 ) : (
-                    <div className="reset-form">
+                    <div className="reset-form changed">
                         <div className='sent'>
                             <BiCheckCircle className="icon"/>
                             <p>Password Successfully Changed</p>

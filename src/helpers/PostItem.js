@@ -121,13 +121,13 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                 ...formData,
                 staffId: name.staffId,
                 postId: postId,
-                // image: image,
+                image: image,
             };
     
             const response = await ip.put("/api/staff/updatePost", updatedFormData, {
-                // headers: {
-                //     "Content-Type": "multipart/form-data",
-                // },
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
     
             setFormData({});
@@ -172,15 +172,14 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
     const [answer, setAnswer] = useState('');
 
     const handlePostChange = (e) => {
-        const selectedAnswer = e.target.value;              // Make the value of the button the Selected Answer 
+        const selectedAnswer = e.target.value;
         setAnswer(selectedAnswer);
     };
 
 
     const DosFunctions = (e) => { 
         handleUpdateChange(e);
-        handlePostChange(e);
-        
+        handlePostChange(e);    
     }
 
 
@@ -319,7 +318,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
                                         <div className="publish-box">
                                             <label htmlFor="title">Title<HiPencilAlt/></label>
-                                            <input className="inputs" type='text' name="title" placeholder={title} onChange={handleUpdateChange} />
+                                            <input className="inputs" type='text' name="title"  placeholder={title} onChange={handleUpdateChange} />
                                         </div>
 
                                         <div className="publish-box">

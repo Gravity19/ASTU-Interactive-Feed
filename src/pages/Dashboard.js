@@ -34,6 +34,7 @@ function Dashboard() {
 
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
+    const [userId, setUserId] = useState('');
     const navigate = useNavigate(); 
 
 	axios.defaults.withCredentials = true;
@@ -45,10 +46,11 @@ function Dashboard() {
 
                 if (res.data.user.user.hasOwnProperty('studentId')) {
                     setSenderType ('Student');
+                    setUserId(res.data.user.user.studentId);
                     setActiveTab(1);
                 } else {
                     setSenderType ('Staff');
-                    // setActiveTab(2);
+                    setUserId(res.data.user.user.studentId);
                 }
             }
             else{
@@ -60,6 +62,33 @@ function Dashboard() {
             navigate("/");
         });
     }, []);
+
+
+    // Get Current User [Database]
+
+
+	const [currentUser, setCurrentUser] = useState('');
+
+	useEffect(() => {
+        ip.get('/api/currentUser', {
+            params: {
+                userId: userId,
+                userType: senderType,
+            },
+        })
+        .then(res => {
+            setCurrentUser(res.data.user);
+        })
+        .catch(err => console.log(err));
+    }, [userId, senderType]);
+    
+    useEffect(() => {
+        if (currentUser && !currentUser.isVerified) {
+            navigate("/");
+        }
+    }, [currentUser]);
+
+
 
 
     // Get All post

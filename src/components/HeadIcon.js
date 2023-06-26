@@ -5,6 +5,7 @@ import {useState, useEffect, useRef} from 'react';
 
 import "../styles/NavBar.css";
 import "../styles/HeadIcon.css";
+import ip from '../helpers/Config.js';
 
 import { FaUser } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
@@ -63,6 +64,7 @@ function HeadIcon() {
 
     const [name, setName] = useState('');
 	const [senderType, setSenderType] = useState('');
+	const [userId, setUserId] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -73,8 +75,10 @@ function HeadIcon() {
 
 				if (res.data.user.user.hasOwnProperty('studentId')) {
                     setSenderType ('Student');
+					setUserId(res.data.user.user.studentId);
                 } else {
                     setSenderType ('Staff');
+					setUserId(res.data.user.user.staffId);
                 }
             }
             else{
@@ -84,10 +88,27 @@ function HeadIcon() {
     }, []);
 
 
+	// Get Current User [Database]
+
+	const [currentUser, setCurrentUser] = useState('');
+
+	useEffect(() => {
+        ip.get('/api/currentUser', {
+            params: {
+                userId: userId,
+				userType: senderType,
+            },
+        })
+        .then(res => {setCurrentUser(res.data.user);})
+        .catch(err =>console.log(err))
+    }, [userId, senderType]);
+
+
+
 	// Default User image
 
     let user_img = '';
-    let user_image = name.picture;
+    let user_image = currentUser.picture;
 
     if (user_image === null || user_image === undefined) {
         user_img = user_avatar;
@@ -111,11 +132,11 @@ function HeadIcon() {
 
 									{senderType === 'Student' ? (
 									<>
-										<p>{name.fullname}<MdVerified className='verified-student'/></p>
+										<p>{currentUser.fullname}<MdVerified className='verified-student'/></p>
 									</>
 									):(
 									<>
-										<p>{name.fullname}<MdVerified className='verified-staff'/></p>
+										<p>{currentUser.fullname}<MdVerified className='verified-staff'/></p>
 									</>
 									)}
 

@@ -105,7 +105,6 @@ function Login() {
                             <option hidden>Login As</option>
                             <option value="student">Student</option>
                             <option value="staff">Staff</option>
-                            <option value="admin">Admin</option>
                         </select>
 
                         <p class="signup-link forgot"><a href="/forgot">Forgot Password</a></p>
