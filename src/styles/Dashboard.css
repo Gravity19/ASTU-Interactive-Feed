@@ -784,8 +784,105 @@
 @media only screen and (max-width: 780px) {
 
     .Dashboard{
-        padding: 0;
         padding-top: 90px;
+        padding-left: 80px;
+        padding-right: 0px;
+        padding-bottom: 95px;
+    }
+
+    .Dashboard .search-bar {
+        position: absolute;
+        top: 420px;
+        right: 20px;
+    }
+
+    .Dashboard .search-staff {
+        position: absolute;
+        top: 370px;
+        right: 20px;
+    }
+    
+
+    .field-one .profile {
+        width: 100%;
+        position: relative;
+        right: 10px;
+    }
+
+    .field-one .profile .bgr {
+        height: 100px;
+    }
+
+    .field-one .detail .user-img {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        height: 6rem;
+        width: 6rem;
+    }
+
+    .field-one .detail .user-img {
+        height: 7rem;
+        width: 7rem;
+    }
+
+    .field-one .left .big {
+        font-size: 15px;
+    }
+
+    .field-one .detail .edit-btn {
+        padding: 8px 9px;
+        font-weight: 400;
+        font-size: 13px;
+    }
+
+
+    /* -- Posts */
+
+    .field-one .posts {
+        position: relative;
+        right: 20px;
+        top: 50px;
+    }
+
+    .field-one .posts .post-list {
+        padding: 0px;
+        position: relative;
+        left: 25px;
+        top: 20px;
+    }
+
+    .field-one .posts .post-list .no-post{
+        width: 320px;
+    }
+
+    /* Modal */
+
+
+    .create-modal {
+        position: fixed;
+        width: 90%;
+    }
+
+    .modal-right{
+        position: fixed;
+        right: 13px;
+        width: 80%;
+    }
+
+    .publish-box .image {
+        position: absolute;
+        left: 245px;
+    }
+
+    .publish-form .publish-radio {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .publish-form select {
+        font-size: 14px;
     }
 
 }

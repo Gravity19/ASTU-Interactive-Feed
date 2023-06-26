@@ -101,15 +101,13 @@ function NavBar() {
         <div className='nav-bar'>
             <img src={logo} alt='logo' className='nav-logo'/>
 
-			{/* Left Side */}
 				<div className='left-div'>
-					<a href="/#" className='mid'>Home</a>
-					<a href="/#" className='mid'>Platform</a>
-					<a href="/About" className='mid'>About</a>
-					{/* <a href="/About" className='mid'>{Username}</a> */}
+					<a href="/" className='mid'>Home</a>
+					{authState &&(
+					<a href="/profile" className='mid'>{name.fullname}</a>
+					)}
 				</div>
 
-			{/* Right-Side */}
 				{!authState ? (
 					<>
 						<a href="/Register" className='loj'>Register</a>

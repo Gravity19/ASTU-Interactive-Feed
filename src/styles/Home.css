@@ -3,10 +3,15 @@
 
 /* === Background image + Header === */
 
+html {
+    scroll-behavior: smooth;
+}
+
 .hmain{
     padding: 0%;
     margin: 0%;
     background-color: #f4f0f0;
+    scroll-behavior: smooth;
 }
 
 .homey {
@@ -1014,6 +1019,7 @@
     color: #fff;
     font-weight: 600;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .more-button-one:hover {
@@ -1025,14 +1031,23 @@
 .more-button-two{                               /* More Button */
     border: 2px solid #ffffff;
     background-color: transparent;
+    text-decoration: none;
+    width: 100px;
     border-radius: 0.4em;
     padding: 0.7em 1.2em;
     transition: all ease-in-out 0.2s;
-    font-size: 16px;
     display: flex;
     justify-content: center;
     color: #fff;
+    font-size: 16px;
     font-weight: 600;
+    cursor: pointer;
+}
+
+.more-button-two:hover{
+    background-color:white;
+    color: #006F5C;
+    
 }
 
 
@@ -1092,7 +1107,7 @@
 /* Board Upper */
 
 .board-upper p{
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     opacity: 0.8;
     margin: 0;

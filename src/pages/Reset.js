@@ -1,13 +1,43 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useNavigate, Link} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import "../styles/login.css";
 
 import astu_logo from "../assets/badges/AstuFeed_badge.png";
 import login_graphics from "../assets/login-graphic.png";
-import { BiShowAlt, BiHide } from "react-icons/bi";
-
+import { BiShowAlt, BiHide, BiCheckCircle } from "react-icons/bi";
+import ip from '../helpers/Config.js';
 
 function Reset() {
+
+
+    // Get Current User
+
+    const [userType, setUserType] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const navigate = useNavigate();
+
+	axios.defaults.withCredentials = true;
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/user')
+        .then(res => {
+            if(res.data.status === "Success"){
+                if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setUserType('Student');
+                    setUserEmail(res.data.user.user.email);
+                } else {
+                    setUserType('Staff');
+                    setUserEmail(res.data.user.user.email);
+                }
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            navigate("/");
+        });
+    }, []);
+
 
 
     // Show and Hide Password
@@ -18,6 +48,46 @@ function Reset() {
         setPasswordVisible(!passwordVisible);
     };
 
+
+    // Change Password
+
+    const [error, setError] = useState("");
+    const [sent, setSent]=useState(false);
+
+    const [formData, setFormData] = useState({
+        // email: userEmail,
+        // userType: userType,
+        oldPassword: "",
+        newPassword: "",
+    });
+    
+    const handleChangePassword = async (event) => {
+        event.preventDefault();
+        try {
+            const updatedFormData = {
+                ...formData,
+                email: userEmail,
+                userType: userType,
+            };
+
+            const response = await ip.post("/api/student/changePassword", updatedFormData);
+            setSent(true);
+            console.log(response)
+            navigate("/profile");
+        } catch (error) {
+            if (error.response.status === 400) {
+                setError(error.response.data.message);
+                console.log(formData);
+            } else {
+                console.log(error);
+            } 
+        }
+    };
+
+    const handlePasswordChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+
+    };
 
 
     return (
@@ -42,12 +112,15 @@ function Reset() {
                     
                 {/* The Form */}
             
-                <form className="login-form">
+                <form className="login-form" onSubmit={handleChangePassword}>
+
+                {!sent ? (
+                <>
                     <p class="form-title">Reset Password</p>
-                    <p class="signup-link">No account? <a href="/register"> Create an Account</a></p>
+                    {/* <p class="signup-link">No account? <a href="/register"> Create an Account</a></p> */}
 
                     <div class="input-container">
-                        <input placeholder="New Password" type={passwordVisible ? 'text' : 'password'} name="password" id="password" required/>
+                        <input placeholder="Old Password" type={passwordVisible ? 'text' : 'password'} name="oldPassword" id="oldPassword" onChange={handlePasswordChange} required/>
                         <span onClick={handlePasswordVisibility}>
                             {passwordVisible ? (
                                 <BiHide className='svg'/>
@@ -57,9 +130,8 @@ function Reset() {
                         </span>
                     </div>
 
-
                     <div class="input-container">
-                        <input placeholder="Confirm Password" type={passwordVisible ? 'text' : 'password'} name="password" id="password" required/>
+                        <input placeholder="New Password" type={passwordVisible ? 'text' : 'password'} name="newPassword" id="newPassword" onChange={handlePasswordChange} required/>
                         <span onClick={handlePasswordVisibility}>
                             {passwordVisible ? (
                                 <BiHide className='svg'/>
@@ -71,7 +143,18 @@ function Reset() {
 
                     <button class="submit reset-btn" type="submit">Reset</button>
 
-                    <div className="error-log">error</div>
+                    <div className="error-log">{error}</div>
+                </>
+
+                ) : (
+                    <div className="reset-form">
+                        <div className='sent'>
+                            <BiCheckCircle className="icon"/>
+                            <p>Password Successfully Changed</p>
+                        </div>
+                    </div>
+                )}
+
                 </form>
 
             </div>

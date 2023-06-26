@@ -236,19 +236,26 @@
 }
 
 
+.account-update .flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 
 .account-update .reg-button {
     padding: 8px 12px;
     color: #fff;
     font-size: 1.0rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 30px;
+    margin-bottom: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease;
-    background-color: #1c528d;
+    background-color: #2377d2;
 }
 .account-update .reg-button:hover {
     background-color: #1b64b2;
@@ -257,7 +264,17 @@
 
 
 
-
+.account-setting .password{
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #05a88d;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 7px 10px;
+    color: white;
+    position: relative;
+    top: 15px;
+}
 
 
 
