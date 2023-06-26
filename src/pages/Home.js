@@ -13,7 +13,6 @@ import barc from "../assets/search.png";
 import utensil from "../assets/utensil.png";
 import trend_icon from "../assets/trend-icon.png";
 
-// import { PostList } from "../helpers/PostList";
 import PostItem from "../helpers/PostItem";
 
 
@@ -24,7 +23,7 @@ function Home() {
     // Session Management
 
 	const [authState, setAuthState]=useState(false);
-    const [name, setName] = useState('');
+    // const [name, setName] = useState('');
 
     axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -32,11 +31,11 @@ function Home() {
         .then(res => {
             if(res.data.status === "Success"){
 				setAuthState(true);
-                setName(res.data.user.user);
+                // setName(res.data.user.user);
             }
             else{
 				setAuthState(false);
-                setName("Something went wrong");
+                // setName("Something went wrong");
             } 
         })
     }, []);
@@ -53,13 +52,7 @@ function Home() {
 
     useEffect(() => {
 
-        // ip.get('/api/staff/viewPost', {
-        //     params: {
-        //         keyword: write,
-        //     },
-        // })
-
-        ip.get('/api/admin/searchPost', {
+        ip.get('/api/staff/viewPost', {
             params: {
                 keyword: write,
             },
@@ -112,6 +105,16 @@ function Home() {
     };
 
 
+    // Scroll
+
+    const scrollToDiv = () => {
+        const element = document.getElementById('myDiv');
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    };
+
 
     return (
         <div className='hmain'>
@@ -125,10 +128,10 @@ function Home() {
                         <h1 className='m-title'>Do your best work, supported by your Adama Science and Technology</h1>
                         <h4 className='m-desc'>ASTU interactive Feed lets members publish directly to students and other audience, without getting into any hassle.</h4>
                     </div>
-                    <button className='more-button-one'>Start Reading</button>
+                    <button className='more-button-one' onClick={scrollToDiv}>Start Reading</button>
 
                 {!authState && (
-                    <button className='more-button-two'>Register</button>
+                    <Link  to="/register" className='more-button-two'>Register</Link>
                 )}
                     
                 </div>
@@ -157,7 +160,7 @@ function Home() {
         
         {/* POST Section */}
 
-            <div className='post'>
+            <div className='post' id="myDiv">
 
 
                     {displayPosts}
@@ -207,18 +210,18 @@ function Home() {
 
                         <div className='board-body'>
                             <div class="desc-board">
-                                    <div class="photo" style={{backgroundImage: 'url(https://i.pinimg.com/originals/a9/26/52/a926525d966c9479c18d3b4f8e64b434.jpg)'}}></div>
+                                    <div class="photo" style={{backgroundImage:"url(https://i.pinimg.com/564x/0f/91/5a/0f915a0565ffb4470a78552eed75ac83.jpg)",} }></div>
                                     
                                     <div class="desc-contact">
                                         <p class="desc-title">Day Corlew</p>
-                                        <p class="desc-message">Let's meet for a coffee CSS word-wrap property is used to break the long words and wrap onto the next line.</p>
+                                        <p class="desc-message">property is used to break the long words and wrap onto the next ..</p>
                                     </div>
 
                                     <div class="desc-timer">3 min</div>
                             </div>
 
                             <div class="desc-board">
-                                    <div class="photo" style={{backgroundImage: 'url(https://i.pinimg.com/originals/a9/26/52/a926525d966c9479c18d3b4f8e64b434.jpg)'}}></div>
+                                    <div class="photo" style={{backgroundImage:"url(https://i.pinimg.com/564x/0f/91/5a/0f915a0565ffb4470a78552eed75ac83.jpg)",}}></div>
                                     
                                     <div class="desc-contact">
                                         <p class="desc-title">Campus Group</p>
@@ -229,11 +232,11 @@ function Home() {
                             </div>
 
                             <div class="desc-board">
-                                    <div class="photo" style={{backgroundImage: 'url(https://i.pinimg.com/originals/a9/26/52/a926525d966c9479c18d3b4f8e64b434.jpg)'}}></div>
+                                    <div class="photo" style={{backgroundImage:"url(https://i.pinimg.com/564x/0f/91/5a/0f915a0565ffb4470a78552eed75ac83.jpg)",}}></div>
                                     
                                     <div class="desc-contact">
                                         <p class="desc-title">School Board Meeting</p>
-                                        <p class="desc-message">Let's meet for a coffee CSS word-wrap property is used to break the long words and wrap onto the next.</p>
+                                        <p class="desc-message">Let's meet for a coffee CSS word-wrap property is used ...</p>
                                     </div>
                                     
                                     <div class="desc-timer">1 hour</div>

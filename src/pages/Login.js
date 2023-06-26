@@ -19,7 +19,6 @@ function Login() {
 
     const navigate = useNavigate();             // define navigation
     const [error, setError] = useState('');     // define error
-    const [authState, setAuthState]=useState(false);
 
     axios.defaults.withCredentials = true;
     const handleSubmit = async (event) => {
@@ -33,7 +32,6 @@ function Login() {
             if (response.data.error) {
                 alert(response.data.error);
             } else {
-                setAuthState(true);
                 navigate("/");
             }
         } catch (error) {

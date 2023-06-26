@@ -257,7 +257,7 @@
 }
 
 .reset-form{
-	height: 320px;
+	height: 365px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -314,8 +314,7 @@
 		bottom: 30px;
 		left: 0px;
 		right: 0px;
-
-
+		padding: 0px 20px;
 	}
 	
 	

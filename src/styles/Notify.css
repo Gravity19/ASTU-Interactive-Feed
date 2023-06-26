@@ -89,6 +89,18 @@
     
 }
 
+.head-notify .notify-dropdown .max{
+    height: 120px;
+    padding: 10px;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 400;
+
+}
+
 
 .head-notify .notify-dropdown .content{
     display: flex;

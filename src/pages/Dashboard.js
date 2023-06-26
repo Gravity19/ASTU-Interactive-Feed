@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import axios from "axios";
 import "../styles/Dashboard.css";
@@ -13,7 +13,7 @@ import ip from '../helpers/Config.js';
 
 import { MdEmail, MdAddLocationAlt, MdVerified, MdOutlineCreate, MdDescription, MdSchool } from "react-icons/md";
 import { BsFillBookmarkPlusFill, BsFillPeopleFill, BsPersonFill, BsPinMapFill} from "react-icons/bs";
-import { FaWalking, FaSchool, FaBook } from "react-icons/fa";
+import { FaWalking, FaSchool } from "react-icons/fa";
 import { HiPencilAlt } from "react-icons/hi";
 import { BiBook, BiSearchAlt } from "react-icons/bi";
 import { RiUploadCloud2Fill } from "react-icons/ri";
@@ -34,6 +34,7 @@ function Dashboard() {
 
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
+    const navigate = useNavigate(); 
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -47,25 +48,38 @@ function Dashboard() {
                     setActiveTab(1);
                 } else {
                     setSenderType ('Staff');
-                    setActiveTab(2);
+                    // setActiveTab(2);
                 }
             }
             else{
                 setName("Something went wrong");
             } 
         })
+        .catch(err => {
+            console.log(err);
+            navigate("/");
+        });
     }, []);
 
 
     // Get All post
 
+    const [allWrite, setAllWrite] = useState('');
     const [allPost, setAllPost] = useState([]);
 
+    const handleAllSearchChange = (event) => {
+        setAllWrite(event.target.value);
+    };
+
     useEffect(() => {
-        ip.get('/api/staff/viewPost')
+        ip.get('/api/staff/viewPost', {
+            params: {
+                keyword: allWrite,
+            },
+        })
         .then(res => {setAllPost(res.data);})
         .catch(err => console.log(err));
-    }, []);
+    }, [allWrite]);
 
 
     
@@ -82,15 +96,15 @@ function Dashboard() {
 
     useEffect(() => {
 
-        // ip.get('/api/student/viewPost', {
+        // ip.get('/api/admin/searchPost', {
         //     params: {
-        //         depName: depart,
         //         keyword: write,
         //     },
         // })
 
-        ip.get('/api/admin/searchPost', {
+        ip.get('/api/student/viewPost', {
             params: {
+                depName: depart,
                 keyword: write,
             },
         })
@@ -103,11 +117,11 @@ function Dashboard() {
     // Get MyPost
 
     const [myPost, SetMyPost] = useState([]);
-    const [staffWrite, setStaffWrite] = useState('');
+    // const [staffWrite, setStaffWrite] = useState('');
 
-    const handleSearchStaffChange = (event) => {
-        setStaffWrite(event.target.value);
-    };
+    // const handleSearchStaffChange = (event) => {
+    //     setStaffWrite(event.target.value);
+    // };
 
     useEffect(() => {
         // ip.get('/api/staff/myPost', {
@@ -117,16 +131,16 @@ function Dashboard() {
         //     },
         // })
 
-        ip.get('/api/admin/searchPost', {
+        ip.get('/api/staff/myPost', {
             params: {
-                keyword: staffWrite,
+                staffId: name.staffId,
             },
         })
         .then(res => {SetMyPost(res.data);})
         .catch(err => 
             console.log("there is something wrong in get MyPost")
         );
-    }, [name.staffId, staffWrite]);
+    }, [name.staffId]);
 
 
 
@@ -263,22 +277,6 @@ function Dashboard() {
             <SideBar />
             <div className='Dashboard'>
 
-                {/* -- Search Bar -- */}
-
-                {senderType === "Student" ?(
-                <div class="search-bar" >
-                    <BiSearchAlt className='icon'/>
-                    <input placeholder="Search" type="search" class="input" onInput={handleSearchChange}/>
-                </div>
-                ):(
-                <div class="search-bar search-staff" >
-                    <BiSearchAlt className='icon'/>
-                    <input placeholder="Bamboo" type="search" class="input" onInput={handleSearchStaffChange}/>
-                </div>
-                )}
-                
-                {/* -- -- */}
-
                 <div className='Dashboard-nav'>
 
                     {senderType === "Staff" &&(
@@ -291,7 +289,7 @@ function Dashboard() {
 
                 {/* Modal Body */}
 
-                    <Modal isOpen={Visible} className='create-modal' style={{overlay: {
+                    <Modal isOpen={Visible} className='create-modal modal-right' style={{overlay: {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',}}}>
@@ -603,7 +601,9 @@ function Dashboard() {
                         <p>About</p>
                         <div className='entry'><MdEmail className='icon'/>{name.email}</div>
                         <div className='entry'><BsPersonFill className='icon'/>{senderType}</div>
-                        <div className='entry'><BiBook className='icon'/>{name.depName}</div>
+                        {senderType === 'Student' &&(
+                            <div className='entry'><BiBook className='icon'/>{name.depName}</div>
+                        )}
                         <div className='entry'><MdAddLocationAlt className='icon'/>Ethiopia, Adama</div>
                     </div>
 
@@ -618,6 +618,22 @@ function Dashboard() {
                 {senderType === "Student" &&(
                     <Notify/>
                 )}
+
+                {/* -- Search Bar -- */}
+
+                {senderType === "Student" ?(
+                <div class="search-bar" >
+                    <BiSearchAlt className='icon'/>
+                    <input placeholder="Search" type="search" class="input" onInput={handleSearchChange}/>
+                </div>
+                ):(
+                <div class="search-bar search-staff" >
+                    <BiSearchAlt className='icon'/>
+                    <input placeholder="search" type="search" class="input" onInput={handleAllSearchChange}/>
+                </div>
+                )}
+                
+                {/* -- -- */}
 
 
 

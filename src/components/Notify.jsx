@@ -88,8 +88,8 @@ function Notify() {
     }, [userId, open, notification.totalRsvp]);
 
 
-    // update Notification
 
+    // update Notification
 
     const updateNotification = () => {
         const requestBody = {
@@ -105,9 +105,6 @@ function Notify() {
         })
         .catch(err => console.log(err));
     };
-
-    
-
 
 
 
@@ -128,20 +125,25 @@ function Notify() {
                     <div className='triangle'></div>
 
                     <p>Notifications</p>
-
+                    
+                {notification.length > 0 ? (
                     <div className='content-scroll'>
                         {notification.rsvpData.map((notfic, i) => (
                         <div className='content' key={i} >
                             <img src={user_avatar} alt='icon-img'/>
 
                             <div className='block'>
-                                {/* <div className='line'><b>Yabets</b> has made to your post <b>Python Developers</b></div> */}
                                 <div className='line'><b>{notfic.text}</b></div>
                                 <div className='loc'>Space</div>
                             </div>
                         </div>
                         ))}
                     </div>
+                ) : (
+                    <div className='content-scroll max'>
+                        <div>You have no new notification</div>
+                    </div>
+                )}
 
 
                 </div>

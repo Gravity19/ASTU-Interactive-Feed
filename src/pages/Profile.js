@@ -2,6 +2,7 @@ import React from 'react';
 import "../styles/Profile.css";
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import {useNavigate, Link} from 'react-router-dom';
 import ip from '../helpers/Config.js';
 
 import SideBar from '../components/SideBar';      //SideBar
@@ -19,8 +20,8 @@ function Profile() {
     // Get Current User
     const [name, setName] = useState('');
     const [senderType, setSenderType] = useState('');
-    const [userType, setUserType] = useState('');
     const [userId, setUserId] = useState('');
+    const navigate = useNavigate(); 
 
     axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -31,22 +32,23 @@ function Profile() {
 
                 if (res.data.user.user.hasOwnProperty('studentId')) {
                     setSenderType ('Student');
-                    setUserType('student');
                     setUserId(res.data.user.user.studentId);
                 } else {
                     setSenderType ('Staff');
-                    setUserType('staff');
                     setUserId(res.data.user.user.staffId);
                 }
             }
             else{
                 setName("Something went wrong");
+                
             } 
         })
+        .catch(err => {
+            console.log(err);
+            navigate("/");
+        });
     }, []);
 
-
-    // Update Profile
 
 
     // Upload Image Preview
@@ -183,39 +185,17 @@ function Profile() {
                     </div>
 
 
-                    {/* <div className="form-pair">
+
+                    {/* 
+                    <div className="form-pair">
                         <div className="x-y-box">
-                            <label htmlFor="password">Full Name</label>
-                            <input type="password" name="password" id="password" placeholder="Enter Name"   required />
+                            ..
                         </div>
-
                         <div className="x-y-box">
-                            <label htmlFor="picture">Picture</label>
-                            <input type="text" name="picture" id="picture" placeholder="Enter picture"   required />
+                            ..
                         </div>
-                    </div> */}
-
-
-
-
-                    {/* <div className="form-pair">
-                        <div className="x-y-box">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder="Enter Password"   required />
-                        </div>
-
-                        <div className="x-y-box">
-                            <label htmlFor="password">Password</label>
-                            <div className="select-box">
-                                <select id="depId" name="depId"   required>
-                                    <option hidden>Department</option>
-                                    <option>Computer Science</option>
-                                    <option>Mechanical Engineering</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div> */}
+                    </div> 
+                    */}
 
 
 
@@ -230,8 +210,12 @@ function Profile() {
                                 </select>
                             </div>
                     </div> */}
+                    
+                    <div className="flex">
+                        <button className="reg-button">Update</button>
 
-                    <button className="reg-button">Update</button>
+                        <Link className='password' to="/reset">Change Password</Link>
+                    </div>
                 
 
 
