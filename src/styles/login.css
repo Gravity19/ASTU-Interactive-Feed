@@ -278,7 +278,9 @@
 	color: #05a88d;
 }
 
-
+.login-form .changed{
+	height: 230px;
+}
 
 /* -- Addition to Reset Page -- */
 
