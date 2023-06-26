@@ -50,7 +50,7 @@ function Dashboard() {
                     setActiveTab(1);
                 } else {
                     setSenderType ('Staff');
-                    setUserId(res.data.user.user.studentId);
+                    setUserId(res.data.user.user.staffId);
                 }
             }
             else{
@@ -146,19 +146,8 @@ function Dashboard() {
     // Get MyPost
 
     const [myPost, SetMyPost] = useState([]);
-    // const [staffWrite, setStaffWrite] = useState('');
-
-    // const handleSearchStaffChange = (event) => {
-    //     setStaffWrite(event.target.value);
-    // };
 
     useEffect(() => {
-        // ip.get('/api/staff/myPost', {
-        //     params: {
-        //         staffId: name.staffId,
-        //         keyword: staffWrite,
-        //     },
-        // })
 
         ip.get('/api/staff/myPost', {
             params: {
@@ -291,7 +280,7 @@ function Dashboard() {
     // Default User image
 
     let user_img = '';
-    let user_image = name.picture;
+    let user_image = currentUser.picture;
 
     if (user_image === null || user_image === undefined) {
         user_img = user_avatar;
@@ -456,13 +445,13 @@ function Dashboard() {
 
                                 {senderType === 'Student' ? (
                                 <>
-                                    <div className="big">{name.fullname}<MdVerified className='verified-student'/></div>
+                                    <div className="big">{currentUser.fullname}<MdVerified className='verified-student'/></div>
                                     <img src={Student_badge} alt="role" className="role"/>
-                                    <div className="small"><MdSchool className='icon'/>{name.depName}</div>
+                                    <div className="small"><MdSchool className='icon'/>{currentUser.depName}</div>
                                 </>
                                 ):(
                                 <>
-                                    <div className="big">{name.fullname}<MdVerified className='verified-staff'/></div>
+                                    <div className="big">{currentUser.fullname}<MdVerified className='verified-staff'/></div>
                                     <img src={Staff_badge} alt="role" className="role"/>
                                 </>
                                 )}
@@ -631,7 +620,7 @@ function Dashboard() {
                         <div className='entry'><MdEmail className='icon'/>{name.email}</div>
                         <div className='entry'><BsPersonFill className='icon'/>{senderType}</div>
                         {senderType === 'Student' &&(
-                            <div className='entry'><BiBook className='icon'/>{name.depName}</div>
+                            <div className='entry'><BiBook className='icon'/>{currentUser.depName}</div>
                         )}
                         <div className='entry'><MdAddLocationAlt className='icon'/>Ethiopia, Adama</div>
                     </div>
