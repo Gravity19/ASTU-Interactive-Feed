@@ -36,6 +36,8 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
     const [name, setName] = useState('');
     const [userType, setUserType] = useState('');
+    const [senderType, setSenderType] = useState('');
+    const [userId, setUserId] = useState('');
 
 	axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -45,9 +47,13 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                 setName(res.data.user.user);
 
                 if (res.data.user.user.hasOwnProperty('studentId')) {
+                    setSenderType('student');
                     setUserType('Student');
+                    setUserId(res.data.user.user.studentId);
                 } else {
+                    setSenderType('staff');
                     setUserType('Staff');
+                    setUserId(res.data.user.user.staffId);
                 }
             }
             else{
@@ -209,7 +215,6 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 
     // Delete Post
 
-
     const deletePost = () => {
         const requestBody = {
             postId: postId
@@ -261,6 +266,24 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         // Simulate saving the updated like count to the database
         // Here you can make an API call to update the likes count in your database
         // Once the data is successfully saved, you can reload the page to fetch the updated count
+        
+    };
+
+
+    // Set Like
+
+	const handleLikePost = async (event) => {
+        try {
+            const updatedFormData = {
+                postId: postId,
+                liked_by_id : userId,
+                liked_by_type: senderType,
+            };
+            const response = await ip.post("/api/student/likePost", updatedFormData);
+			console.log(response.data);
+        } catch (error) {
+			console.log(error.response.data);
+		}
     };
 
 
@@ -480,7 +503,7 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                             
                             <div className="like-heart">
                                 <label class="like-container">
-                                    <input type="checkbox" onClick={handleLike}/><BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`}/>
+                                    <input type="checkbox" onClick={() => {handleLike(); handleLikePost();}} /><BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`}/>
                                 </label>
                                 <p>{likeCount}</p>
                             </div>

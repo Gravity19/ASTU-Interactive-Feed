@@ -75,6 +75,7 @@ function SideBar() {
 
 
 
+
     // Get Current User [Database]
 
 	const [currentUser, setCurrentUser] = useState('');
@@ -91,7 +92,7 @@ function SideBar() {
     }, [userId, senderType]);
 
 
-
+    
 
 	// Logout function
 
@@ -113,7 +114,7 @@ function SideBar() {
     // Default User image
 
     let user_img = '';
-    let user_image = name.picture;
+    let user_image = currentUser.picture;
 
     if (user_image === null || user_image === undefined) {
         user_img = user_avatar;
@@ -184,7 +185,7 @@ function SideBar() {
                         <div className="profile-details">
                             <img src={user_img} alt="profileImg" />
                             <div className="name_job">
-                                <div className="name">{name.fullname}</div>
+                                <div className="name">{currentUser.fullname}</div>
                                 <div className="role">{senderType}</div>
                             </div>
                         </div>
