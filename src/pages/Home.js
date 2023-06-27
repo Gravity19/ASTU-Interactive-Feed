@@ -52,7 +52,7 @@ function Home() {
 
     useEffect(() => {
 
-        ip.get('/api/staff/viewPost', {
+        ip.get('/api/admin/searchPost', {
             params: {
                 keyword: write,
             },
