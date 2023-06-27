@@ -26,7 +26,7 @@ import B508 from "../assets/loc/b508.png";
 import B509 from "../assets/loc/b509.png";
 
 
-function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, time, date, loc, day, postId, summarizable, posterId, likes}) {
+function PostItem({ user_image, user_name, user_badge, card_image, tag, title, desc, time, date, loc, day, postId, summarizable, posterId, likes, likedStd, likedStf}) {
 
 
     const [Popup, setPopup] = useState(false); 
@@ -252,27 +252,9 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         Staff_img = `http://localhost:3000${Staff_img}`;
     }
 
+    // Like Post api
 
-    // Like Logic
-
-    const [likeCount, setLikeCount] = useState(likes);
-    const [liked, setLiked] = useState(false);
-
-
-    const handleLike = () => {
-        setLiked(!liked);
-        setLikeCount(liked ? likeCount - 1 : likeCount + 1);
-    
-        // Simulate saving the updated like count to the database
-        // Here you can make an API call to update the likes count in your database
-        // Once the data is successfully saved, you can reload the page to fetch the updated count
-        
-    };
-
-
-    // Set Like
-
-	const handleLikePost = async (event) => {
+    const handleLikePost = async (event) => {
         try {
             const updatedFormData = {
                 postId: postId,
@@ -285,6 +267,52 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
 			console.log(error.response.data);
 		}
     };
+
+
+    // liked by current user
+
+    const currentUserID = userId
+
+    const [didLike, setDidLike] = useState(false); // Ensure initial value is set to false
+
+    useEffect(() => {
+        if (userType === "Student" && Array.isArray(likedStd)) {
+            if (likedStd.includes(currentUserID.toString())) {
+            setDidLike(true);
+            }
+        }
+        if (userType === "Staff" && Array.isArray(likedStf)) {
+            if (likedStf.includes(currentUserID.toString())) {
+            setDidLike(true);
+            }
+        }
+        }, [likedStd,likedStf,didLike,userId,userType]);
+
+    console.log('likedStd:', likedStd, 'likedStf:', likedStf, 'currentUserID:', currentUserID, 'userType:', userType, 'didLike:', didLike);
+
+
+
+    // Like Logic
+
+    const [likeCount, setLikeCount] = useState(likes);
+    const [liked, setLiked] = useState(false);
+
+    useEffect(() => {
+
+        if( didLike === true){
+            setLiked(true);
+        }
+
+    }, [ didLike]);
+
+    const handleLike = () => {
+        setLiked(!liked);
+        setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+    };
+
+    // addition
+
+
 
 
     return (
@@ -500,10 +528,11 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                 )}
                             </div>
                             
-                            
+
                             <div className="like-heart">
-                                <label class="like-container">
-                                    <input type="checkbox" onClick={() => {handleLike(); handleLikePost();}} /><BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`}/>
+                                <label className="like-container">
+                                    <input type="checkbox" onClick={() => {handleLike(); handleLikePost();}} />
+                                    <BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`} />
                                 </label>
                                 <p>{likeCount}</p>
                             </div>
