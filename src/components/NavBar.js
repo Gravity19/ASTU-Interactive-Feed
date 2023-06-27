@@ -78,12 +78,11 @@ function NavBar() {
 	// Logout function
 
 	const logout = () => {
-		ip.get('/api/logout')
+		axios.get('http://localhost:3000/api/logout')
         .then(res => {
             if(res.data.message === "Success"){
 				setAuthState(false);
 				navigate('/login');
-				window.location.reload();
             }
             else{
 				alert("error");

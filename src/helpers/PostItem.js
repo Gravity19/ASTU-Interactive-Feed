@@ -288,9 +288,6 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
         }
         }, [likedStd,likedStf,didLike,userId,userType]);
 
-    console.log('likedStd:', likedStd, 'likedStf:', likedStf, 'currentUserID:', currentUserID, 'userType:', userType, 'didLike:', didLike);
-
-
 
     // Like Logic
 
@@ -528,14 +525,23 @@ function PostItem({ user_image, user_name, user_badge, card_image, tag, title, d
                                 )}
                             </div>
                             
-
-                            <div className="like-heart">
+                            {userId && (
+                                <div className="like-heart">
                                 <label className="like-container">
                                     <input type="checkbox" onClick={() => {handleLike(); handleLikePost();}} />
                                     <BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`} />
                                 </label>
                                 <p>{likeCount}</p>
-                            </div>
+                                </div> 
+                            )}
+
+                            {/* <div className="like-heart">
+                                <label className="like-container">
+                                    <input type="checkbox" onClick={() => {handleLike(); handleLikePost();}} />
+                                    <BsFillHeartFill className={`svg ${liked ? 'svg-red' : ''}`} />
+                                </label>
+                                <p>{likeCount}</p>
+                            </div> */}
                         </div>
         </div>
     );

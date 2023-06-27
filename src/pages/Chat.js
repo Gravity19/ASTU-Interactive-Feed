@@ -389,10 +389,10 @@ function Chat() {
 
                     <section class="discussions" style={{ zIndex: zIndex1 }}>
                         <div class="top-bar">
-                            <div class="searchbar">
+                            {/* <div class="searchbar">
                                 <IoSearch className='icon'/>
                                 <input type="text" placeholder="Search..." className='input-me'></input>
-                            </div>
+                            </div> */}
 
                             {prefer && (
 

@@ -291,7 +291,12 @@ function Profile() {
                     <div className="card-banner-big">{currentUser.fullname}</div>
                     <div className="card-banner-small">{currentUser.depName}</div>
                     <div className="card-banner-tag">{senderType}</div>
-                    <div className="card-banner-text">Doloremque, nihil! At ea atque quidem! Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+
+                    {!currentUser.isVerified ? (
+                        <div className="card-banner-verified">this is a non-verified user of the Astu Interactive Feed website. login to participate and contribute to the platform</div>
+                    ) : (
+                        <div className="card-banner-text">This is a verified member of the ASTU Interactive Feed website is a valuable contributor to the platform.</div>
+                    )}
 
                     <div className="card-banner-options">
                     {options.map((option, i) => (

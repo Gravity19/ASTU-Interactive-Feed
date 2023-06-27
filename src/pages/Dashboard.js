@@ -29,6 +29,12 @@ import user_avatar from '../assets/user_avatar.png';
 function Dashboard() {
 
     const [Visible, setVisible] = useState(false);
+    const [switchValue, setSwitchValue] = useState(0);
+
+
+    const handleSwitchChange = () => {
+        setSwitchValue((prevValue) => (prevValue === 0 ? 1 : 0));
+      };
 
     // Get Current User
 
@@ -195,6 +201,7 @@ function Dashboard() {
         staffId: "",
         categoryId: "",
         eventLocation: "",
+        rsvp: 0,
     });
 
     const handlePost = async (event) => {
@@ -395,10 +402,15 @@ function Dashboard() {
 
                             {/* -- Switch RSVP -- */}
 
-                            {/* <div className='switch-box'>
+                            <div className="switch-box">
                                 <span>RSVP</span>
-                                <input className="switch" type="checkbox"/>
-                            </div> */}
+                                <input
+                                    className="switch"
+                                    type="checkbox"
+                                    checked={switchValue === 1}
+                                    onChange={handleSwitchChange}
+                                />
+                            </div>
 
                             {/* Location */}
 
