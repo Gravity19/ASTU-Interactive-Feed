@@ -511,6 +511,8 @@ function Dashboard() {
                                             summarizable={item.summarizable}
                                             posterId={item.staffId}
                                             likes={item.likes}
+                                            likedStd={item.studentIds}
+                                            likedStf={item.staffIds}
                                         />
                                     );
                                 })}
